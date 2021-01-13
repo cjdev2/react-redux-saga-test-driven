@@ -4,6 +4,7 @@
 ```bash
 npx create-react-app react-redux-saga-test-driven
 cd react-redux-saga-test-driven/
+npm install ramda
 ```
 ## Scripts
 

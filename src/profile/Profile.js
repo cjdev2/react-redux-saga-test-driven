@@ -1,19 +1,28 @@
 import './Profile.css'
+import * as R from 'ramda'
 
-const Profile = () => {
+const ProfileListItem = ({profile}) => {
+    return <>
+        <span>{profile.name}</span>
+        <button>delete</button>
+    </>
+}
+
+const ProfileList = ({profiles}) => {
+    const createElement = profile => <ProfileListItem key={profile.id} profile={profile}/>
+    const profileElements = R.map(createElement, profiles)
+    return <div className={'elements'}>
+        {profileElements}
+    </div>
+}
+
+const Profile = ({profiles}) => {
+    const header = `${profiles.length} profiles`
     return <div className={'Profile'}>
-        <h2>3 Profiles</h2>
-        <input value={''}
-               placeholder={'new profile'}
+        <h2>{header}</h2>
+        <input placeholder={'new profile'}
                autoFocus={true}/>
-        <div className={'elements'}>
-            <span>First Profile</span>
-            <button>delete</button>
-            <span>Second Profile</span>
-            <button>delete</button>
-            <span>Third Profile</span>
-            <button>delete</button>
-        </div>
+        <ProfileList profiles={profiles}/>
     </div>
 }
 
