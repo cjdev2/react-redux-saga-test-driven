@@ -1,0 +1,12 @@
+.Profile {
+    display: grid;
+    justify-content: center;
+    grid-gap: 2px;
+}
+
+.Profile .elements {
+    display: grid;
+    justify-content: left;
+    grid-gap: 0.2em;
+    grid-template-columns: auto auto;
+}

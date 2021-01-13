@@ -1,5 +1,6 @@
 import './App.css';
+import Top from './top/Top'
 
-const App = () => <h1>Hello, world!</h1>
+const App = () => <Top/>
 
 export default App;
