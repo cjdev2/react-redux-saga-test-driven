@@ -1,8 +1,8 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect'
-import createSample from "../test/sample";
+import createSample from "../test-util/sample";
 import {render} from "@testing-library/react";
-import Profile from "./Profile";
+import ProfileView from "./ProfileView";
 
 test('some profiles', async () => {
     // given
@@ -10,7 +10,7 @@ test('some profiles', async () => {
     const profiles = sample.profileArray(3)
 
     // when
-    const rendered = render(<Profile profiles={profiles}/>)
+    const rendered = render(<ProfileView profiles={profiles}/>)
 
     // then
     expect(rendered.getByText('3 profiles')).toBeInTheDocument()

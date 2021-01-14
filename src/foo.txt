@@ -1,0 +1,29 @@
+  ● Console
+    console.error
+      Error: Uncaught [TypeError: Cannot read property 'length' of undefined]
+          at ProfileView (/Users/sshubin/gitlab.cj.dev/training/react-redux-saga-test-driven/src/profile/ProfileView.js:20:32)
+          at Object.renderLatest (/Users/sshubin/gitlab.cj.dev/training/react-redux-saga-test-driven/src/test-util/dispatchSystemTester.js:30:16)
+          at Object.<anonymous> (/Users/sshubin/gitlab.cj.dev/training/react-redux-saga-test-driven/src/profile/profileDispatchSystem.test.js:27:12)
+    console.error
+      The above error occurred in the <ProfileView> component:
+          at ProfileView (/Users/sshubin/gitlab.cj.dev/training/react-redux-saga-test-driven/src/profile/ProfileView.js:19:23)
+      Consider adding an error boundary to your tree to customize error handling behavior.
+      Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+  ● fetch profiles success
+    TypeError: Cannot read property 'length' of undefined
+      18 |
+      19 | const ProfileView = ({profiles}) => {
+    > 20 |     const header = `${profiles.length} profiles`
+         |                                ^
+      21 |     return <div className={'Profile'}>
+      22 |         <h2>{header}</h2>
+      23 |         <input placeholder={'new profile'}
+      at ProfileView (src/profile/ProfileView.js:20:32)
+      at Object.renderLatest (src/test-util/dispatchSystemTester.js:30:16)
+      at Object.<anonymous> (src/profile/profileDispatchSystem.test.js:27:12)
+Test Suites: 1 failed, 5 passed, 6 total
+Tests:       1 failed, 16 passed, 17 total
+Snapshots:   0 total
+Time:        3.121 s
+Ran all test suites related to changed files.
+Watch Usage: Press w to show more.
