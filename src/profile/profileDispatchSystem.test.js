@@ -4,6 +4,16 @@ import createSample from "../test-util/sample";
 import profileDispatchSystem from "./profileDispatchSystem";
 import createDispatchSystemTester from "../test-util/dispatchSystemTester";
 
+test('profile render default', async () => {
+    // when
+    const tester = createDispatchSystemTester({system: profileDispatchSystem})
+
+    // then
+    expect(tester.store.getState()).toEqual({profile:{profiles:[]}})
+    expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
+    expect(tester.events).toEqual([])
+})
+
 test('fetch profiles success', async () => {
     // // given
     const sample = createSample()
