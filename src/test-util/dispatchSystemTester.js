@@ -6,10 +6,8 @@ import {act} from "react-dom/test-utils";
 import {Provider} from 'react-redux'
 import {render} from "@testing-library/react";
 
-
-
-const createDispatchSystemTester = ({system, fetchResponses}) => {
-    const fetch = createFetchFunction(fetchResponses)
+const createDispatchSystemTester = ({system, fetchEvents}) => {
+    const fetch = createFetchFunction(fetchEvents)
     const environment = createEnvironment({fetch})
     const sagaMiddleware = createSagaMiddleware()
     const events = []

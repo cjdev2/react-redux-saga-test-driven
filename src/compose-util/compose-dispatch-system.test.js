@@ -141,8 +141,8 @@ test('create dispatch system',async  () => {
         reducerMap,
         effectMap
     })
-    const fetchResponses = [{uri:'/value',response:'world'}]
-    const tester = createDispatchSystemTester({system, fetchResponses})
+    const fetchEvents = [{uri:'/value',response:'world'}]
+    const tester = createDispatchSystemTester({system, fetchEvents})
     await tester.dispatch(dispatch.request())
     expect(tester.rendered.getByText('Hello, world!')).toBeInTheDocument()
 })

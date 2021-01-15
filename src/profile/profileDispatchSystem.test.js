@@ -18,11 +18,13 @@ test('fetch profiles', async () => {
     // // given
     const sample = createSample()
     const profiles = sample.profileArray(3)
-    const response = {
+    const fetchEvent = {
         uri: '/proxy/profile',
         response: JSON.stringify(profiles)
     }
-    const tester = createDispatchSystemTester({system: profileDispatchSystem, fetchResponses: [response]})
+    const fetchEvents = [fetchEvent]
+    const system = profileDispatchSystem
+    const tester = createDispatchSystemTester({system, fetchEvents})
 
     // when
     await tester.dispatch(profileDispatch.fetchProfilesRequest())
