@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect'
-import {Top, reducer, saga, initializeEvents} from './top'
+import {initializeEvents, reducer, saga, Top} from './top'
 
 test('smoke test', async () => {
     expect(Top).toBeDefined()

@@ -4,7 +4,7 @@ const createEnvironment = ({fetch, history, window}) => {
             const response = await fetch(resource, init)
             return await response.text()
         } catch (error) {
-            if(init){
+            if (init) {
                 throw Error(`Unable to fetch text from resource '${resource}' and custom settings ${JSON.stringify(init)}`)
             } else {
                 throw Error(`Unable to fetch text from resource '${resource}'`)

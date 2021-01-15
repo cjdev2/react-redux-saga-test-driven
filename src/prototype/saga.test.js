@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect'
 import * as R from 'ramda'
 import {applyMiddleware, createStore} from 'redux'
-import createSagaMiddleware, {runSaga, stdChannel} from 'redux-saga'
+import createSagaMiddleware from 'redux-saga'
 import {put, take, takeEvery} from "redux-saga/effects";
 import {act} from "react-dom/test-utils"
 

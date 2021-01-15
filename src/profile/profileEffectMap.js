@@ -1,4 +1,4 @@
-import {profileEvent, profileDispatch} from "./profileDispatch";
+import {profileDispatch, profileEvent} from "./profileDispatch";
 import {put} from "redux-saga/effects";
 
 const fetchProfilesRequest = environment => function* () {

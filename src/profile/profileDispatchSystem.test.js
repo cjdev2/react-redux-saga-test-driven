@@ -9,7 +9,7 @@ test('profile render default', async () => {
     const tester = createDispatchSystemTester({system: profileDispatchSystem})
 
     // then
-    expect(tester.store.getState()).toEqual({profile:{profiles:[]}})
+    expect(tester.store.getState()).toEqual({profile: {profiles: []}})
     expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
     expect(tester.events).toEqual([])
 })
@@ -30,7 +30,7 @@ test('fetch profiles', async () => {
     await tester.dispatch(profileDispatch.fetchProfilesRequest())
 
     // then
-    expect(tester.store.getState()).toEqual({profile:{profiles}})
+    expect(tester.store.getState()).toEqual({profile: {profiles}})
 
     expect(tester.rendered.getByText('3 profiles')).toBeInTheDocument()
     expect(tester.rendered.getByText(profiles[0].name)).toBeInTheDocument()

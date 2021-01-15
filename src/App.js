@@ -1,5 +1,5 @@
 import './App.css';
-import {Top,reducer,saga,initializeEvents, initialState} from './top/top'
+import {initializeEvents, initialState, reducer, saga, Top} from './top/top'
 import {Provider} from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import {applyMiddleware, compose, createStore} from 'redux'

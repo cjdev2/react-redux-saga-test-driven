@@ -1,6 +1,5 @@
 import * as R from 'ramda'
 import {all, call, takeEvery} from "redux-saga/effects";
-import {combineReducers} from "redux";
 import {connect} from "react-redux";
 
 const disallowDuplicateKey = (key, left, right) => {

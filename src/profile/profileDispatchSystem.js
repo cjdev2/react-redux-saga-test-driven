@@ -6,12 +6,12 @@ import profileReducerMap from "./profileReducerMap";
 import profileEffectMap from "./profileEffectMap";
 
 const profileDispatchSystem = createDispatchSystem({
-    name:"profile",
-    model:profileModel,
-    dispatch:profileDispatch,
-    View:ProfileView,
-    reducerMap:profileReducerMap,
-    effectMap:profileEffectMap
+    name: "profile",
+    model: profileModel,
+    dispatch: profileDispatch,
+    View: ProfileView,
+    reducerMap: profileReducerMap,
+    effectMap: profileEffectMap
 })
 
 export default profileDispatchSystem

@@ -1,7 +1,11 @@
 import Profile from '../profile/Profile'
 import profileDispatchSystem from '../profile/profileDispatchSystem'
 import {profileDispatch} from "../profile/profileDispatch";
-import {createReducerFromDispatchSystems, createSagaFromDispatchSystems, createInitialStateFromDispatchSystems} from "../compose-util/compose-dispatch-system";
+import {
+    createInitialStateFromDispatchSystems,
+    createReducerFromDispatchSystems,
+    createSagaFromDispatchSystems
+} from "../compose-util/compose-dispatch-system";
 
 const dispatchSystems = [profileDispatchSystem]
 

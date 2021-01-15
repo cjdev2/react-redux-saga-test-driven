@@ -8,7 +8,7 @@ import {
 import * as R from 'ramda'
 import {put, takeEvery} from "redux-saga/effects";
 import createDispatchSystemTester from "../test-util/dispatchSystemTester";
-import createSagaMiddleware, {runSaga, stdChannel} from 'redux-saga'
+import createSagaMiddleware from 'redux-saga'
 import {applyMiddleware, createStore} from 'redux'
 import {act} from "react-dom/test-utils";
 import createEnvironment from "../environment/environment";
@@ -33,8 +33,8 @@ test('pairs to object disallows duplicates', () => {
 })
 
 test('compose reducer', () => {
-    const valueLensA = R.lensPath(['a','value'])
-    const valueLensB = R.lensPath(['b','value'])
+    const valueLensA = R.lensPath(['a', 'value'])
+    const valueLensB = R.lensPath(['b', 'value'])
     const reducerA = (state = {}, event) => {
         if (event.type === 'a-event') {
             return R.set(valueLensA, event.value, state)
@@ -65,8 +65,8 @@ test('compose reducer', () => {
 
 test('compose saga', async () => {
     const events = []
-    const requestEvent = {type:'request'}
-    const responseEvent = {type:'response'}
+    const requestEvent = {type: 'request'}
+    const responseEvent = {type: 'response'}
     const requestHandler = function* (event) {
         events.push(requestEvent)
         yield put(responseEvent)
@@ -107,7 +107,7 @@ test('compose saga', async () => {
     expect(events).toEqual([requestEvent, responseEvent])
 })
 
-test('create dispatch system',async  () => {
+test('create dispatch system', async () => {
     const name = 'foo'
     const model = {
         value: {
@@ -141,7 +141,7 @@ test('create dispatch system',async  () => {
         reducerMap,
         effectMap
     })
-    const fetchEvents = [{uri:'/value',response:'world'}]
+    const fetchEvents = [{uri: '/value', response: 'world'}]
     const tester = createDispatchSystemTester({system, fetchEvents})
     await tester.dispatch(dispatch.request())
     expect(tester.rendered.getByText('Hello, world!')).toBeInTheDocument()
