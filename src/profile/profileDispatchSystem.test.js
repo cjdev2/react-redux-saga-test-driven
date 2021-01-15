@@ -18,11 +18,10 @@ test('fetch profiles success', async () => {
     await tester.dispatch(profileDispatch.fetchProfilesRequest())
 
     // then
-    expect(tester.store.getState()).toEqual({profiles})
+    expect(tester.store.getState()).toEqual({profile:{profiles}})
+    expect(tester.rendered.getByText('3 profiles')).toBeInTheDocument()
     expect(tester.events).toEqual([
         {"type": "PROFILE/FETCH_PROFILES_REQUEST"},
         {"type": "PROFILE/FETCH_PROFILES_SUCCESS", profiles}
     ])
-
-    tester.renderLatest().debug()
 })

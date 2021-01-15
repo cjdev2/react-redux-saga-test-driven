@@ -21,7 +21,7 @@ const pairsToObject = pairArray => {
 
 const createMapStateToProps = ({name, model}) => state => {
     const toEntry = (property, key) => {
-        const value = R.view(property.lens, state[name])
+        const value = R.view(property.lens, state)
         return [key, value]
     }
     const entries = R.mapObjIndexed(toEntry, model)
@@ -33,7 +33,25 @@ const createReducerFromDispatchSystems = dispatchSystems => {
     const dispatchSystemToReducerMapPair = dispatchSystem => [dispatchSystem.name, dispatchSystem.reducer]
     const reducerMapPairs = R.map(dispatchSystemToReducerMapPair, dispatchSystems)
     const reducerMap = pairsToObject(reducerMapPairs)
-    return combineReducers(reducerMap)
+    const reducers = R.map(system => system.reducer, dispatchSystems)
+    const newReducer = (state, event) => {
+        const accumulateState = (accumulator, reducer) => reducer(accumulator, event)
+        const newState = R.reduce(accumulateState, state, reducers)
+        return newState
+    }
+    return newReducer
+}
+
+const createSettersFromModel = model => {
+    const createSetter = property => R.set(property.lens, property.initialValue)
+    const setters = R.map(createSetter, R.values(model))
+    return setters
+}
+
+const createInitialStateFromDispatchSystems = dispatchSystems => {
+    const models = R.map(system => system.model, dispatchSystems)
+    const setters = R.chain(createSettersFromModel, models)
+    return R.apply(R.pipe, setters)({})
 }
 
 const createInitialState = model => {
@@ -42,7 +60,7 @@ const createInitialState = model => {
     return R.apply(R.pipe, setters)({})
 }
 
-const createReducerFromMap = ({reducerMap, model}) => (state = createInitialState(model), event) => {
+const createReducerFromMap = ({reducerMap, model}) => (state, event) => {
     const reducer = reducerMap[event.type]
     if (reducer) {
         return reducer(state, event)
@@ -76,12 +94,15 @@ const createDispatchSystem = (
     const Component = connect(mapStateToProps, dispatch)(View)
     const reducer = createReducerFromMap({reducerMap, model})
     const saga = createSagaFromMap(effectMap)
+    const initialState = createInitialState(model)
     return {
         name,
         Component,
         reducer,
         saga,
-        mapStateToProps
+        mapStateToProps,
+        model,
+        initialState
     }
 }
 
@@ -89,5 +110,6 @@ export {
     pairsToObject,
     createReducerFromDispatchSystems,
     createDispatchSystem,
-    createSagaFromDispatchSystems
+    createSagaFromDispatchSystems,
+    createInitialStateFromDispatchSystems
 }

@@ -18,24 +18,20 @@ const createDispatchSystemTester = ({system, fetchResponses}) => {
         return next(event)
     }
     const reducer = system.reducer
-    const state = {}
+    const state = system.initialState
     const store = createStore(reducer, state, applyMiddleware(sagaMiddleware, monitor))
     const saga = system.saga(environment)
     sagaMiddleware.run(saga)
     const dispatch = async event => await act(async () => {
         store.dispatch(event)
     })
-    const renderLatest = () => {
-        const Component = system.Component
-        console.log({state:store.getState()})
-        console.log({props:system.mapStateToProps({[system.name]:store.getState()})})
-        return render(<Provider store={store}><Component/></Provider>)
-    }
+    const Component = system.Component
+    const rendered = render(<Provider store={store}><Component/></Provider>)
     return {
         dispatch,
         store,
         events,
-        renderLatest
+        rendered
     }
 }
 
