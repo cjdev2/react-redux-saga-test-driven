@@ -1,12 +1,12 @@
 import * as R from "ramda";
 
-const createFetchFunction = responses => {
+const createFetchFunction = fetchEvents => {
     return async (uri, options) => {
-        const responseMatches = response =>
-            R.equals(uri, response.uri) && R.equals(options, response.options)
-        const responseElement = R.find(responseMatches, responses)
-        if (R.isNil(responseElement)) throw Error(`No response defined for uri '${uri}' and options ${JSON.stringify(options)}`)
-        const text = async () => responseElement.response
+        const matchesUriAndOptions = fetchEvent =>
+            R.equals(uri, fetchEvent.uri) && R.equals(options, fetchEvent.options)
+        const fetchEvent = R.find(matchesUriAndOptions, fetchEvents)
+        if (R.isNil(fetchEvent)) throw Error(`No fetch event defined for uri '${uri}' and options ${JSON.stringify(options)}`)
+        const text = async () => fetchEvent.response
         return {
             text
         }
