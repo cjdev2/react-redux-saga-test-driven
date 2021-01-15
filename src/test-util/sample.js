@@ -10,6 +10,7 @@ const createSample = () => {
     const profileArray = quantity => R.times(profile, quantity)
 
     return {
+        profile,
         profileArray
     }
 }

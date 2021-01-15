@@ -14,7 +14,7 @@ test('profile render default', async () => {
     expect(tester.events).toEqual([])
 })
 
-test('fetch profiles success', async () => {
+test('fetch profiles', async () => {
     // // given
     const sample = createSample()
     const profiles = sample.profileArray(3)
@@ -29,7 +29,12 @@ test('fetch profiles success', async () => {
 
     // then
     expect(tester.store.getState()).toEqual({profile:{profiles}})
+
     expect(tester.rendered.getByText('3 profiles')).toBeInTheDocument()
+    expect(tester.rendered.getByText(profiles[0].name)).toBeInTheDocument()
+    expect(tester.rendered.getByText(profiles[1].name)).toBeInTheDocument()
+    expect(tester.rendered.getByText(profiles[2].name)).toBeInTheDocument()
+
     expect(tester.events).toEqual([
         {"type": "PROFILE/FETCH_PROFILES_REQUEST"},
         {"type": "PROFILE/FETCH_PROFILES_SUCCESS", profiles}
