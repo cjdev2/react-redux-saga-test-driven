@@ -1,5 +1,39 @@
 # Sample Program Demonstrating React, Redux, and Sagas
 
+## Requirements
+- [ ] Profiles
+  - [ ] Display all profiles
+  - [ ] Add a profile
+  - [ ] Remove a profile
+  - [ ] Navigate to tasks associated with a particular profile
+- [ ] Tasks
+  - [ ] Display all tasks for a particular profile
+  - [ ] Add a task
+  - [ ] Mark a task as complete
+  - [ ] Clear all completed tasks
+  - [ ] Navigate to profiles
+- [ ] Summary
+  - [ ] Display the total number of profiles
+  - [ ] Display the total number of tasks
+  - [ ] Be visible on every page
+  - [ ] Immediately update as the underlying data changes
+- [ ] Navigation
+  - [ ] Profiles and Tasks are displayed on different pages
+  - [ ] Bookmarked pages should work
+  - [ ] Back button should work
+
+## Intent
+You should know how write a front end application that handles all of the following in a testable way
+- presentation
+- state
+- side effects
+- multiple pages
+- back button
+- an event in one component triggering a state change in another, without coupling those components together
+
+This is a fully test driven example project that shows one way of accomplishing this.
+
+
 ## How this project was created
 ```bash
 npx create-react-app react-redux-saga-test-driven
