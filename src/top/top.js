@@ -1,6 +1,6 @@
 import Profile from '../profile/Profile'
 import profileDispatchSystem from '../profile/profileDispatchSystem'
-import {profileDispatch} from "../profile/profileDispatch";
+import profileDispatch from "../profile/profileDispatch";
 import {
     createInitialStateFromDispatchSystems,
     createReducerFromDispatchSystems,

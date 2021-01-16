@@ -1,4 +1,16 @@
-const createEnvironment = ({fetch, history, window}) => {
+const nopPromiseTracker = {
+    trackPromise: p => p,
+    waitForPromises: () => Promise.resolve(),
+    waitForAllPromises: () => Promise.resolve()
+}
+
+const createEnvironment = (
+    {
+        fetch,
+        history,
+        window,
+        promiseTracker = nopPromiseTracker
+    }) => {
     const fetchText = async (resource, init) => {
         try {
             const response = await fetch(resource, init)
@@ -23,6 +35,7 @@ const createEnvironment = ({fetch, history, window}) => {
         fetch,
         history,
         window,
+        promiseTracker,
         fetchText,
         fetchJson
     }
