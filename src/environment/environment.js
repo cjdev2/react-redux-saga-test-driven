@@ -1,7 +1,5 @@
 const nopPromiseTracker = {
-    trackPromise: p => p,
-    waitForPromises: () => Promise.resolve(),
-    waitForAllPromises: () => Promise.resolve()
+    trackPromise: p => p
 }
 
 const createEnvironment = (
@@ -11,7 +9,7 @@ const createEnvironment = (
         window,
         promiseTracker = nopPromiseTracker
     }) => {
-    const fetchText = async (resource, init) => {
+    const untrackedFetchText = async (resource, init) => {
         try {
             const response = await fetch(resource, init)
             return await response.text()
@@ -23,19 +21,30 @@ const createEnvironment = (
             }
         }
     }
-    const fetchJson = async (resource, init) => {
-        const text = await fetchText(resource, init)
+    const untrackedFetchJson = async (resource, init) => {
+        const text = await untrackedFetchText(resource, init)
         try {
             return JSON.parse(text)
         } catch (error) {
             throw Error(`Unable to parse response from ${JSON.stringify({resource, init})} to json\n${text}`)
         }
     }
+    const trackPromise = f => {
+        const tracked = (...theArguments) => {
+            const promise = f(...theArguments)
+            promiseTracker.trackPromise(promise)
+            return promise
+        }
+        return tracked
+    }
+
+    const fetchText = trackPromise(untrackedFetchText)
+    const fetchJson = trackPromise(untrackedFetchJson)
+
     return {
         fetch,
         history,
         window,
-        promiseTracker,
         fetchText,
         fetchJson
     }

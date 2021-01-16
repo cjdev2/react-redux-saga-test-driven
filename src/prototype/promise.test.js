@@ -31,3 +31,18 @@ test('timers', async () => {
     const b = await bPromise
     expect(a * b).toEqual(6)
 })
+
+test('wrap promise', async () => {
+    const foo = async (a, b, c) => {
+        return a * 100 + b * 10 + c
+    }
+    const wrap = f => {
+        const wrapped = (...theArguments) => {
+            const result = f(...theArguments)
+            return result
+        }
+        return wrapped
+    }
+    const bar = wrap(foo)
+    expect(await bar(1, 2, 3)).toEqual(123)
+})

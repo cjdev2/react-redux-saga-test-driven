@@ -2,13 +2,13 @@ import profileDispatch, {profileEvent} from "./profileDispatch";
 import {put} from "redux-saga/effects";
 
 const fetchProfilesRequest = environment => function* () {
-    const profiles = yield environment.promiseTracker.trackPromise(environment.fetchJson('/proxy/profile'))
+    const profiles = yield environment.fetchJson('/proxy/profile')
     yield put(profileDispatch.fetchProfilesSuccess(profiles))
 }
 
 const addProfileRequest = environment => function* (event) {
     const body = JSON.stringify({name: event.name})
-    yield environment.promiseTracker.trackPromise(environment.fetchText(`/proxy/profile`, {method: 'POST', body}))
+    yield environment.fetchText(`/proxy/profile`, {method: 'POST', body})
     yield put(profileDispatch.profileNameChanged(''))
     yield put(profileDispatch.fetchProfilesRequest())
 }
