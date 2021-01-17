@@ -1,10 +1,13 @@
 import './Profile.css'
 import * as R from 'ramda'
 import {pluralize} from "../string-util/string-util";
+import {eventCouldHaveComeFromLabelInsteadOfElement} from '../element-util/element-util'
 
 const ProfileListItem = ({profile, deleteProfileRequest}) => {
-    const onClick = () => {
-        deleteProfileRequest(profile.id)
+    const onClick = event => {
+        if (!eventCouldHaveComeFromLabelInsteadOfElement(event)) {
+            deleteProfileRequest(profile.id)
+        }
     }
     return <>
         <label htmlFor={profile.id}>{profile.name}</label>

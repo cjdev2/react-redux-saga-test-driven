@@ -41,6 +41,11 @@ const createDispatchSystemTester = ({system, fetchEvents, initialState}) => {
         await userEvent.click(element);
         return await promiseTracker.waitForAllPromises()
     }
+    const userClicksElementWithLabelTextWithOptions = async ({labelText, mouseEvent}) => {
+        const element = rendered.getByLabelText(labelText)
+        await userEvent.click(element, mouseEvent);
+        return await promiseTracker.waitForAllPromises()
+    }
     const Component = system.Component
     const rendered = render(<Provider store={store}><Component/></Provider>)
     const debug = () => {
@@ -61,6 +66,7 @@ const createDispatchSystemTester = ({system, fetchEvents, initialState}) => {
         userTypes,
         userPressesKey,
         userClicksElementWithLabelText,
+        userClicksElementWithLabelTextWithOptions,
         debug
     }
 }

@@ -1,40 +1,15 @@
 import '@testing-library/jest-dom/extend-expect'
-import {eventHappenedInBoundingRect} from "./element-util";
+import {eventCouldHaveComeFromLabelInsteadOfElement} from "./element-util";
+import {clickedOnLabelAssociatedByHtmlFor, typicalMouseEvent, usedKeyboard} from "../test-util/mouse-event-test-util";
 
-test('event happened in bounding rect', async () => {
-    // when
-    const event = {
-        clientX: 552,
-        clientY: 11,
-        target: {
-            getBoundingClientRect: () => ({
-                left: 511.7578125,
-                right: 564.078125,
-                top: 0,
-                bottom: 21.5
-            })
-        }
-    }
-
-    // then
-    expect(eventHappenedInBoundingRect(event)).toEqual(true)
+test('typical mouse event', async () => {
+    expect(eventCouldHaveComeFromLabelInsteadOfElement(typicalMouseEvent)).toEqual(false)
 })
 
-test('event happened outside bounding rect', async () => {
-    // when
-    const event = {
-        clientX: 477,
-        clientY: 11,
-        target: {
-            getBoundingClientRect: () => ({
-                left: 511.7578125,
-                right: 564.078125,
-                top: 0,
-                bottom: 21.5
-            })
-        }
-    }
+test('clicked on label associated by htmlFor', async () => {
+    expect(eventCouldHaveComeFromLabelInsteadOfElement(clickedOnLabelAssociatedByHtmlFor)).toEqual(true)
+})
 
-    // then
-    expect(eventHappenedInBoundingRect(event)).toEqual(false)
+test('used keyboard', async () => {
+    expect(eventCouldHaveComeFromLabelInsteadOfElement(usedKeyboard)).toEqual(false)
 })
