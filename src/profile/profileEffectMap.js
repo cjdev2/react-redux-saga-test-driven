@@ -13,9 +13,16 @@ const addProfileRequest = environment => function* (event) {
     yield put(profileDispatch.fetchProfilesRequest())
 }
 
+const deleteProfileRequest = environment => function* (event) {
+    const id = event.id
+    yield environment.fetchText(`/proxy/profile/${id}`, {method: 'DELETE'})
+    yield put(profileDispatch.fetchProfilesRequest())
+}
+
 const profileEffectMap = {
     [profileEvent.FETCH_PROFILES_REQUEST]: fetchProfilesRequest,
-    [profileEvent.ADD_PROFILE_REQUEST]: addProfileRequest
+    [profileEvent.ADD_PROFILE_REQUEST]: addProfileRequest,
+    [profileEvent.DELETE_PROFILE_REQUEST]: deleteProfileRequest
 }
 
 export default profileEffectMap

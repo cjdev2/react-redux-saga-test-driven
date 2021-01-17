@@ -15,9 +15,9 @@ const createEnvironment = (
             return await response.text()
         } catch (error) {
             if (init) {
-                throw Error(`Unable to fetch text from resource '${resource}' and custom settings ${JSON.stringify(init)}`)
+                throw Error(`Unable to fetch resource '${resource}' with options ${JSON.stringify(init)}`)
             } else {
-                throw Error(`Unable to fetch text from resource '${resource}'`)
+                throw Error(`Unable to fetch resource '${resource}'`)
             }
         }
     }
@@ -26,7 +26,7 @@ const createEnvironment = (
         try {
             return JSON.parse(text)
         } catch (error) {
-            throw Error(`Unable to parse response from ${JSON.stringify({resource, init})} to json\n${text}`)
+            throw Error(`Unable to parse response from resource '${resource}' to json\n${text}`)
         }
     }
     const trackPromise = f => {

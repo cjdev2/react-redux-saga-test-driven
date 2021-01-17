@@ -22,7 +22,7 @@ test('fetch text error', async () => {
     const environment = createEnvironment({fetch})
 
     // when
-    await expect(environment.fetchText('uri')).rejects.toThrow("Unable to fetch text from resource 'uri'")
+    return expect(environment.fetchText('the-uri')).rejects.toThrow("Unable to fetch resource 'the-uri'")
 })
 
 test('fetch text with options error', async () => {
@@ -31,7 +31,7 @@ test('fetch text with options error', async () => {
     const environment = createEnvironment({fetch})
 
     // when
-    await expect(environment.fetchText('uri', {method: 'POST'})).rejects.toThrow("Unable to fetch text from resource 'uri' and custom settings {\"method\":\"POST\"}")
+    return expect(environment.fetchText('uri', {method: 'POST'})).rejects.toThrow("Unable to fetch resource 'uri' with options {\"method\":\"POST\"}")
 })
 
 test('fetch json', async () => {
@@ -54,7 +54,7 @@ test('fetch json parse error', async () => {
     const responses = [response]
     const fetch = createFetchFunction(responses)
     const environment = createEnvironment({fetch})
-    const expectedMessage = 'Unable to parse response from {"resource":"uri"} to json\nnot valid json'
+    const expectedMessage = "Unable to parse response from resource 'uri' to json\nnot valid json"
 
     // then
     await expect(environment.fetchJson('uri')).rejects.toThrow(expectedMessage)
@@ -66,7 +66,7 @@ test('fetch json error', async () => {
     const environment = createEnvironment({fetch})
 
     // when
-    await expect(environment.fetchJson('uri')).rejects.toThrow("Unable to fetch text from resource 'uri'")
+    await expect(environment.fetchJson('uri')).rejects.toThrow("Unable to fetch resource 'uri'")
 })
 
 test('fetch json with options error', async () => {
@@ -75,5 +75,5 @@ test('fetch json with options error', async () => {
     const environment = createEnvironment({fetch})
 
     // when
-    await expect(environment.fetchJson('uri', {method: 'POST'})).rejects.toThrow("Unable to fetch text from resource 'uri' and custom settings {\"method\":\"POST\"}")
+    await expect(environment.fetchJson('uri', {method: 'POST'})).rejects.toThrow("Unable to fetch resource 'uri' with options {\"method\":\"POST\"}")
 })

@@ -8,7 +8,7 @@ import {fireEvent, render} from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import createPromiseTracker from "./promise-tracker";
 
-const createDispatchSystemTester = ({system, fetchEvents}) => {
+const createDispatchSystemTester = ({system, fetchEvents, initialState}) => {
     const fetch = createFetchFunction(fetchEvents)
     const promiseTracker = createPromiseTracker()
     const environment = createEnvironment({fetch, promiseTracker})
@@ -19,7 +19,7 @@ const createDispatchSystemTester = ({system, fetchEvents}) => {
         return next(event)
     }
     const reducer = system.reducer
-    const state = system.initialState
+    const state = initialState || system.initialState
     const store = createStore(reducer, state, applyMiddleware(sagaMiddleware, monitor))
     const saga = system.saga(environment)
     sagaMiddleware.run(saga)
@@ -36,6 +36,11 @@ const createDispatchSystemTester = ({system, fetchEvents}) => {
         await fireEvent.keyUp(dataEntry, {key})
         return await promiseTracker.waitForAllPromises()
     }
+    const userClicksElementWithLabelText = async labelText => {
+        const element = rendered.getByLabelText(labelText)
+        await userEvent.click(element);
+        return await promiseTracker.waitForAllPromises()
+    }
     const Component = system.Component
     const rendered = render(<Provider store={store}><Component/></Provider>)
     const debug = () => {
@@ -43,10 +48,10 @@ const createDispatchSystemTester = ({system, fetchEvents}) => {
         rendered.debug()
 
         console.log('model')
-        console.log(store.getState())
+        console.log(JSON.stringify(store.getState(), null, 2))
 
         console.log('events')
-        console.log(events)
+        console.log(JSON.stringify(events, null, 2))
     }
     return {
         dispatch,
@@ -55,6 +60,7 @@ const createDispatchSystemTester = ({system, fetchEvents}) => {
         rendered,
         userTypes,
         userPressesKey,
+        userClicksElementWithLabelText,
         debug
     }
 }
