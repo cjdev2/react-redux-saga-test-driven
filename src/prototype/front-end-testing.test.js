@@ -7,48 +7,6 @@ import userEvent from "@testing-library/user-event";
 import createSagaMiddleware from "redux-saga";
 import {put, takeEvery} from "redux-saga/effects";
 
-/*
-test('debug profile dispatch system', async () => {
-    const profile = {id: 'id', name: 'abc'}
-    const profilesAfterAdd = [profile]
-    const addProfileEvent = {
-        uri: '/proxy/profile',
-        options: {
-            method: "POST",
-            body: JSON.stringify({name: 'abc'})
-        }
-    }
-    const listProfilesEvent = {
-        uri: '/proxy/profile',
-        response: JSON.stringify(profilesAfterAdd)
-    }
-    const fetchEvents = [addProfileEvent, listProfilesEvent]
-    const fetch = createFetchFunction(fetchEvents)
-    const promiseTracker = createPromiseTracker()
-    const environment = createEnvironment({fetch, promiseTracker})
-    const Connected = profileDispatchSystem.Component
-    const reducer = profileDispatchSystem.reducer
-    const initialState = profileDispatchSystem.initialState
-    const events = []
-    const monitor = store => next => event => {
-        events.push(event)
-        return next(event)
-    }
-    const sagaMiddleware = createSagaMiddleware()
-    const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, monitor))
-    const saga = profileDispatchSystem.saga(environment)
-    sagaMiddleware.run(saga)
-    const rendered = render(<Provider store={store}><Connected/></Provider>)
-    const dataEntry = rendered.getByPlaceholderText('profile name')
-    userEvent.type(dataEntry, "abc")
-    await promiseTracker.waitForPromises()
-    fireEvent.keyUp(dataEntry, {key: 'Enter'})
-    await promiseTracker.waitForPromises()
-    rendered.debug()
-    console.log(store.getState())
-    console.log(events)
-})
-*/
 test('react redux saga', () => {
     const LIST_VALUES_REQUEST = 'LIST_VALUES_REQUEST'
     const LIST_VALUES_SUCCESS = 'LIST_VALUES_SUCCESS'

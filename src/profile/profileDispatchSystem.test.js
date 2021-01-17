@@ -9,13 +9,13 @@ test('profile render default', async () => {
     const tester = createDispatchSystemTester({system: profileDispatchSystem})
 
     // then
+    expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
     expect(tester.store.getState()).toEqual({
         profile: {
             profileName: '',
             profiles: []
         }
     })
-    expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
     expect(tester.events).toEqual([])
 })
 
