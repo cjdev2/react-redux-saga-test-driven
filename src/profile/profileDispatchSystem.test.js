@@ -96,3 +96,25 @@ test('add profile', async () => {
         {"type": "PROFILE/FETCH_PROFILES_SUCCESS", profiles: profilesAfterAdd}
     ])
 })
+
+test('do not add blank profile', async () => {
+    // given
+    const system = profileDispatchSystem
+    const tester = createDispatchSystemTester({system})
+
+    // when
+    await tester.userPressesKey({placeholder: 'profile name', key: 'Enter'})
+
+    // then
+    tester.debug()
+    expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
+
+    expect(tester.store.getState()).toEqual({
+        profile: {
+            profileName: '',
+            profiles: []
+        }
+    })
+
+    expect(tester.events).toEqual([])
+})
