@@ -91,9 +91,10 @@ const createDispatchSystem = (
         View,
         reducerMap,
         effectMap,
-        extraState = {},
-        extraDispatch = {}
+        componentDependencyMap
     }) => {
+    const extraState = componentDependencyMap
+    const extraDispatch = {}
     const mapStateToProps = createMapStateToProps({model, extraState})
     const mapDispatchToProps = createMapDispatchToProps({dispatch, extraDispatch})
     const Component = connect(mapStateToProps, mapDispatchToProps)(View)

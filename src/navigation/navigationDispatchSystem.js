@@ -4,23 +4,17 @@ import navigationDispatch from "./navigationDispatch";
 import NavigationView from "./NavigationView";
 import navigationReducerMap from "./navigationReducerMap";
 import navigationEffectMap from "./navigationEffectMap";
-import Profile from "../profile/Profile";
-import * as R from 'ramda'
 
-const createNavigationDispatchSystem = overrides => {
-    const defaults = {
+const createNavigationDispatchSystem = componentDependencyMap => {
+    return createDispatchSystem({
         name: "navigation",
         model: navigationModel,
         dispatch: navigationDispatch,
         View: NavigationView,
         reducerMap: navigationReducerMap,
         effectMap: navigationEffectMap,
-        componentDependencyMap: {
-            Profile
-        }
-    }
-    const settings = R.mergeLeft(overrides, defaults)
-    return createDispatchSystem(settings)
+        componentDependencyMap
+    })
 }
 
 export default createNavigationDispatchSystem

@@ -4,10 +4,10 @@ import createNavigationDispatchSystem from "./navigationDispatchSystem";
 import createDispatchSystemTester from "../test-util/dispatchSystemTester";
 
 const createTester = ({uri}) => {
-    const extraState = {
+    const componentDependencyMap = {
         Profile: () => <span>profile component</span>
     }
-    const system = createNavigationDispatchSystem({extraState})
+    const system = createNavigationDispatchSystem(componentDependencyMap)
     const tester = createDispatchSystemTester({system, uri})
     return tester
 }

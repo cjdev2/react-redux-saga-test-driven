@@ -6,7 +6,7 @@ import createDispatchSystemTester from "../test-util/dispatchSystemTester";
 import {clickedOnLabelAssociatedByHtmlFor} from "../test-util/mouse-event-test-util";
 
 const createTester = ({fetchEvents, initialState}) => {
-    const system = createProfileDispatchSystem()
+    const system = createProfileDispatchSystem({})
     const tester = createDispatchSystemTester({system, fetchEvents, initialState})
     return tester
 }

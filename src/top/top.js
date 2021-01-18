@@ -7,8 +7,8 @@ import {
 import createNavigationDispatchSystem from "../navigation/navigationDispatchSystem";
 import navigationDispatch from "../navigation/navigationDispatch";
 
-const profileSystem = createProfileDispatchSystem()
-const navigationSystem = createNavigationDispatchSystem({extraState: {Profile: profileSystem.Component}})
+const profileSystem = createProfileDispatchSystem({})
+const navigationSystem = createNavigationDispatchSystem({Profile: profileSystem.Component})
 const dispatchSystems = [profileSystem, navigationSystem]
 const initializeEvents = [navigationDispatch.fetchPageRequest()]
 const Top = navigationSystem.Component
