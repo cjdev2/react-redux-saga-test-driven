@@ -7,15 +7,25 @@ import {Provider} from 'react-redux'
 import {fireEvent, render} from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import createPromiseTracker from "./promise-tracker";
+import {createMemoryHistory} from "history";
 
-const createDispatchSystemTester = ({system, fetchEvents, initialState}) => {
+const createDispatchSystemTester = ({system, uri, fetchEvents = [], initialState}) => {
+    const history = createMemoryHistory()
+    if (uri) {
+        history.push(uri)
+        history.go(0)
+    }
+    const historyEvents = []
+    history.listen(({location, action}) => {
+        historyEvents.push({action, pathname: location.pathname, state: location.state})
+    });
     const fetch = createFetchFunction(fetchEvents)
     const promiseTracker = createPromiseTracker()
-    const environment = createEnvironment({fetch, promiseTracker})
+    const environment = createEnvironment({history, window, fetch, promiseTracker})
     const sagaMiddleware = createSagaMiddleware()
-    const events = []
+    const reduxEvents = []
     const monitor = store => next => event => {
-        events.push(event)
+        reduxEvents.push(event)
         return next(event)
     }
     const reducer = system.reducer
@@ -55,18 +65,23 @@ const createDispatchSystemTester = ({system, fetchEvents, initialState}) => {
         console.log('model')
         console.log(JSON.stringify(store.getState(), null, 2))
 
-        console.log('events')
-        console.log(JSON.stringify(events, null, 2))
+        console.log('redux events')
+        console.log(reduxEvents)
+
+        console.log(`history events (${history.location.pathname})`)
+        console.log(historyEvents)
     }
     return {
         dispatch,
         store,
-        events,
+        reduxEvents,
         rendered,
         userTypes,
         userPressesKey,
         userClicksElementWithLabelText,
         userClicksElementWithLabelTextWithOptions,
+        history,
+        historyEvents,
         debug
     }
 }

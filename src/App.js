@@ -15,7 +15,7 @@ const store = createStore(
 )
 const history = createBrowserHistory()
 const environment = createEnvironment({
-    fetch, history, window
+    fetch, history
 })
 sagaMiddleware.run(saga(environment))
 initializeEvents.forEach(event => store.dispatch(event))

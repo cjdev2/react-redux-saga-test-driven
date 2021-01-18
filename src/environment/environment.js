@@ -6,7 +6,6 @@ const createEnvironment = (
     {
         fetch,
         history,
-        window,
         promiseTracker = nopPromiseTracker
     }) => {
     const untrackedFetchText = async (resource, init) => {
@@ -44,7 +43,6 @@ const createEnvironment = (
     return {
         fetch,
         history,
-        window,
         fetchText,
         fetchJson
     }

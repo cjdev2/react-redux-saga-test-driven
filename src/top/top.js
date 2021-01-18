@@ -1,18 +1,20 @@
-import Profile from '../profile/Profile'
-import profileDispatchSystem from '../profile/profileDispatchSystem'
-import profileDispatch from "../profile/profileDispatch";
+import createProfileDispatchSystem from '../profile/profileDispatchSystem'
 import {
     createInitialStateFromDispatchSystems,
     createReducerFromDispatchSystems,
     createSagaFromDispatchSystems
 } from "../compose-util/compose-dispatch-system";
+import createNavigationDispatchSystem from "../navigation/navigationDispatchSystem";
+import navigationDispatch from "../navigation/navigationDispatch";
 
-const dispatchSystems = [profileDispatchSystem]
+const profileSystem = createProfileDispatchSystem()
+const navigationSystem = createNavigationDispatchSystem({extraState: {Profile: profileSystem.Component}})
+const dispatchSystems = [profileSystem, navigationSystem]
+const initializeEvents = [navigationDispatch.fetchPageRequest()]
+const Top = navigationSystem.Component
 
 const initialState = createInitialStateFromDispatchSystems(dispatchSystems)
 const reducer = createReducerFromDispatchSystems(dispatchSystems)
 const saga = createSagaFromDispatchSystems(dispatchSystems)
-const initializeEvents = [profileDispatch.fetchProfilesRequest()]
-const Top = Profile
 
 export {Top, reducer, saga, initializeEvents, initialState}

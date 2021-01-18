@@ -18,13 +18,14 @@ const pairsToObject = pairArray => {
     return R.reduce(mergeTwoObjectsNoDuplicateKey, initialValue, objects)
 }
 
-const createMapStateToProps = ({name, model}) => state => {
+const createMapStateToProps = ({model, extraState}) => state => {
     const toEntry = (property, key) => {
         const value = R.view(property.lens, state)
         return [key, value]
     }
     const entries = R.mapObjIndexed(toEntry, model)
-    const result = pairsToObject(R.values(entries))
+    const stateFromModel = pairsToObject(R.values(entries))
+    const result = R.mergeLeft(stateFromModel, extraState)
     return result
 }
 
@@ -80,6 +81,11 @@ const createSagaFromDispatchSystems = dispatchSystems => environment => function
     yield all(R.map(dispatchSystem => call(dispatchSystem.saga(environment)), dispatchSystems))
 }
 
+const createMapDispatchToProps = ({dispatch, extraDispatch}) => {
+    const merged = R.mergeLeft(dispatch, extraDispatch)
+    return merged
+}
+
 const createDispatchSystem = (
     {
         name,
@@ -87,10 +93,13 @@ const createDispatchSystem = (
         dispatch,
         View,
         reducerMap,
-        effectMap
+        effectMap,
+        extraState = {},
+        extraDispatch = {}
     }) => {
-    const mapStateToProps = createMapStateToProps({name, model})
-    const Component = connect(mapStateToProps, dispatch)(View)
+    const mapStateToProps = createMapStateToProps({model, extraState})
+    const mapDispatchToProps = createMapDispatchToProps({dispatch, extraDispatch})
+    const Component = connect(mapStateToProps, mapDispatchToProps)(View)
     const reducer = createReducerFromMap({reducerMap, model})
     const saga = createSagaFromMap(effectMap)
     const initialState = createInitialState(model)
