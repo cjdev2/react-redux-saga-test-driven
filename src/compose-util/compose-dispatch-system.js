@@ -2,7 +2,7 @@ import * as R from 'ramda'
 import {all, call, takeEvery} from "redux-saga/effects";
 import {connect} from "react-redux";
 
-const disallowDuplicateKey = (key, left, right) => {
+const disallowDuplicateKey = key => {
     throw Error(`duplicate key '${key}'`)
 }
 
@@ -30,9 +30,6 @@ const createMapStateToProps = ({model, extraState}) => state => {
 }
 
 const createReducerFromDispatchSystems = dispatchSystems => {
-    const dispatchSystemToReducerMapPair = dispatchSystem => [dispatchSystem.name, dispatchSystem.reducer]
-    const reducerMapPairs = R.map(dispatchSystemToReducerMapPair, dispatchSystems)
-    const reducerMap = pairsToObject(reducerMapPairs)
     const reducers = R.map(system => system.reducer, dispatchSystems)
     const newReducer = (state, event) => {
         const accumulateState = (accumulator, reducer) => reducer(accumulator, event)
@@ -60,7 +57,7 @@ const createInitialState = model => {
     return R.apply(R.pipe, setters)({})
 }
 
-const createReducerFromMap = ({reducerMap, model}) => (state, event) => {
+const createReducerFromMap = ({reducerMap}) => (state, event) => {
     const reducer = reducerMap[event.type]
     if (reducer) {
         return reducer(state, event)
@@ -100,7 +97,7 @@ const createDispatchSystem = (
     const mapStateToProps = createMapStateToProps({model, extraState})
     const mapDispatchToProps = createMapDispatchToProps({dispatch, extraDispatch})
     const Component = connect(mapStateToProps, mapDispatchToProps)(View)
-    const reducer = createReducerFromMap({reducerMap, model})
+    const reducer = createReducerFromMap({reducerMap})
     const saga = createSagaFromMap(effectMap)
     const initialState = createInitialState(model)
     return {
