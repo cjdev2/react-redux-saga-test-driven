@@ -1,6 +1,7 @@
 import profileDispatch, {profileEvent} from "./profileDispatch";
-import {put} from "redux-saga/effects";
+import {all, put} from "redux-saga/effects";
 import summaryDispatch from "../summary/summaryDispatch";
+import * as R from "ramda";
 
 const fetchProfilesRequest = environment => function* () {
     const profiles = yield environment.fetchJson('/proxy/profile')
@@ -16,8 +17,15 @@ const addProfileRequest = environment => function* (event) {
 }
 
 const deleteProfileRequest = environment => function* (event) {
-    const id = event.id
-    yield environment.fetchText(`/proxy/profile/${id}`, {method: 'DELETE'})
+    const profileId = event.id
+    const allTasks = yield environment.fetchJson('/proxy/task')
+    const matchesProfile = task => task.profileId === profileId
+    const tasksForProfile = R.filter(matchesProfile, allTasks)
+    const taskIds = R.map(R.prop('id'), tasksForProfile)
+    const createDeleteTaskFunction = taskId => environment.fetchText(`/proxy/task/${taskId}`, {method: 'DELETE'})
+    const deleteTaskFunctions = R.map(createDeleteTaskFunction, taskIds)
+    yield all(deleteTaskFunctions)
+    yield environment.fetchText(`/proxy/profile/${profileId}`, {method: 'DELETE'})
     yield put(profileDispatch.fetchProfilesRequest())
     yield put(summaryDispatch.fetchSummaryRequest())
 }

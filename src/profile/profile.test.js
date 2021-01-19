@@ -127,11 +127,16 @@ describe('profile', () => {
     test('delete profile', async () => {
         // // given
         const sample = createSample()
-        const profile1 = sample.profile({name: 'do not delete me'})
-        const profile2 = sample.profile({name: 'target to delete'})
-        const profile3 = sample.profile({name: 'do not delete me either'})
-        const initialProfiles = [profile1, profile2, profile3]
-        const profilesAfterDelete = [profile1, profile3]
+        const profile1NoDelete = sample.profile({name: 'do not delete me'})
+        const profile2Delete = sample.profile({name: 'target to delete'})
+        const profile3NoDelete = sample.profile({name: 'do not delete me either'})
+        const taskInProfile1 = sample.task({profileId: profile1NoDelete.id})
+        const firstTaskInProfile2 = sample.task({profileId: profile2Delete.id})
+        const secondTaskInProfile2 = sample.task({profileId: profile2Delete.id})
+        const initialTasks = [taskInProfile1, firstTaskInProfile2, secondTaskInProfile2]
+        const tasksAfterDelete = [taskInProfile1]
+        const initialProfiles = [profile1NoDelete, profile2Delete, profile3NoDelete]
+        const profilesAfterDelete = [profile1NoDelete, profile3NoDelete]
         const initialState = {
             profile: {
                 profileName: '',
@@ -144,8 +149,24 @@ describe('profile', () => {
                 profiles: profilesAfterDelete
             }
         }
+        const httpGetTasks = {
+            uri: '/proxy/task',
+            response: JSON.stringify(initialTasks)
+        }
+        const httpDeleteFirstTask = {
+            uri: `/proxy/task/${firstTaskInProfile2.id}`,
+            options: {
+                method: "DELETE"
+            }
+        }
+        const httpDeleteSecondTask = {
+            uri: `/proxy/task/${secondTaskInProfile2.id}`,
+            options: {
+                method: "DELETE"
+            }
+        }
         const httpDeleteProfile = {
-            uri: `/proxy/profile/${profile2.id}`,
+            uri: `/proxy/profile/${profile2Delete.id}`,
             options: {
                 method: "DELETE"
             }
@@ -155,11 +176,11 @@ describe('profile', () => {
             response: JSON.stringify(profilesAfterDelete)
         }
 
-        const fetchEvents = [httpDeleteProfile, httpGetProfiles]
+        const fetchEvents = [httpGetTasks, httpDeleteFirstTask, httpDeleteSecondTask, httpDeleteProfile, httpGetProfiles]
         const tester = createTester({fetchEvents, initialState})
 
         // when
-        await tester.userClicksElementWithLabelText(profile2.name)
+        await tester.userClicksElementWithLabelText(profile2Delete.name)
 
         // then
         expect(tester.rendered.getByText('2 profiles')).toBeInTheDocument()
@@ -170,7 +191,7 @@ describe('profile', () => {
         expect(tester.store.getState()).toEqual(stateAfterDelete)
 
         expect(tester.reduxEvents).toEqual([
-            {type: "PROFILE/DELETE_PROFILE_REQUEST", id: profile2.id},
+            {type: "PROFILE/DELETE_PROFILE_REQUEST", id: profile2Delete.id},
             {type: "PROFILE/FETCH_PROFILES_REQUEST"},
             {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'},
             {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles: profilesAfterDelete}
