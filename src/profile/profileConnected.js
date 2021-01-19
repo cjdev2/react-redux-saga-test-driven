@@ -1,8 +1,7 @@
 import {createConnected} from "../compose-util/compose-connected";
-import profileModel from "./profileModel";
 import profileDispatch from "./profileDispatch";
 import Profile from "./Profile";
-import profileReducers from "./profileReducers";
+import {profileModel, profileReducers} from "./profileState";
 import profileEffects from "./profileEffects";
 
 const createProfileConnected = componentDependencyMap => {

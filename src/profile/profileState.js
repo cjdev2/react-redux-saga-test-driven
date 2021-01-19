@@ -1,6 +1,11 @@
 import {profileEvent} from "./profileDispatch";
 import * as R from "ramda";
-import profileModel from "./profileModel";
+import {lensPathWithDefault} from "../compose-util/compose-connected";
+
+const profileModel = {
+    profiles: lensPathWithDefault(['profile', 'profiles'], []),
+    profileName: lensPathWithDefault(['profile', 'profileName'], '')
+}
 
 const fetchProfilesSuccess = (state, event) => R.set(profileModel.profiles, event.profiles, state)
 const profileNameChanged = (state, event) => {
@@ -13,4 +18,4 @@ const profileReducers = {
     [profileEvent.PROFILE_NAME_CHANGED]: profileNameChanged
 }
 
-export default profileReducers
+export {profileReducers, profileModel}

@@ -46,7 +46,7 @@ const createReducerFromConnected = connectedArray => {
     return newReducer
 }
 
-const createReducerFromMap = ({reducerMap}) => (state, event) => {
+const createReducerFromMap = reducerMap => (state, event) => {
     const reducer = reducerMap[event.type]
     if (reducer) {
         return reducer(state, event)
@@ -87,7 +87,7 @@ const createConnected = (
     const mapStateToProps = createMapStateToProps({model, extraState})
     const mapDispatchToProps = createMapDispatchToProps({dispatch, extraDispatch})
     const Component = connect(mapStateToProps, mapDispatchToProps)(View)
-    const reducer = createReducerFromMap({reducerMap})
+    const reducer = createReducerFromMap(reducerMap)
     const saga = createSagaFromMap(effectMap)
     return {
         name,

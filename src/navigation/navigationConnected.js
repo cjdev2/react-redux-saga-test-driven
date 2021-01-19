@@ -1,8 +1,7 @@
 import {createConnected} from "../compose-util/compose-connected";
-import navigationModel from "./navigationModel";
 import navigationDispatch from "./navigationDispatch";
 import Navigation from "./Navigation";
-import navigationReducers from "./navigationReducers";
+import {navigationModel, navigationReducers} from "./navigationState";
 import navigationEffects from "./navigationEffects";
 
 const createNavigationConnected = componentDependencyMap => {

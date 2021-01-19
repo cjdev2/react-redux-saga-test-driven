@@ -1,8 +1,7 @@
 import {createConnected} from "../compose-util/compose-connected";
-import summaryModel from "./summaryModel";
 import summaryDispatch from "./summaryDispatch";
 import Summary from "./Summary";
-import summaryReducers from "./summaryReducers";
+import {summaryModel, summaryReducers} from "./summaryState";
 import summaryEffects from "./summaryEffects";
 
 const createSummaryConnected = componentDependencyMap => {

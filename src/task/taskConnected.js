@@ -1,8 +1,7 @@
 import {createConnected} from "../compose-util/compose-connected";
-import taskModel from "./taskModel";
 import taskDispatch from "./taskDispatch";
 import Task from "./Task";
-import taskReducers from "./taskReducers";
+import {taskModel, taskReducers} from "./taskState";
 import taskEffects from "./taskEffects";
 
 const createTaskConnected = componentDependencyMap => {
