@@ -41,15 +41,15 @@ describe('task', () => {
         const task3 = sample.task({profileId: profile.id})
         const tasks = [task1, task2, task3]
         const tasksInProfile = [task1, task3]
-        const getProfile = {
+        const httpGetProfile = {
             uri: `/proxy/profile/${profile.id}`,
             response: JSON.stringify(profile)
         }
-        const getTasks = {
+        const httpGetTasks = {
             uri: `/proxy/task`,
             response: JSON.stringify(tasks)
         }
-        const fetchEvents = [getProfile, getTasks]
+        const fetchEvents = [httpGetProfile, httpGetTasks]
         const tester = createTester({fetchEvents, uri})
 
         // when
@@ -218,7 +218,7 @@ describe('task', () => {
         const incompleteTask = sample.task({profileId: profile.id})
         const completeTask = R.assoc('complete', true, incompleteTask)
 
-        const httpUpdateTask = {
+        const httpPostUpdateTask = {
             uri: `/proxy/task/${incompleteTask.id}`,
             options: {
                 method: 'POST',
@@ -233,7 +233,7 @@ describe('task', () => {
             uri: `/proxy/task`,
             response: JSON.stringify([completeTask])
         }
-        const fetchEvents = [httpUpdateTask, httpGetProfile, httpGetTasks]
+        const fetchEvents = [httpPostUpdateTask, httpGetProfile, httpGetTasks]
         const initialState = {
             task: {
                 profile,
@@ -281,7 +281,7 @@ describe('task', () => {
         const incompleteTask = sample.task({profileId: profile.id})
         const completeTask = R.assoc('complete', true, incompleteTask)
 
-        const httpUpdateTask = {
+        const httpPostUpdateTask = {
             uri: `/proxy/task/${completeTask.id}`,
             options: {
                 method: 'POST',
@@ -296,7 +296,7 @@ describe('task', () => {
             uri: `/proxy/task`,
             response: JSON.stringify([incompleteTask])
         }
-        const fetchEvents = [httpUpdateTask, httpGetProfile, httpGetTasks]
+        const fetchEvents = [httpPostUpdateTask, httpGetProfile, httpGetTasks]
         const initialState = {
             task: {
                 profile,

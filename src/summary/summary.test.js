@@ -39,15 +39,15 @@ describe('summary', () => {
         const tasksForProfile1 = sample.taskArray({quantity: 2, profile: profile1})
         const tasksForProfile2 = sample.taskArray({quantity: 3, profile: profile1})
         const tasks = R.concat(tasksForProfile1, tasksForProfile2)
-        const httpFetchProfiles = {
+        const httpGetProfiles = {
             uri: '/proxy/profile',
             response: JSON.stringify(profiles)
         }
-        const httpFetchTasks = {
+        const httpGetTasks = {
             uri: '/proxy/task',
             response: JSON.stringify(tasks)
         }
-        const fetchEvents = [httpFetchProfiles, httpFetchTasks]
+        const fetchEvents = [httpGetProfiles, httpGetTasks]
         const tester = createTester({fetchEvents})
 
         // when

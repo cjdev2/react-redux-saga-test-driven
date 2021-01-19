@@ -102,7 +102,7 @@ test('compose saga', async () => {
     expect(events).toEqual([requestEvent, responseEvent])
 })
 
-test('create dispatch system', async () => {
+test('create connected', async () => {
     const name = 'foo'
     const model = {
         value: {
@@ -136,7 +136,8 @@ test('create dispatch system', async () => {
         reducerMap,
         effectMap
     })
-    const fetchEvents = [{uri: '/value', response: 'world'}]
+    const httpGetValue = {uri: '/value', response: 'world'};
+    const fetchEvents = [httpGetValue]
     const tester = createConnectedTester({system, fetchEvents})
     await tester.dispatch(dispatch.request())
     expect(tester.rendered.getByText('Hello, world!')).toBeInTheDocument()

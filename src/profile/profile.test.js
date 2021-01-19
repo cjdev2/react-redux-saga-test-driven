@@ -31,11 +31,11 @@ describe('profile', () => {
         // // given
         const sample = createSample()
         const profiles = sample.profileArray(3)
-        const fetchEvent = {
+        const httpGetProfiles = {
             uri: '/proxy/profile',
             response: JSON.stringify(profiles)
         }
-        const fetchEvents = [fetchEvent]
+        const fetchEvents = [httpGetProfiles]
         const tester = createTester({fetchEvents})
 
         // when
@@ -64,18 +64,18 @@ describe('profile', () => {
         // // given
         const profile = {id: 'id', name: 'yo'}
         const profilesAfterAdd = [profile]
-        const addProfileEvent = {
+        const httpPostCreateProfile = {
             uri: '/proxy/profile',
             options: {
                 method: "POST",
                 body: JSON.stringify({name: 'yo'})
             }
         }
-        const listProfilesEvent = {
+        const httpGetProfiles = {
             uri: '/proxy/profile',
             response: JSON.stringify(profilesAfterAdd)
         }
-        const fetchEvents = [addProfileEvent, listProfilesEvent]
+        const fetchEvents = [httpPostCreateProfile, httpGetProfiles]
         const tester = createTester({fetchEvents})
 
         // when
@@ -144,18 +144,18 @@ describe('profile', () => {
                 profiles: profilesAfterDelete
             }
         }
-        const deleteProfileEvent = {
+        const httpDeleteProfile = {
             uri: `/proxy/profile/${profile2.id}`,
             options: {
                 method: "DELETE"
             }
         }
-        const fetchProfilesAfterDeleteEvent = {
+        const httpGetProfiles = {
             uri: '/proxy/profile',
             response: JSON.stringify(profilesAfterDelete)
         }
 
-        const fetchEvents = [deleteProfileEvent, fetchProfilesAfterDeleteEvent]
+        const fetchEvents = [httpDeleteProfile, httpGetProfiles]
         const tester = createTester({fetchEvents, initialState})
 
         // when
@@ -191,18 +191,18 @@ describe('profile', () => {
                 profiles: initialProfiles
             }
         }
-        const deleteProfileEvent = {
+        const httpDeleteProfile = {
             uri: `/proxy/profile/${profile2.id}`,
             options: {
                 method: "DELETE"
             }
         }
-        const fetchProfilesAfterDeleteEvent = {
+        const httpGetProfiles = {
             uri: '/proxy/profile',
             response: JSON.stringify(profilesAfterDelete)
         }
 
-        const fetchEvents = [deleteProfileEvent, fetchProfilesAfterDeleteEvent]
+        const fetchEvents = [httpDeleteProfile, httpGetProfiles]
         const tester = createTester({fetchEvents, initialState})
 
         // when
