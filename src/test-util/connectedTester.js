@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event'
 import createPromiseTracker from "./promise-tracker";
 import {createMemoryHistory} from "history";
 
-const createConnectedTester = ({system, uri, fetchEvents = [], initialState}) => {
+const createConnectedTester = ({connected, uri, fetchEvents = [], initialState}) => {
     const history = createMemoryHistory()
     if (uri) {
         history.push(uri)
@@ -28,10 +28,10 @@ const createConnectedTester = ({system, uri, fetchEvents = [], initialState}) =>
         reduxEvents.push(event)
         return next(event)
     }
-    const reducer = system.reducer
-    const state = initialState || system.initialState
+    const reducer = connected.reducer
+    const state = initialState || connected.initialState
     const store = createStore(reducer, state, applyMiddleware(sagaMiddleware, monitor))
-    const saga = system.saga(environment)
+    const saga = connected.saga(environment)
     sagaMiddleware.run(saga)
     const dispatch = async event => await act(async () => {
         store.dispatch(event)
@@ -61,7 +61,7 @@ const createConnectedTester = ({system, uri, fetchEvents = [], initialState}) =>
         await userEvent.click(element, mouseEvent);
         return await promiseTracker.waitForAllPromises()
     }
-    const Component = system.Component
+    const Component = connected.Component
     const rendered = render(<Provider store={store}><Component/></Provider>)
     const debug = () => {
         console.log('view')

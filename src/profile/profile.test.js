@@ -6,8 +6,8 @@ import createConnectedTester from "../test-util/connectedTester";
 import {clickedOnLabelAssociatedByHtmlFor} from "../test-util/mouse-event-test-util";
 
 const createTester = ({fetchEvents, initialState}) => {
-    const system = createProfileConnected({})
-    const tester = createConnectedTester({system, fetchEvents, initialState})
+    const connected = createProfileConnected({})
+    const tester = createConnectedTester({connected, fetchEvents, initialState})
     return tester
 }
 

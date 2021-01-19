@@ -30,7 +30,7 @@ const createMapStateToProps = ({model, extraState}) => state => {
 }
 
 const createReducerFromConnected = connectedArray => {
-    const reducers = R.map(system => system.reducer, connectedArray)
+    const reducers = R.map(connected => connected.reducer, connectedArray)
     const newReducer = (state, event) => {
         const accumulateState = (accumulator, reducer) => reducer(accumulator, event)
         const newState = R.reduce(accumulateState, state, reducers)
@@ -46,7 +46,7 @@ const createSettersFromModel = model => {
 }
 
 const createInitialStateFromConnected = connectedArray => {
-    const models = R.map(system => system.model, connectedArray)
+    const models = R.map(connected => connected.model, connectedArray)
     const setters = R.chain(createSettersFromModel, models)
     return R.apply(R.pipe, setters)({})
 }

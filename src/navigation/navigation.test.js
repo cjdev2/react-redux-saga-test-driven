@@ -10,8 +10,8 @@ const createTester = ({uri}) => {
         Task: () => <span>task component</span>,
         Summary: () => <span>summary component</span>
     }
-    const system = createNavigationConnected(componentDependencyMap)
-    const tester = createConnectedTester({system, uri})
+    const connected = createNavigationConnected(componentDependencyMap)
+    const tester = createConnectedTester({connected, uri})
     return tester
 }
 

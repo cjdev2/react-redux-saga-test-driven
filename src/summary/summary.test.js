@@ -6,8 +6,8 @@ import createConnectedTester from "../test-util/connectedTester";
 import * as R from 'ramda'
 
 const createTester = ({fetchEvents, initialState}) => {
-    const system = createSummaryConnected({})
-    const tester = createConnectedTester({system, fetchEvents, initialState})
+    const connected = createSummaryConnected({})
+    const tester = createConnectedTester({connected, fetchEvents, initialState})
     return tester
 }
 

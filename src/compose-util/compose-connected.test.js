@@ -128,7 +128,7 @@ test('create connected', async () => {
     const effectMap = {
         request,
     }
-    const system = createConnected({
+    const connected = createConnected({
         name,
         model,
         dispatch,
@@ -138,7 +138,7 @@ test('create connected', async () => {
     })
     const httpGetValue = {uri: '/value', response: 'world'};
     const fetchEvents = [httpGetValue]
-    const tester = createConnectedTester({system, fetchEvents})
+    const tester = createConnectedTester({connected, fetchEvents})
     await tester.dispatch(dispatch.request())
     expect(tester.rendered.getByText('Hello, world!')).toBeInTheDocument()
 })
