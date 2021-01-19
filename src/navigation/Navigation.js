@@ -1,6 +1,6 @@
 const PageNotFound = ({page}) => <h1>{`Page '${page}' not found`}</h1>
 
-const NavigationView = ({page, Profile, Task, Summary}) => {
+const Navigation = ({page, Profile, Task, Summary}) => {
     const pageMap = {
         profile: Profile,
         task: Task
@@ -12,4 +12,4 @@ const NavigationView = ({page, Profile, Task, Summary}) => {
     </div>
 }
 
-export default NavigationView;
+export default Navigation;

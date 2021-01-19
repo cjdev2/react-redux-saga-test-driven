@@ -29,8 +29,8 @@ const createMapStateToProps = ({model, extraState}) => state => {
     return result
 }
 
-const createReducerFromDispatchSystems = dispatchSystems => {
-    const reducers = R.map(system => system.reducer, dispatchSystems)
+const createReducerFromConnected = connectedArray => {
+    const reducers = R.map(system => system.reducer, connectedArray)
     const newReducer = (state, event) => {
         const accumulateState = (accumulator, reducer) => reducer(accumulator, event)
         const newState = R.reduce(accumulateState, state, reducers)
@@ -45,8 +45,8 @@ const createSettersFromModel = model => {
     return setters
 }
 
-const createInitialStateFromDispatchSystems = dispatchSystems => {
-    const models = R.map(system => system.model, dispatchSystems)
+const createInitialStateFromConnected = connectedArray => {
+    const models = R.map(system => system.model, connectedArray)
     const setters = R.chain(createSettersFromModel, models)
     return R.apply(R.pipe, setters)({})
 }
@@ -74,8 +74,8 @@ const createSagaFromMap = effectMap => environment => function* () {
     }
 }
 
-const createSagaFromDispatchSystems = dispatchSystems => environment => function* () {
-    yield all(R.map(dispatchSystem => call(dispatchSystem.saga(environment)), dispatchSystems))
+const createSagaFromConnected = connectedArray => environment => function* () {
+    yield all(R.map(connected => call(connected.saga(environment)), connectedArray))
 }
 
 const createMapDispatchToProps = ({dispatch, extraDispatch}) => {
@@ -83,7 +83,7 @@ const createMapDispatchToProps = ({dispatch, extraDispatch}) => {
     return merged
 }
 
-const createDispatchSystem = (
+const createConnected = (
     {
         name,
         model,
@@ -114,8 +114,8 @@ const createDispatchSystem = (
 
 export {
     pairsToObject,
-    createReducerFromDispatchSystems,
-    createDispatchSystem,
-    createSagaFromDispatchSystems,
-    createInitialStateFromDispatchSystems
+    createReducerFromConnected,
+    createConnected,
+    createSagaFromConnected,
+    createInitialStateFromConnected
 }

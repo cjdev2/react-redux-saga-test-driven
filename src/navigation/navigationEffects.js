@@ -25,9 +25,9 @@ const fetchPage = environment => function* () {
     }
 }
 
-const navigationEffectMap = {
+const navigationEffects = {
     [navigationEvent.FETCH_PAGE_REQUEST]: fetchPage,
     [navigationEvent.REDIRECT]: redirect
 }
 
-export default navigationEffectMap
+export default navigationEffects

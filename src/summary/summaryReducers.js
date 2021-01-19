@@ -6,8 +6,8 @@ const fetchSummarySuccess = (state, event) => R.pipe(
     R.set(summaryModel.profileCount.lens, event.profileCount),
     R.set(summaryModel.taskCount.lens, event.taskCount))(state)
 
-const summaryReducerMap = {
+const summaryReducers = {
     [summaryEvent.FETCH_SUMMARY_SUCCESS]: fetchSummarySuccess
 }
 
-export default summaryReducerMap
+export default summaryReducers

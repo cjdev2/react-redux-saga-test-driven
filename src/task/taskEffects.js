@@ -39,11 +39,11 @@ const deleteTasksRequest = environment => function* (event) {
     yield put(summaryDispatch.fetchSummaryRequest())
 }
 
-const taskEffectMap = {
+const taskEffects = {
     [taskEvent.FETCH_TASKS_REQUEST]: fetchTasksRequest,
     [taskEvent.ADD_TASK_REQUEST]: addTaskRequest,
     [taskEvent.UPDATE_TASK_REQUEST]: updateTaskRequest,
     [taskEvent.DELETE_TASKS_REQUEST]: deleteTasksRequest,
 }
 
-export default taskEffectMap
+export default taskEffects

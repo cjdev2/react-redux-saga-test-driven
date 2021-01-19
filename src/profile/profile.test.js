@@ -1,13 +1,13 @@
 import '@testing-library/jest-dom/extend-expect'
 import profileDispatch from "./profileDispatch";
 import createSample from "../test-util/sample";
-import createProfileDispatchSystem from "./profileDispatchSystem";
-import createDispatchSystemTester from "../test-util/dispatchSystemTester";
+import createProfileConnected from "./profileConnected";
+import createConnectedTester from "../test-util/connectedTester";
 import {clickedOnLabelAssociatedByHtmlFor} from "../test-util/mouse-event-test-util";
 
 const createTester = ({fetchEvents, initialState}) => {
-    const system = createProfileDispatchSystem({})
-    const tester = createDispatchSystemTester({system, fetchEvents, initialState})
+    const system = createProfileConnected({})
+    const tester = createConnectedTester({system, fetchEvents, initialState})
     return tester
 }
 

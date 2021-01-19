@@ -41,7 +41,7 @@ const AddProfile = ({profileName, profileNameChanged, addProfileRequest}) => {
                   onChange={onChange}/>
 }
 
-const ProfileView = ({profiles, profileName, profileNameChanged, addProfileRequest, deleteProfileRequest}) => {
+const Profile = ({profiles, profileName, profileNameChanged, addProfileRequest, deleteProfileRequest}) => {
     const header = `${profiles.length} ${pluralize({
         quantity: profiles.length,
         singular: 'profile',
@@ -57,4 +57,4 @@ const ProfileView = ({profiles, profileName, profileNameChanged, addProfileReque
     </div>
 }
 
-export default ProfileView;
+export default Profile;

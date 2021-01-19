@@ -1,13 +1,8 @@
 import '@testing-library/jest-dom/extend-expect'
-import {
-    createDispatchSystem,
-    createReducerFromDispatchSystems,
-    createSagaFromDispatchSystems,
-    pairsToObject
-} from "./compose-dispatch-system";
+import {createConnected, createReducerFromConnected, createSagaFromConnected, pairsToObject} from "./compose-connected";
 import * as R from 'ramda'
 import {put, takeEvery} from "redux-saga/effects";
-import createDispatchSystemTester from "../test-util/dispatchSystemTester";
+import createConnectedTester from "../test-util/connectedTester";
 import createSagaMiddleware from 'redux-saga'
 import {applyMiddleware, createStore} from 'redux'
 import {act} from "react-dom/test-utils";
@@ -49,16 +44,16 @@ test('compose reducer', () => {
             return state
         }
     }
-    const dispatchSystemA = {
+    const connectedA = {
         name: 'a',
         reducer: reducerA
     }
-    const dispatchSystemB = {
+    const connectedB = {
         name: 'b',
         reducer: reducerB
     }
-    const dispatchSystems = [dispatchSystemA, dispatchSystemB]
-    const reducer = createReducerFromDispatchSystems(dispatchSystems)
+    const connectedArray = [connectedA, connectedB]
+    const reducer = createReducerFromConnected(connectedArray)
     expect(reducer({}, {type: 'a-event', value: 123})).toEqual({a: {value: 123}})
     expect(reducer({}, {type: 'b-event', value: 456})).toEqual({b: {value: 456}})
 })
@@ -81,17 +76,17 @@ test('compose saga', async () => {
         yield takeEvery('response', responseHandler)
     }
 
-    const dispatchSystemA = {
+    const connectedA = {
         name: 'a',
         saga: sagaA
     }
-    const dispatchSystemB = {
+    const connectedB = {
         name: 'b',
         saga: sagaB
     }
-    const dispatchSystems = [dispatchSystemA, dispatchSystemB]
+    const connectedArray = [connectedA, connectedB]
     const environment = createEnvironment({})
-    const saga = createSagaFromDispatchSystems(dispatchSystems)(environment)
+    const saga = createSagaFromConnected(connectedArray)(environment)
     const reducer = (state, event) => state
     const state = {}
     const sagaMiddleware = createSagaMiddleware()
@@ -133,7 +128,7 @@ test('create dispatch system', async () => {
     const effectMap = {
         request,
     }
-    const system = createDispatchSystem({
+    const system = createConnected({
         name,
         model,
         dispatch,
@@ -142,7 +137,7 @@ test('create dispatch system', async () => {
         effectMap
     })
     const fetchEvents = [{uri: '/value', response: 'world'}]
-    const tester = createDispatchSystemTester({system, fetchEvents})
+    const tester = createConnectedTester({system, fetchEvents})
     await tester.dispatch(dispatch.request())
     expect(tester.rendered.getByText('Hello, world!')).toBeInTheDocument()
 })

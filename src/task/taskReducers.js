@@ -12,9 +12,9 @@ const taskNameChanged = (state, event) => {
     return result
 }
 
-const taskReducerMap = {
+const taskReducers = {
     [taskEvent.FETCH_TASKS_SUCCESS]: fetchTasksSuccess,
     [taskEvent.TASK_NAME_CHANGED]: taskNameChanged
 }
 
-export default taskReducerMap
+export default taskReducers

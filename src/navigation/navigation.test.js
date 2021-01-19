@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect'
 import navigationDispatch from "./navigationDispatch";
-import createNavigationDispatchSystem from "./navigationDispatchSystem";
-import createDispatchSystemTester from "../test-util/dispatchSystemTester";
+import createNavigationConnected from "./navigationConnected";
+import createConnectedTester from "../test-util/connectedTester";
 import createSample from "../test-util/sample";
 
 const createTester = ({uri}) => {
@@ -10,8 +10,8 @@ const createTester = ({uri}) => {
         Task: () => <span>task component</span>,
         Summary: () => <span>summary component</span>
     }
-    const system = createNavigationDispatchSystem(componentDependencyMap)
-    const tester = createDispatchSystemTester({system, uri})
+    const system = createNavigationConnected(componentDependencyMap)
+    const tester = createConnectedTester({system, uri})
     return tester
 }
 

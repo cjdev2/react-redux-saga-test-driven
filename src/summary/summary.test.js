@@ -1,13 +1,13 @@
 import '@testing-library/jest-dom/extend-expect'
 import summaryDispatch from "./summaryDispatch";
 import createSample from "../test-util/sample";
-import createSummaryDispatchSystem from "./summaryDispatchSystem";
-import createDispatchSystemTester from "../test-util/dispatchSystemTester";
+import createSummaryConnected from "./summaryConnected";
+import createConnectedTester from "../test-util/connectedTester";
 import * as R from 'ramda'
 
 const createTester = ({fetchEvents, initialState}) => {
-    const system = createSummaryDispatchSystem({})
-    const tester = createDispatchSystemTester({system, fetchEvents, initialState})
+    const system = createSummaryConnected({})
+    const tester = createConnectedTester({system, fetchEvents, initialState})
     return tester
 }
 

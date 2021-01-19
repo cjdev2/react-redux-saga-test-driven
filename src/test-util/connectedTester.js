@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event'
 import createPromiseTracker from "./promise-tracker";
 import {createMemoryHistory} from "history";
 
-const createDispatchSystemTester = ({system, uri, fetchEvents = [], initialState}) => {
+const createConnectedTester = ({system, uri, fetchEvents = [], initialState}) => {
     const history = createMemoryHistory()
     if (uri) {
         history.push(uri)
@@ -92,4 +92,4 @@ const createDispatchSystemTester = ({system, uri, fetchEvents = [], initialState
     }
 }
 
-export default createDispatchSystemTester
+export default createConnectedTester

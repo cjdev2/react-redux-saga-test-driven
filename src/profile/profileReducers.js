@@ -8,9 +8,9 @@ const profileNameChanged = (state, event) => {
     return result
 }
 
-const profileReducerMap = {
+const profileReducers = {
     [profileEvent.FETCH_PROFILES_SUCCESS]: fetchProfilesSuccess,
     [profileEvent.PROFILE_NAME_CHANGED]: profileNameChanged
 }
 
-export default profileReducerMap
+export default profileReducers

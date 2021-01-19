@@ -22,10 +22,10 @@ const deleteProfileRequest = environment => function* (event) {
     yield put(summaryDispatch.fetchSummaryRequest())
 }
 
-const profileEffectMap = {
+const profileEffects = {
     [profileEvent.FETCH_PROFILES_REQUEST]: fetchProfilesRequest,
     [profileEvent.ADD_PROFILE_REQUEST]: addProfileRequest,
     [profileEvent.DELETE_PROFILE_REQUEST]: deleteProfileRequest
 }
 
-export default profileEffectMap
+export default profileEffects

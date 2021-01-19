@@ -9,8 +9,8 @@ const fetchSummaryRequest = environment => function* () {
     yield put(summaryDispatch.fetchSummarySuccess({profileCount, taskCount}))
 }
 
-const summaryEffectMap = {
+const summaryEffects = {
     [summaryEvent.FETCH_SUMMARY_REQUEST]: fetchSummaryRequest
 }
 
-export default summaryEffectMap
+export default summaryEffects

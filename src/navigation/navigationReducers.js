@@ -4,8 +4,8 @@ import navigationModel from "./navigationModel";
 
 const fetchPage = (state, event) => R.set(navigationModel.page.lens, event.page, state)
 
-const navigationReducerMap = {
+const navigationReducers = {
     [navigationEvent.FETCH_PAGE_SUCCESS]: fetchPage
 }
 
-export default navigationReducerMap
+export default navigationReducers

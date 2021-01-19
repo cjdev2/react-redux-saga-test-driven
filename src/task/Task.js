@@ -41,15 +41,15 @@ const AddTask = ({profile, taskName, taskNameChanged, addTaskRequest}) => {
                   onChange={onChange}/>
 }
 
-const TaskView = ({
-                      profile,
-                      tasks,
-                      taskName,
-                      taskNameChanged,
-                      addTaskRequest,
-                      updateTaskRequest,
-                      deleteTasksRequest
-                  }) => {
+const Task = ({
+                  profile,
+                  tasks,
+                  taskName,
+                  taskNameChanged,
+                  addTaskRequest,
+                  updateTaskRequest,
+                  deleteTasksRequest
+              }) => {
     const header = `${tasks.length} ${pluralize({
         quantity: tasks.length,
         singular: 'task',
@@ -74,4 +74,4 @@ const TaskView = ({
     </div>
 }
 
-export default TaskView;
+export default Task;
