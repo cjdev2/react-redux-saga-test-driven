@@ -1,6 +1,24 @@
 # Sample Program Demonstrating React, Redux, and Sagas
 
+## How to run
+
+First make sure you have [webdb](https://gitlab.cj.dev/training/webdb) running, then read the "Scripts" section.
+
+## Scripts
+
+- `./scripts/prepare.sh`
+  - One time initialization
+- `./scripts/sample-data.sh`
+  - Create sample data for [webdb](https://gitlab.cj.dev/training/webdb)
+- `./scripts/run.sh`
+  - Run application
+- `./scripts/test.sh`
+  - Run the tests
+- `./scripts/coverage.sh`
+  - Test coverage report
+
 ## Requirements
+
 - [ ] Profiles
   - [ ] Display all profiles
   - [ ] Add a profile
@@ -45,14 +63,6 @@ npm install redux-saga
 npm install history
 npm install http-proxy-middleware
 ```
-## Scripts
-
-- prepare.sh
-    - One time initialization
-- run.sh
-    - Run application
-- coverage.sh
-    - Test coverage report
 
 ## Proxy setup
 Create file `src/setupProxy.js`, with the following contents
@@ -100,11 +110,6 @@ and be more explicit and intentional about what css styles are applied
 - http-proxy-middleware
   - https://github.com/chimurai/http-proxy-middleware
   - https://www.npmjs.com/package/http-proxy-middleware
-
-## Other resources
-- https://redux-saga.js.org/docs/api/
-- http://cef62.github.io/redux-saga/docs/advanced/UsingRunSaga.html
-- https://scastiel.dev/posts/2019-08-03-lost-redux-saga-reimplement-them/
 
 ## Middleware for monitoring
 ```js
