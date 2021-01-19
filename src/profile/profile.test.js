@@ -105,7 +105,6 @@ describe('profile', () => {
         const firstTaskInProfile2 = sample.task({profileId: profile2Delete.id})
         const secondTaskInProfile2 = sample.task({profileId: profile2Delete.id})
         const initialTasks = [taskInProfile1, firstTaskInProfile2, secondTaskInProfile2]
-        const tasksAfterDelete = [taskInProfile1]
         const initialProfiles = [profile1NoDelete, profile2Delete, profile3NoDelete]
         const profilesAfterDelete = [profile1NoDelete, profile3NoDelete]
         const initialState = {

@@ -8,6 +8,16 @@ import {fireEvent, render} from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import createPromiseTracker from "./promise-tracker";
 import {createMemoryHistory} from "history";
+import * as R from "ramda";
+
+const effectiveStateFor = (model, state) => {
+    const accumulateState = (accumulator, lens) => {
+        const value = R.view(lens, state)
+        const newAccumulator = R.set(lens, value, accumulator)
+        return newAccumulator
+    }
+    return R.reduce(accumulateState, {}, R.values(model))
+}
 
 const createConnectedTester = ({connected, uri, fetchEvents = [], initialState}) => {
     const history = createMemoryHistory()
@@ -76,6 +86,7 @@ const createConnectedTester = ({connected, uri, fetchEvents = [], initialState})
         console.log(`history events (${history.location.pathname})`)
         console.log(historyEvents)
     }
+    const effectiveState = () => effectiveStateFor(connected.model, store.getState())
     return {
         dispatch,
         store,
@@ -88,6 +99,7 @@ const createConnectedTester = ({connected, uri, fetchEvents = [], initialState})
         userClicksElementWithLabelTextWithOptions,
         history,
         historyEvents,
+        effectiveState,
         debug
     }
 }
