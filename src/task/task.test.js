@@ -138,6 +138,7 @@ describe('task', () => {
             },
             {type: 'TASK/TASK_NAME_CHANGED', name: ''},
             {type: 'TASK/FETCH_TASKS_REQUEST'},
+            {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'},
             {
                 type: 'TASK/FETCH_TASKS_SUCCESS',
                 profile,
@@ -386,6 +387,7 @@ describe('task', () => {
         expect(tester.reduxEvents).toEqual([
             {type: 'TASK/DELETE_TASKS_REQUEST', taskIds: [completeTask.id]},
             {type: 'TASK/FETCH_TASKS_REQUEST'},
+            {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'},
             {
                 type: 'TASK/FETCH_TASKS_SUCCESS',
                 profile,

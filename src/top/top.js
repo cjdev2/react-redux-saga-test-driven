@@ -7,14 +7,17 @@ import {
 import createNavigationDispatchSystem from "../navigation/navigationDispatchSystem";
 import navigationDispatch from "../navigation/navigationDispatch";
 import createTaskDispatchSystem from "../task/taskDispatchSystem";
+import createSummaryDispatchSystem from "../summary/summaryDispatchSystem";
 
 const profileSystem = createProfileDispatchSystem({})
 const taskSystem = createTaskDispatchSystem({})
+const summarySystem = createSummaryDispatchSystem({})
 const navigationSystem = createNavigationDispatchSystem({
     Profile: profileSystem.Component,
-    Task: taskSystem.Component
+    Task: taskSystem.Component,
+    Summary: summarySystem.Component
 })
-const dispatchSystems = [profileSystem, taskSystem, navigationSystem]
+const dispatchSystems = [profileSystem, taskSystem, navigationSystem, summarySystem]
 const initializeEvents = [navigationDispatch.fetchPageRequest()]
 const Top = navigationSystem.Component
 

@@ -7,7 +7,8 @@ import createSample from "../test-util/sample";
 const createTester = ({uri}) => {
     const componentDependencyMap = {
         Profile: () => <span>profile component</span>,
-        Task: () => <span>task component</span>
+        Task: () => <span>task component</span>,
+        Summary: () => <span>summary component</span>
     }
     const system = createNavigationDispatchSystem(componentDependencyMap)
     const tester = createDispatchSystemTester({system, uri})
@@ -40,6 +41,7 @@ describe('navigation', () => {
 
         // then
         expect(tester.rendered.getByText('profile component')).toBeInTheDocument()
+        expect(tester.rendered.getByText('summary component')).toBeInTheDocument()
 
         expect(tester.store.getState()).toEqual({
             "navigation": {
@@ -50,7 +52,8 @@ describe('navigation', () => {
         expect(tester.reduxEvents).toEqual([
             {type: 'NAVIGATION/FETCH_PAGE_REQUEST'},
             {type: 'NAVIGATION/FETCH_PAGE_SUCCESS', page: 'profile'},
-            {type: 'PROFILE/FETCH_PROFILES_REQUEST'}
+            {type: 'PROFILE/FETCH_PROFILES_REQUEST'},
+            {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'}
         ])
     })
 
@@ -65,6 +68,7 @@ describe('navigation', () => {
 
         // then
         expect(tester.rendered.getByText('task component')).toBeInTheDocument()
+        expect(tester.rendered.getByText('summary component')).toBeInTheDocument()
 
         expect(tester.store.getState()).toEqual({
             "navigation": {
@@ -75,7 +79,8 @@ describe('navigation', () => {
         expect(tester.reduxEvents).toEqual([
             {type: 'NAVIGATION/FETCH_PAGE_REQUEST'},
             {type: 'NAVIGATION/FETCH_PAGE_SUCCESS', page: 'task'},
-            {type: 'TASK/FETCH_TASKS_REQUEST'}
+            {type: 'TASK/FETCH_TASKS_REQUEST'},
+            {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'}
         ])
     })
 })

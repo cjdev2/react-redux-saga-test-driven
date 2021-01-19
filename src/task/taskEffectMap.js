@@ -1,6 +1,7 @@
 import taskDispatch, {taskEvent, taskUriPattern} from "./taskDispatch";
 import {all, put} from "redux-saga/effects";
 import * as R from 'ramda'
+import summaryDispatch from "../summary/summaryDispatch";
 
 const fetchTasksRequest = environment => function* (event) {
     const uri = environment.history.location.pathname
@@ -19,6 +20,7 @@ const addTaskRequest = environment => function* (event) {
     yield environment.fetchText(`/proxy/task`, {method: 'POST', body})
     yield put(taskDispatch.taskNameChanged(''))
     yield put(taskDispatch.fetchTasksRequest())
+    yield put(summaryDispatch.fetchSummaryRequest())
 }
 
 const updateTaskRequest = environment => function* (event) {
@@ -34,6 +36,7 @@ const deleteTasksRequest = environment => function* (event) {
     const deleteTaskFunctions = R.map(createDeleteTaskFunction, taskIds)
     yield all(deleteTaskFunctions)
     yield put(taskDispatch.fetchTasksRequest())
+    yield put(summaryDispatch.fetchSummaryRequest())
 }
 
 const taskEffectMap = {

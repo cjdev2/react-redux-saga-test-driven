@@ -1,5 +1,6 @@
 import profileDispatch, {profileEvent} from "./profileDispatch";
 import {put} from "redux-saga/effects";
+import summaryDispatch from "../summary/summaryDispatch";
 
 const fetchProfilesRequest = environment => function* () {
     const profiles = yield environment.fetchJson('/proxy/profile')
@@ -11,12 +12,14 @@ const addProfileRequest = environment => function* (event) {
     yield environment.fetchText(`/proxy/profile`, {method: 'POST', body})
     yield put(profileDispatch.profileNameChanged(''))
     yield put(profileDispatch.fetchProfilesRequest())
+    yield put(summaryDispatch.fetchSummaryRequest())
 }
 
 const deleteProfileRequest = environment => function* (event) {
     const id = event.id
     yield environment.fetchText(`/proxy/profile/${id}`, {method: 'DELETE'})
     yield put(profileDispatch.fetchProfilesRequest())
+    yield put(summaryDispatch.fetchSummaryRequest())
 }
 
 const profileEffectMap = {

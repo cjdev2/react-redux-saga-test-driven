@@ -55,8 +55,8 @@ describe('profile', () => {
         })
 
         expect(tester.reduxEvents).toEqual([
-            {"type": "PROFILE/FETCH_PROFILES_REQUEST"},
-            {"type": "PROFILE/FETCH_PROFILES_SUCCESS", profiles}
+            {type: "PROFILE/FETCH_PROFILES_REQUEST"},
+            {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles}
         ])
     })
 
@@ -94,12 +94,13 @@ describe('profile', () => {
         })
 
         expect(tester.reduxEvents).toEqual([
-            {"type": 'PROFILE/PROFILE_NAME_CHANGED', name: 'y'},
-            {"type": 'PROFILE/PROFILE_NAME_CHANGED', name: 'yo'},
-            {"type": "PROFILE/ADD_PROFILE_REQUEST", name: 'yo'},
-            {"type": 'PROFILE/PROFILE_NAME_CHANGED', name: ''},
-            {"type": "PROFILE/FETCH_PROFILES_REQUEST"},
-            {"type": "PROFILE/FETCH_PROFILES_SUCCESS", profiles: profilesAfterAdd}
+            {type: 'PROFILE/PROFILE_NAME_CHANGED', name: 'y'},
+            {type: 'PROFILE/PROFILE_NAME_CHANGED', name: 'yo'},
+            {type: "PROFILE/ADD_PROFILE_REQUEST", name: 'yo'},
+            {type: 'PROFILE/PROFILE_NAME_CHANGED', name: ''},
+            {type: "PROFILE/FETCH_PROFILES_REQUEST"},
+            {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'},
+            {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles: profilesAfterAdd}
         ])
     })
 
@@ -171,6 +172,7 @@ describe('profile', () => {
         expect(tester.reduxEvents).toEqual([
             {type: "PROFILE/DELETE_PROFILE_REQUEST", id: profile2.id},
             {type: "PROFILE/FETCH_PROFILES_REQUEST"},
+            {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'},
             {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles: profilesAfterDelete}
         ])
     })
