@@ -28,6 +28,7 @@ test('pairs to object disallows duplicates', () => {
 })
 
 test('compose reducer', () => {
+    // given
     const valueLensA = R.lensPath(['a', 'value'])
     const valueLensB = R.lensPath(['b', 'value'])
     const reducerA = (state = {}, event) => {
@@ -53,12 +54,17 @@ test('compose reducer', () => {
         reducer: reducerB
     }
     const connectedArray = [connectedA, connectedB]
+
+    // when
     const reducer = createReducerFromConnected(connectedArray)
+
+    // then
     expect(reducer({}, {type: 'a-event', value: 123})).toEqual({a: {value: 123}})
     expect(reducer({}, {type: 'b-event', value: 456})).toEqual({b: {value: 456}})
 })
 
 test('compose saga', async () => {
+    // given
     const events = []
     const requestEvent = {type: 'request'}
     const responseEvent = {type: 'response'}
@@ -75,7 +81,6 @@ test('compose saga', async () => {
     const sagaB = environment => function* (event) {
         yield takeEvery('response', responseHandler)
     }
-
     const connectedA = {
         name: 'a',
         saga: sagaA
@@ -86,6 +91,8 @@ test('compose saga', async () => {
     }
     const connectedArray = [connectedA, connectedB]
     const environment = createEnvironment({})
+
+    // when
     const saga = createSagaFromConnected(connectedArray)(environment)
     const reducer = (state, event) => state
     const state = {}
@@ -99,10 +106,13 @@ test('compose saga', async () => {
     await act(async () => {
         store.dispatch(requestEvent)
     })
+
+    // then
     expect(events).toEqual([requestEvent, responseEvent])
 })
 
 test('create connected', async () => {
+    // given
     const name = 'foo'
     const model = {
         value: {
@@ -128,6 +138,8 @@ test('create connected', async () => {
     const effectMap = {
         request,
     }
+
+    // when
     const connected = createConnected({
         name,
         model,
@@ -140,5 +152,7 @@ test('create connected', async () => {
     const fetchEvents = [httpGetValue]
     const tester = createConnectedTester({connected, fetchEvents})
     await tester.dispatch(dispatch.request())
+
+    // then
     expect(tester.rendered.getByText('Hello, world!')).toBeInTheDocument()
 })

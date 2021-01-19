@@ -13,7 +13,7 @@ const createTester = ({fetchEvents, uri, initialState}) => {
 
 describe('task', () => {
     test('render detached', async () => {
-        // when
+        // given
         const tester = createTester({})
 
         // then

@@ -28,7 +28,7 @@ describe('profile', () => {
     })
 
     test('fetch profiles', async () => {
-        // // given
+        // given
         const sample = createSample()
         const profiles = sample.profileArray(3)
         const httpGetProfiles = {
@@ -61,7 +61,7 @@ describe('profile', () => {
     })
 
     test('add profile', async () => {
-        // // given
+        // given
         const profile = {id: 'id', name: 'yo'}
         const profilesAfterAdd = [profile]
         const httpPostCreateProfile = {
@@ -125,7 +125,7 @@ describe('profile', () => {
     })
 
     test('delete profile', async () => {
-        // // given
+        // given
         const sample = createSample()
         const profile1NoDelete = sample.profile({name: 'do not delete me'})
         const profile2Delete = sample.profile({name: 'target to delete'})
@@ -175,7 +175,6 @@ describe('profile', () => {
             uri: '/proxy/profile',
             response: JSON.stringify(profilesAfterDelete)
         }
-
         const fetchEvents = [httpGetTasks, httpDeleteFirstTask, httpDeleteSecondTask, httpDeleteProfile, httpGetProfiles]
         const tester = createTester({fetchEvents, initialState})
 
@@ -199,7 +198,7 @@ describe('profile', () => {
     })
 
     test('do not trigger delete if clicking on label', async () => {
-        // // given
+        // given
         const sample = createSample()
         const profile1 = sample.profile({name: 'do not delete me'})
         const profile2 = sample.profile({name: 'target to delete'})

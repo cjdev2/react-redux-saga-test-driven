@@ -8,6 +8,7 @@ import createSagaMiddleware from "redux-saga";
 import {put, takeEvery} from "redux-saga/effects";
 
 test('react redux saga', () => {
+    // given
     const LIST_VALUES_REQUEST = 'LIST_VALUES_REQUEST'
     const LIST_VALUES_SUCCESS = 'LIST_VALUES_SUCCESS'
     const ADD_VALUE_REQUEST = 'ADD_VALUE_REQUEST'
@@ -86,6 +87,8 @@ test('react redux saga', () => {
     sagaMiddleware.run(saga)
     const rendered = render(<Provider store={store}><Connected/></Provider>)
     const dataEntry = rendered.getByPlaceholderText('the placeholder')
+
+    // when
     userEvent.type(dataEntry, "abc")
     fireEvent.keyUp(dataEntry, {key: 'Enter'})
 
@@ -108,6 +111,7 @@ test('react redux saga', () => {
 })
 
 test('react redux saga async', async () => {
+    // given
     const LIST_VALUES_REQUEST = 'LIST_VALUES_REQUEST'
     const LIST_VALUES_SUCCESS = 'LIST_VALUES_SUCCESS'
     const ADD_VALUE_REQUEST = 'ADD_VALUE_REQUEST'
@@ -167,13 +171,11 @@ test('react redux saga async', async () => {
     const initialState = R.pipe(
         R.set(valueToAddLens, ''),
         R.set(valuesLens, []))({})
-
     const events = []
     const monitor = store => next => event => {
         events.push(event)
         return next(event)
     }
-
     const sagaMiddleware = createSagaMiddleware()
     const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware, monitor))
     const createPromiseTracker = () => {
@@ -210,10 +212,13 @@ test('react redux saga async', async () => {
     sagaMiddleware.run(saga(environment))
     const rendered = render(<Provider store={store}><Connected/></Provider>)
     const dataEntry = rendered.getByPlaceholderText('the placeholder')
+
+    // when
     userEvent.type(dataEntry, "abc")
     fireEvent.keyUp(dataEntry, {key: 'Enter'})
     await environment.promiseTracker.waitForPromises()
 
+    // then
     // test the view
     expect(rendered.getByText('abc')).toBeInTheDocument()
 

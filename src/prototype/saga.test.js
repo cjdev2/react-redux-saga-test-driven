@@ -11,6 +11,7 @@ const assertArrayIsSorted = array => {
 }
 
 test('take', async () => {
+    // given
     const eventOrder = []
     const reducer = (state, event) => state
     const state = {}
@@ -26,15 +27,19 @@ test('take', async () => {
         eventOrder.push('4 - exited saga')
     }
 
+    // when
     eventOrder.push('1 - about to run saga')
     sagaMiddleware.run(saga)
     eventOrder.push('3 - finished running saga, about to dispatch event')
     store.dispatch({type: 'foo'})
     eventOrder.push('5 - dispatched event')
+
+    // then
     assertArrayIsSorted(eventOrder)
 })
 
 test('fire event from both saga and store', async () => {
+    // given
     const eventsHandled = []
     const reducer = (state, event) => state
     const state = {}
@@ -58,11 +63,16 @@ test('fire event from both saga and store', async () => {
         yield put(fooEvent)
     }
     sagaMiddleware.run(saga)
+
+    // when
     store.dispatch(barEvent)
+
+    // then
     expect(eventsHandled).toEqual([fooEvent, barEvent])
 })
 
 test('one event fires another', async () => {
+    // given
     const eventsHandled = []
     const reducer = (state, event) => state
     const state = {}
@@ -86,11 +96,16 @@ test('one event fires another', async () => {
         yield takeEvery('bar', barHandler)
     }
     sagaMiddleware.run(saga)
+
+    // when
     store.dispatch(fooEvent)
+
+    // then
     expect(eventsHandled).toEqual([fooEvent, barEvent])
 })
 
 test('event makes async call', async () => {
+    // given
     const eventsHandled = []
     const reducer = (state, event) => state
     const state = {}
@@ -116,9 +131,12 @@ test('event makes async call', async () => {
         yield takeEvery('bar', barHandler)
     }
     sagaMiddleware.run(saga)
+
+    // when
     await act(async () => {
         store.dispatch(fooEvent)
     })
 
+    // then
     expect(eventsHandled).toEqual([fooEvent, {type: 'bar', payload: 'async content'}])
 })

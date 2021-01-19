@@ -13,7 +13,7 @@ const createTester = ({fetchEvents, initialState}) => {
 
 describe('summary', () => {
     test('render detached', async () => {
-        // when
+        // given
         const tester = createTester({})
 
         // then
@@ -31,7 +31,7 @@ describe('summary', () => {
     })
 
     test('fetch summary', async () => {
-        // when
+        // given
         const sample = createSample()
         const profile1 = sample.profile()
         const profile2 = sample.profile()
@@ -54,7 +54,6 @@ describe('summary', () => {
         await tester.dispatch(summaryDispatch.fetchSummaryRequest())
 
         // then
-
         expect(tester.rendered.getByText('Number of profiles = 2')).toBeInTheDocument()
         expect(tester.rendered.getByText('Number of tasks across all profiles = 5')).toBeInTheDocument()
 
