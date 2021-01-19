@@ -26,6 +26,8 @@ describe('navigation', () => {
         // then
         expect(tester.history.location.pathname).toEqual('/profile')
 
+        expect(tester.effectiveState()).toEqual({navigation: {page: ''}})
+
         expect(tester.reduxEvents).toEqual([
             {type: 'NAVIGATION/FETCH_PAGE_REQUEST'},
             {type: 'NAVIGATION/REDIRECT', uri: '/profile'}
@@ -43,7 +45,7 @@ describe('navigation', () => {
         expect(tester.rendered.getByText('profile component')).toBeInTheDocument()
         expect(tester.rendered.getByText('summary component')).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             "navigation": {
                 "page": "profile"
             }
@@ -70,7 +72,7 @@ describe('navigation', () => {
         expect(tester.rendered.getByText('task component')).toBeInTheDocument()
         expect(tester.rendered.getByText('summary component')).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             "navigation": {
                 "page": "task"
             }

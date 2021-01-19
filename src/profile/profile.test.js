@@ -32,6 +32,13 @@ describe('profile', () => {
         expect(tester.rendered.getByText(profiles[1].name)).toBeInTheDocument()
         expect(tester.rendered.getByText(profiles[2].name)).toBeInTheDocument()
 
+        expect(tester.effectiveState()).toEqual({
+            profile: {
+                profileName: '',
+                profiles
+            }
+        })
+
         expect(tester.reduxEvents).toEqual([
             {type: "PROFILE/FETCH_PROFILES_REQUEST"},
             {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles}
@@ -64,7 +71,7 @@ describe('profile', () => {
         expect(tester.rendered.getByText('1 profile')).toBeInTheDocument()
         expect(tester.rendered.getByText(profile.name)).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             profile: {
                 profileName: '',
                 profiles: profilesAfterAdd
@@ -91,6 +98,13 @@ describe('profile', () => {
 
         // then
         expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
+
+        expect(tester.effectiveState()).toEqual({
+            profile: {
+                profileName: '',
+                profiles: []
+            }
+        })
 
         expect(tester.reduxEvents).toEqual([])
     })
@@ -157,7 +171,7 @@ describe('profile', () => {
         expect(tester.rendered.queryByText('target to delete')).not.toBeInTheDocument()
         expect(tester.rendered.queryByText('do not delete me either')).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual(stateAfterDelete)
+        expect(tester.effectiveState()).toEqual(stateAfterDelete)
 
         expect(tester.reduxEvents).toEqual([
             {type: "PROFILE/DELETE_PROFILE_REQUEST", id: profile2Delete.id},
@@ -207,7 +221,7 @@ describe('profile', () => {
         expect(tester.rendered.queryByText('target to delete')).toBeInTheDocument()
         expect(tester.rendered.queryByText('do not delete me either')).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual(initialState)
+        expect(tester.effectiveState()).toEqual(initialState)
 
         expect(tester.reduxEvents).toEqual([])
     })

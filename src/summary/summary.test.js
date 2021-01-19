@@ -39,7 +39,7 @@ describe('summary', () => {
         expect(tester.rendered.getByText('Number of profiles = 2')).toBeInTheDocument()
         expect(tester.rendered.getByText('Number of tasks across all profiles = 5')).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             "summary": {
                 "profileCount": 2,
                 "taskCount": 5

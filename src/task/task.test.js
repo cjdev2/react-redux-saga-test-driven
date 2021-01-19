@@ -12,7 +12,7 @@ const createTester = ({fetchEvents, uri, initialState}) => {
 }
 
 describe('task', () => {
-    test('load tasks tasks', async () => {
+    test('load tasks', async () => {
         // given
         const sample = createSample()
         const profile = sample.profile()
@@ -41,6 +41,14 @@ describe('task', () => {
         expect(tester.rendered.getByText(task1.name)).toBeInTheDocument()
         expect(tester.rendered.queryByText(task2.name)).not.toBeInTheDocument()
         expect(tester.rendered.getByText(task3.name)).toBeInTheDocument()
+
+        expect(tester.effectiveState()).toEqual({
+            "task": {
+                profile,
+                "tasks": tasksInProfile,
+                "taskName": ""
+            }
+        })
 
         expect(tester.reduxEvents).toEqual(
             [
@@ -94,7 +102,7 @@ describe('task', () => {
         expect(tester.rendered.getByText(`1 task in profile ${profile.name}`)).toBeInTheDocument()
         expect(tester.rendered.getByText(task.name)).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             task: {
                 profile,
                 tasks: [task],
@@ -139,7 +147,7 @@ describe('task', () => {
         // then
         expect(tester.rendered.getByText(`0 tasks in profile ${profile.name}`)).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             task: {
                 profile,
                 tasks: [],
@@ -170,7 +178,7 @@ describe('task', () => {
         // then
         expect(tester.rendered.getByText(`0 tasks in profile ${profile.name}`)).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             task: {
                 profile,
                 tasks: [],
@@ -224,7 +232,7 @@ describe('task', () => {
         expect(tester.rendered.queryByText(completeTask.name)).toBeInTheDocument()
         expect(tester.rendered.getByText(completeTask.name)).toHaveClass('complete')
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             task: {
                 profile,
                 tasks: [completeTask],
@@ -287,7 +295,7 @@ describe('task', () => {
         expect(tester.rendered.queryByText(incompleteTask.name)).toBeInTheDocument()
         expect(tester.rendered.getByText(incompleteTask.name)).toHaveClass('in-progress')
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             task: {
                 profile,
                 tasks: [incompleteTask],
@@ -349,7 +357,7 @@ describe('task', () => {
         expect(tester.rendered.getByText(`1 task in profile ${profile.name}`)).toBeInTheDocument()
         expect(tester.rendered.queryByText(incompleteTask.name)).toBeInTheDocument()
 
-        expect(tester.store.getState()).toEqual({
+        expect(tester.effectiveState()).toEqual({
             task: {
                 profile,
                 tasks: [incompleteTask],
