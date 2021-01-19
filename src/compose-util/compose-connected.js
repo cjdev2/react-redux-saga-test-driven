@@ -2,6 +2,13 @@ import * as R from 'ramda'
 import {all, call, takeEvery} from "redux-saga/effects";
 import {connect} from "react-redux";
 
+const lensPathWithDefault = (lensPath, theDefault) => {
+    const theLens = R.lensPath(lensPath)
+    const getter = R.pipe(R.view(theLens), R.defaultTo(theDefault))
+    const setter = R.set(theLens)
+    return R.lens(getter, setter)
+}
+
 const disallowDuplicateKey = key => {
     throw Error(`duplicate key '${key}'`)
 }
@@ -19,8 +26,8 @@ const pairsToObject = pairArray => {
 }
 
 const createMapStateToProps = ({model, extraState}) => state => {
-    const toEntry = (property, key) => {
-        const value = R.view(property.lens, state)
+    const toEntry = (lens, key) => {
+        const value = R.view(lens, state)
         return [key, value]
     }
     const entries = R.mapObjIndexed(toEntry, model)
@@ -37,24 +44,6 @@ const createReducerFromConnected = connectedArray => {
         return newState
     }
     return newReducer
-}
-
-const createSettersFromModel = model => {
-    const createSetter = property => R.set(property.lens, property.initialValue)
-    const setters = R.map(createSetter, R.values(model))
-    return setters
-}
-
-const createInitialStateFromConnected = connectedArray => {
-    const models = R.map(connected => connected.model, connectedArray)
-    const setters = R.chain(createSettersFromModel, models)
-    return R.apply(R.pipe, setters)({})
-}
-
-const createInitialState = model => {
-    const createSetter = property => R.set(property.lens, property.initialValue)
-    const setters = R.map(createSetter, R.values(model))
-    return R.apply(R.pipe, setters)({})
 }
 
 const createReducerFromMap = ({reducerMap}) => (state, event) => {
@@ -100,7 +89,6 @@ const createConnected = (
     const Component = connect(mapStateToProps, mapDispatchToProps)(View)
     const reducer = createReducerFromMap({reducerMap})
     const saga = createSagaFromMap(effectMap)
-    const initialState = createInitialState(model)
     return {
         name,
         Component,
@@ -108,14 +96,13 @@ const createConnected = (
         saga,
         mapStateToProps,
         model,
-        initialState
     }
 }
 
 export {
     pairsToObject,
+    lensPathWithDefault,
     createReducerFromConnected,
     createConnected,
-    createSagaFromConnected,
-    createInitialStateFromConnected
+    createSagaFromConnected
 }

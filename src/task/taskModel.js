@@ -1,18 +1,9 @@
-import * as R from "ramda";
+import {lensPathWithDefault} from "../compose-util/compose-connected";
 
 const taskModel = {
-    profile: {
-        lens: R.lensPath(['task', 'profile']),
-        initialValue: {id: 'null-profile-id', name: 'null-profile-name'}
-    },
-    tasks: {
-        lens: R.lensPath(['task', 'tasks']),
-        initialValue: []
-    },
-    taskName: {
-        lens: R.lensPath(['task', 'taskName']),
-        initialValue: ''
-    }
+    profile: lensPathWithDefault(['task', 'profile'], {id: 'null-profile-id', name: 'null-profile-name'}),
+    tasks: lensPathWithDefault(['task', 'tasks'], []),
+    taskName: lensPathWithDefault(['task', 'taskName'], '')
 }
 
 export default taskModel

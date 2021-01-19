@@ -1,5 +1,11 @@
 import '@testing-library/jest-dom/extend-expect'
-import {createConnected, createReducerFromConnected, createSagaFromConnected, pairsToObject} from "./compose-connected";
+import {
+    createConnected,
+    createReducerFromConnected,
+    createSagaFromConnected,
+    lensPathWithDefault,
+    pairsToObject
+} from "./compose-connected";
 import * as R from 'ramda'
 import {put, takeEvery} from "redux-saga/effects";
 import createConnectedTester from "../test-util/connectedTester";
@@ -115,10 +121,7 @@ test('create connected', async () => {
     // given
     const name = 'foo'
     const model = {
-        value: {
-            lens: R.lensPath(['value']),
-            initialValue: ''
-        }
+        value: lensPathWithDefault(['value'], '')
     }
     const dispatch = {
         request: () => ({type: 'request'}),
@@ -127,7 +130,7 @@ test('create connected', async () => {
     const View = (props) => {
         return <div>Hello, {props.value}!</div>
     }
-    const success = (state, event) => R.set(model.value.lens, event.value, state)
+    const success = (state, event) => R.set(model.value, event.value, state)
     const reducerMap = {
         response: success
     }

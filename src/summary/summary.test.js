@@ -12,24 +12,6 @@ const createTester = ({fetchEvents, initialState}) => {
 }
 
 describe('summary', () => {
-    test('render detached', async () => {
-        // given
-        const tester = createTester({})
-
-        // then
-        expect(tester.rendered.getByText('Number of profiles = 0')).toBeInTheDocument()
-        expect(tester.rendered.getByText('Number of tasks across all profiles = 0')).toBeInTheDocument()
-
-        expect(tester.store.getState()).toEqual({
-            "summary": {
-                "profileCount": 0,
-                "taskCount": 0
-            }
-        })
-
-        expect(tester.reduxEvents).toEqual([])
-    })
-
     test('fetch summary', async () => {
         // given
         const sample = createSample()

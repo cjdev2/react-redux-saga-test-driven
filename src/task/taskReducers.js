@@ -3,12 +3,12 @@ import * as R from "ramda";
 import taskModel from "./taskModel";
 
 const fetchTasksSuccess = (state, event) => R.pipe(
-    R.set(taskModel.profile.lens, event.profile),
-    R.set(taskModel.tasks.lens, event.tasks)
+    R.set(taskModel.profile, event.profile),
+    R.set(taskModel.tasks, event.tasks)
 )(state)
 
 const taskNameChanged = (state, event) => {
-    const result = R.set(taskModel.taskName.lens, event.name, state)
+    const result = R.set(taskModel.taskName, event.name, state)
     return result
 }
 

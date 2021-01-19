@@ -1,9 +1,5 @@
 import createProfileConnected from '../profile/profileConnected'
-import {
-    createInitialStateFromConnected,
-    createReducerFromConnected,
-    createSagaFromConnected
-} from "../compose-util/compose-connected";
+import {createReducerFromConnected, createSagaFromConnected} from "../compose-util/compose-connected";
 import createNavigationConnected from "../navigation/navigationConnected";
 import navigationDispatch from "../navigation/navigationDispatch";
 import createTaskConnected from "../task/taskConnected";
@@ -21,8 +17,7 @@ const connectedArray = [profileConnected, taskConnected, navigationConnected, su
 const initializeEvents = [navigationDispatch.fetchPageRequest()]
 const Top = navigationConnected.Component
 
-const initialState = createInitialStateFromConnected(connectedArray)
 const reducer = createReducerFromConnected(connectedArray)
 const saga = createSagaFromConnected(connectedArray)
 
-export {Top, reducer, saga, initializeEvents, initialState}
+export {Top, reducer, saga, initializeEvents}

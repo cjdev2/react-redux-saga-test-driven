@@ -1,10 +1,7 @@
-import * as R from "ramda";
+import {lensPathWithDefault} from "../compose-util/compose-connected";
 
 const navigationModel = {
-    page: {
-        lens: R.lensPath(['navigation', 'page']),
-        initialValue: ''
-    }
+    page: lensPathWithDefault(['navigation', 'page'], '')
 }
 
 export default navigationModel

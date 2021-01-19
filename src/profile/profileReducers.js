@@ -2,9 +2,9 @@ import {profileEvent} from "./profileDispatch";
 import * as R from "ramda";
 import profileModel from "./profileModel";
 
-const fetchProfilesSuccess = (state, event) => R.set(profileModel.profiles.lens, event.profiles, state)
+const fetchProfilesSuccess = (state, event) => R.set(profileModel.profiles, event.profiles, state)
 const profileNameChanged = (state, event) => {
-    const result = R.set(profileModel.profileName.lens, event.name, state)
+    const result = R.set(profileModel.profileName, event.name, state)
     return result
 }
 

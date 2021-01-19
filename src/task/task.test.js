@@ -12,25 +12,6 @@ const createTester = ({fetchEvents, uri, initialState}) => {
 }
 
 describe('task', () => {
-    test('render detached', async () => {
-        // given
-        const tester = createTester({})
-
-        // then
-        expect(tester.rendered.getByText('0 tasks in profile null-profile-name')).toBeInTheDocument()
-        expect(tester.store.getState()).toEqual({
-            "task": {
-                "profile": {
-                    "id": "null-profile-id",
-                    "name": "null-profile-name"
-                },
-                "tasks": [],
-                "taskName": ""
-            }
-        })
-        expect(tester.reduxEvents).toEqual([])
-    })
-
     test('load tasks tasks', async () => {
         // given
         const sample = createSample()
@@ -60,14 +41,6 @@ describe('task', () => {
         expect(tester.rendered.getByText(task1.name)).toBeInTheDocument()
         expect(tester.rendered.queryByText(task2.name)).not.toBeInTheDocument()
         expect(tester.rendered.getByText(task3.name)).toBeInTheDocument()
-
-        expect(tester.store.getState()).toEqual({
-            "task": {
-                profile,
-                "tasks": tasksInProfile,
-                "taskName": ""
-            }
-        })
 
         expect(tester.reduxEvents).toEqual(
             [

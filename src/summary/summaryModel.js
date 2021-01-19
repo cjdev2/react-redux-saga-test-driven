@@ -1,14 +1,8 @@
-import * as R from "ramda";
+import {lensPathWithDefault} from "../compose-util/compose-connected";
 
 const summaryModel = {
-    profileCount: {
-        lens: R.lensPath(['summary', 'profileCount']),
-        initialValue: 0
-    },
-    taskCount: {
-        lens: R.lensPath(['summary', 'taskCount']),
-        initialValue: 0
-    }
+    profileCount: lensPathWithDefault(['summary', 'profileCount'], 0),
+    taskCount: lensPathWithDefault(['summary', 'taskCount'], 0)
 }
 
 export default summaryModel

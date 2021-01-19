@@ -12,21 +12,6 @@ const createTester = ({fetchEvents, initialState}) => {
 }
 
 describe('profile', () => {
-    test('render default', async () => {
-        // when
-        const tester = createTester({})
-
-        // then
-        expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
-        expect(tester.store.getState()).toEqual({
-            profile: {
-                profileName: '',
-                profiles: []
-            }
-        })
-        expect(tester.reduxEvents).toEqual([])
-    })
-
     test('fetch profiles', async () => {
         // given
         const sample = createSample()
@@ -46,13 +31,6 @@ describe('profile', () => {
         expect(tester.rendered.getByText(profiles[0].name)).toBeInTheDocument()
         expect(tester.rendered.getByText(profiles[1].name)).toBeInTheDocument()
         expect(tester.rendered.getByText(profiles[2].name)).toBeInTheDocument()
-
-        expect(tester.store.getState()).toEqual({
-            profile: {
-                profileName: '',
-                profiles
-            }
-        })
 
         expect(tester.reduxEvents).toEqual([
             {type: "PROFILE/FETCH_PROFILES_REQUEST"},
@@ -113,13 +91,6 @@ describe('profile', () => {
 
         // then
         expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
-
-        expect(tester.store.getState()).toEqual({
-            profile: {
-                profileName: '',
-                profiles: []
-            }
-        })
 
         expect(tester.reduxEvents).toEqual([])
     })
