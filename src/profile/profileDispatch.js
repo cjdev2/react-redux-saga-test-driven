@@ -1,3 +1,5 @@
+const profileUriPattern = /^\/profile($|\/)/
+
 const profileEvent = {
     ADD_PROFILE_REQUEST: 'PROFILE/ADD_PROFILE_REQUEST',
     FETCH_PROFILES_REQUEST: 'PROFILE/FETCH_PROFILES_REQUEST',
@@ -14,4 +16,4 @@ const profileDispatch = {
     deleteProfileRequest: id => ({type: profileEvent.DELETE_PROFILE_REQUEST, id})
 }
 
-export {profileDispatch as default, profileEvent}
+export {profileDispatch as default, profileEvent, profileUriPattern}

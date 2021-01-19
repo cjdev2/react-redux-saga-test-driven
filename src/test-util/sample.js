@@ -3,7 +3,7 @@ import * as R from 'ramda'
 const createSample = () => {
     let index = 0
     const string = prefix => `${prefix}-${++index}`
-    const profile = (overrides) => {
+    const profile = overrides => {
         const generated = {
             id: string('profile-id'),
             name: string('profile-name')
@@ -11,10 +11,22 @@ const createSample = () => {
         return R.mergeRight(generated, overrides)
     }
     const profileArray = quantity => R.times(profile, quantity)
+    const task = overrides => {
+        const generated = {
+            profileId: string('profile-id'),
+            id: string('task-id'),
+            name: string('task-name'),
+            complete: false
+        }
+        return R.mergeRight(generated, overrides)
+    }
+    const taskArray = ({quantity, profile}) => R.times(() => task({profileId: profile.id}), quantity)
 
     return {
         profile,
-        profileArray
+        profileArray,
+        task,
+        taskArray
     }
 }
 

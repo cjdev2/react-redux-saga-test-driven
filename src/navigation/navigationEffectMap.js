@@ -1,8 +1,7 @@
 import navigationDispatch, {navigationEvent} from "./navigationDispatch";
 import {put} from "redux-saga/effects";
-import profileDispatch from "../profile/profileDispatch";
-
-const profilePattern = /profile($|\/)/
+import profileDispatch, {profileUriPattern} from "../profile/profileDispatch";
+import taskDispatch, {taskUriPattern} from "../task/taskDispatch";
 
 const redirect = environment => function* (event) {
     const uri = event.uri
@@ -12,9 +11,12 @@ const redirect = environment => function* (event) {
 
 const fetchPage = environment => function* () {
     const uri = environment.history.location.pathname
-    if (profilePattern.test(uri)) {
+    if (profileUriPattern.test(uri)) {
         yield put(navigationDispatch.fetchPageSuccess("profile"))
         yield put(profileDispatch.fetchProfilesRequest())
+    } else if (taskUriPattern.test(uri)) {
+        yield put(navigationDispatch.fetchPageSuccess("task"))
+        yield put(taskDispatch.fetchTasksRequest())
     } else {
         yield put(navigationDispatch.redirect('/profile'))
     }

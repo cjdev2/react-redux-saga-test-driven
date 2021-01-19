@@ -10,7 +10,7 @@ const ProfileListItem = ({profile, deleteProfileRequest}) => {
         }
     }
     return <>
-        <label htmlFor={profile.id}>{profile.name}</label>
+        <label htmlFor={profile.id}><a href={'/task/' + profile.id}>{profile.name}</a></label>
         <button onClick={onClick} id={profile.id}>delete</button>
     </>
 }
@@ -49,9 +49,11 @@ const ProfileView = ({profiles, profileName, profileNameChanged, addProfileReque
     })}`
     return <div className={'Profile'}>
         <h2>{header}</h2>
-        <AddProfile profileName={profileName} profileNameChanged={profileNameChanged}
+        <AddProfile profileName={profileName}
+                    profileNameChanged={profileNameChanged}
                     addProfileRequest={addProfileRequest}/>
-        <ProfileList profiles={profiles} deleteProfileRequest={deleteProfileRequest}/>
+        <ProfileList profiles={profiles}
+                     deleteProfileRequest={deleteProfileRequest}/>
     </div>
 }
 

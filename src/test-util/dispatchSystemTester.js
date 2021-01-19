@@ -46,6 +46,11 @@ const createDispatchSystemTester = ({system, uri, fetchEvents = [], initialState
         await fireEvent.keyUp(dataEntry, {key})
         return await promiseTracker.waitForAllPromises()
     }
+    const userClicksElementWithText = async text => {
+        const element = rendered.getByText(text)
+        await userEvent.click(element);
+        return await promiseTracker.waitForAllPromises()
+    }
     const userClicksElementWithLabelText = async labelText => {
         const element = rendered.getByLabelText(labelText)
         await userEvent.click(element);
@@ -78,6 +83,7 @@ const createDispatchSystemTester = ({system, uri, fetchEvents = [], initialState
         rendered,
         userTypes,
         userPressesKey,
+        userClicksElementWithText,
         userClicksElementWithLabelText,
         userClicksElementWithLabelTextWithOptions,
         history,

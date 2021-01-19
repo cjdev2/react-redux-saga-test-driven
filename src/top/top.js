@@ -6,10 +6,15 @@ import {
 } from "../compose-util/compose-dispatch-system";
 import createNavigationDispatchSystem from "../navigation/navigationDispatchSystem";
 import navigationDispatch from "../navigation/navigationDispatch";
+import createTaskDispatchSystem from "../task/taskDispatchSystem";
 
 const profileSystem = createProfileDispatchSystem({})
-const navigationSystem = createNavigationDispatchSystem({Profile: profileSystem.Component})
-const dispatchSystems = [profileSystem, navigationSystem]
+const taskSystem = createTaskDispatchSystem({})
+const navigationSystem = createNavigationDispatchSystem({
+    Profile: profileSystem.Component,
+    Task: taskSystem.Component
+})
+const dispatchSystems = [profileSystem, taskSystem, navigationSystem]
 const initializeEvents = [navigationDispatch.fetchPageRequest()]
 const Top = navigationSystem.Component
 

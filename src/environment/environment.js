@@ -11,7 +11,8 @@ const createEnvironment = (
     const untrackedFetchText = async (resource, init) => {
         try {
             const response = await fetch(resource, init)
-            return await response.text()
+            const text = await response.text()
+            return text
         } catch (error) {
             if (init) {
                 throw Error(`Unable to fetch resource '${resource}' with options ${JSON.stringify(init)}`)
