@@ -17,6 +17,12 @@ First make sure you have [webdb](https://gitlab.cj.dev/training/webdb) running, 
 - `./scripts/coverage.sh`
   - Test coverage report
 
+## Design Goals
+
+- Easy to compose
+- Easy to test
+- Easy for parts to interact with each other without knowledge of implementation details
+
 ## Requirements
 
 - [ ] Profiles
