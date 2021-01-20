@@ -12,10 +12,12 @@ const ifThenElse = (condition, ifTrue, ifFalse) => {
 }
 
 const createFetchFake = (fetchSpecs) => {
+    const actualFetches = []
     let fetchSpecIndex = 0
     let trackedPromises = []
     let nextTrackedFetchesIndex = 0
     const trackedFetch = (resource, init) => {
+        actualFetches.push({resource, init})
         const thisFetchSpecIndex = fetchSpecIndex
         fetchSpecIndex++
         const fetchSpec = fetchSpecs[thisFetchSpecIndex]
@@ -24,7 +26,6 @@ const createFetchFake = (fetchSpecs) => {
         const expectedInitBody = ifThenElse(R.isNil(fetchSpec.requestText), {}, {body: fetchSpec.requestText})
         const mergedInit = R.mergeRight(expectedInitMethod, expectedInitBody)
         const expectedInit = ifThenElse(R.isEmpty(mergedInit), undefined, mergedInit)
-        console.log('expectedInit', expectedInit)
         const matches = R.equals(resource, expectedResource) && R.equals(init, expectedInit)
         if (matches) {
             const fetchSpecResponseText = ifThenElse(R.isNil(fetchSpec.responseText), '', fetchSpec.responseText)
@@ -38,7 +39,7 @@ const createFetchFake = (fetchSpecs) => {
                 promise: textPromise
             })
             const responsePromise = invokeLater(() => ({
-                text: textPromise
+                text: () => textPromise
             }), 1)
             trackedPromises.push({
                 name: 'response',
@@ -64,10 +65,25 @@ const createFetchFake = (fetchSpecs) => {
         trackedPromises = []
         return Promise.all(promises)
     }
+    const getTrackedPromises = () => trackedPromises
+    const getPromiseCount = () => nextTrackedFetchesIndex
+    const getActualFetches = () => actualFetches
+    const waitForFetches = (timeout = 1) => {
+        if (actualFetches.length === fetchSpecs.length) {
+            return Promise.resolve()
+        } else if (timeout > 1000) {
+            throw Error(`Waiting fetch to be invoked ${fetchSpecs.length} times, only invoked ${actualFetches.length} times`)
+        } else {
+            return invokeLater(waitForFetches, timeout * 2)
+        }
+    }
     return {
         fetch: trackedFetch,
         waitForAllTrackedPromises,
-        getTrackedPromises: () => trackedPromises
+        getTrackedPromises,
+        getPromiseCount,
+        getActualFetches,
+        waitForFetches
     }
 }
 
