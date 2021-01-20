@@ -35,7 +35,8 @@ describe('profile', () => {
         expect(tester.effectiveState()).toEqual({
             profile: {
                 profileName: '',
-                profiles
+                profiles,
+                errors: []
             }
         })
 
@@ -43,6 +44,23 @@ describe('profile', () => {
             {type: "PROFILE/FETCH_PROFILES_REQUEST"},
             {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles}
         ])
+    })
+
+    test('profiles error', async () => {
+        // given
+        const httpGetProfiles = {
+            uri: '/proxy/profile',
+            errorMessage: 'the-error-message'
+        }
+        const fetchEvents = [httpGetProfiles]
+        const tester = createTester({fetchEvents})
+
+        // when
+        await tester.dispatch(profileDispatch.fetchProfilesRequest())
+
+        // then
+        expect(tester.rendered.getByText('0 profiles')).toBeInTheDocument()
+        expect(tester.rendered.getByText('the-error-message', {exact: false})).toBeInTheDocument()
     })
 
     test('add profile', async () => {
@@ -74,7 +92,8 @@ describe('profile', () => {
         expect(tester.effectiveState()).toEqual({
             profile: {
                 profileName: '',
-                profiles: profilesAfterAdd
+                profiles: profilesAfterAdd,
+                errors: []
             }
         })
 
@@ -102,7 +121,8 @@ describe('profile', () => {
         expect(tester.effectiveState()).toEqual({
             profile: {
                 profileName: '',
-                profiles: []
+                profiles: [],
+                errors: []
             }
         })
 
@@ -124,13 +144,15 @@ describe('profile', () => {
         const initialState = {
             profile: {
                 profileName: '',
-                profiles: initialProfiles
+                profiles: initialProfiles,
+                errors: []
             }
         }
         const stateAfterDelete = {
             profile: {
                 profileName: '',
-                profiles: profilesAfterDelete
+                profiles: profilesAfterDelete,
+                errors: []
             }
         }
         const httpGetTasks = {
@@ -192,7 +214,8 @@ describe('profile', () => {
         const initialState = {
             profile: {
                 profileName: '',
-                profiles: initialProfiles
+                profiles: initialProfiles,
+                errors: []
             }
         }
         const httpDeleteProfile = {

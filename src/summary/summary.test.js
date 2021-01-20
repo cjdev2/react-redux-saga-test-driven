@@ -40,9 +40,10 @@ describe('summary', () => {
         expect(tester.rendered.getByText('Number of tasks across all profiles = 5')).toBeInTheDocument()
 
         expect(tester.effectiveState()).toEqual({
-            "summary": {
-                "profileCount": 2,
-                "taskCount": 5
+            summary: {
+                profileCount: 2,
+                taskCount: 5,
+                errors: []
             }
         })
 
@@ -54,5 +55,23 @@ describe('summary', () => {
                 taskCount: 5
             }
         ])
+    })
+
+    test('summary error', async () => {
+        // given
+        const httpGetProfiles = {
+            uri: '/proxy/profile',
+            errorMessage: 'the-error'
+        }
+        const fetchEvents = [httpGetProfiles]
+        const tester = createTester({fetchEvents})
+
+        // when
+        await tester.dispatch(summaryDispatch.fetchSummaryRequest())
+
+        // then
+        expect(tester.rendered.getByText('the-error', {exact: false})).toBeInTheDocument()
+        expect(tester.rendered.getByText('Number of profiles = 0')).toBeInTheDocument()
+        expect(tester.rendered.getByText('Number of tasks across all profiles = 0')).toBeInTheDocument()
     })
 })

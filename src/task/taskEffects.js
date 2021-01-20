@@ -2,6 +2,7 @@ import taskDispatch, {taskEvent, taskUriPattern} from "./taskDispatch";
 import {all, put} from "redux-saga/effects";
 import * as R from 'ramda'
 import summaryDispatch from "../summary/summaryDispatch";
+import {composeErrorMessage} from "../error/ErrorComponent";
 
 const fetchTasksRequest = environment => function* (event) {
     const uri = environment.history.location.pathname
@@ -46,4 +47,8 @@ const taskEffects = {
     [taskEvent.DELETE_TASKS_REQUEST]: deleteTasksRequest,
 }
 
-export default taskEffects
+const taskError = environment => function* (error, event) {
+    yield put(taskDispatch.addError(composeErrorMessage({error, event})))
+}
+
+export {taskEffects as default, taskError}

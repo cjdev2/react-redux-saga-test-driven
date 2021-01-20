@@ -141,6 +141,9 @@ test('create connected', async () => {
     const effectMap = {
         request,
     }
+    const handleError = environment => function* () {
+    }
+    const componentDependencyMap = {}
 
     // when
     const connected = createConnected({
@@ -149,7 +152,9 @@ test('create connected', async () => {
         dispatch,
         View,
         reducerMap,
-        effectMap
+        effectMap,
+        handleError,
+        componentDependencyMap
     })
     const httpGetValue = {uri: '/value', response: 'world'};
     const fetchEvents = [httpGetValue]

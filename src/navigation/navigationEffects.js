@@ -30,4 +30,8 @@ const navigationEffects = {
     [navigationEvent.REDIRECT]: redirect
 }
 
-export default navigationEffects
+const navigationError = environment => function* (error, event) {
+    // navigation is not interacting with fetch, so no need for error handling
+}
+
+export {navigationEffects as default, navigationError}

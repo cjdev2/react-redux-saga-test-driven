@@ -9,6 +9,12 @@ const lensPathWithDefault = (lensPath, theDefault) => {
     return R.lens(getter, setter)
 }
 
+const appendToArray = (lens, value, state) => {
+    const oldArray = R.view(lens, state)
+    const newArray = R.concat(oldArray, [value])
+    return R.set(lens, newArray, state)
+}
+
 const disallowDuplicateKey = key => {
     throw Error(`duplicate key '${key}'`)
 }
@@ -55,10 +61,19 @@ const createReducerFromMap = reducerMap => (state, event) => {
     }
 }
 
-const createSagaFromMap = effectMap => environment => function* () {
+const createSagaFromMap = ({effectMap, handleError}) => environment => function* () {
     const names = Object.keys(effectMap)
     for (const name of names) {
-        const handler = effectMap[name](environment)
+        const successHandler = effectMap[name](environment)
+        const errorHandler = handleError(environment)
+        const handler = function* (...args) {
+            try {
+                yield* successHandler(...args)
+            } catch (error) {
+                yield* errorHandler(error, ...args)
+            }
+        }
+
         yield takeEvery(name, handler)
     }
 }
@@ -80,6 +95,7 @@ const createConnected = (
         View,
         reducerMap,
         effectMap,
+        handleError,
         componentDependencyMap
     }) => {
     const extraState = componentDependencyMap
@@ -88,7 +104,7 @@ const createConnected = (
     const mapDispatchToProps = createMapDispatchToProps({dispatch, extraDispatch})
     const Component = connect(mapStateToProps, mapDispatchToProps)(View)
     const reducer = createReducerFromMap(reducerMap)
-    const saga = createSagaFromMap(effectMap)
+    const saga = createSagaFromMap({effectMap, handleError})
     return {
         name,
         Component,
@@ -104,5 +120,6 @@ export {
     lensPathWithDefault,
     createReducerFromConnected,
     createConnected,
-    createSagaFromConnected
+    createSagaFromConnected,
+    appendToArray
 }

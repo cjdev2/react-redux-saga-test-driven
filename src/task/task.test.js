@@ -46,7 +46,8 @@ describe('task', () => {
             "task": {
                 profile,
                 "tasks": tasksInProfile,
-                "taskName": ""
+                "taskName": "",
+                errors: []
             }
         })
 
@@ -60,6 +61,24 @@ describe('task', () => {
                 }
             ]
         )
+    })
+
+    test('task error', async () => {
+        // given
+        const uri = `/task/the-profile-id`
+        const httpGetProfile = {
+            uri: `/proxy/profile/the-profile-id`,
+            errorMessage: 'the-error'
+
+        }
+        const fetchEvents = [httpGetProfile]
+        const tester = createTester({fetchEvents, uri})
+
+        // when
+        await tester.dispatch(taskDispatch.fetchTasksRequest())
+
+        // then
+        expect(tester.rendered.getByText('the-error', {exact: false})).toBeInTheDocument()
     })
 
     test('add task', async () => {
@@ -106,7 +125,8 @@ describe('task', () => {
             task: {
                 profile,
                 tasks: [task],
-                taskName: ''
+                taskName: '',
+                errors: []
             }
         })
 
@@ -151,7 +171,8 @@ describe('task', () => {
             task: {
                 profile,
                 tasks: [],
-                taskName: ''
+                taskName: '',
+                errors: []
             }
         })
 
@@ -182,7 +203,8 @@ describe('task', () => {
             task: {
                 profile,
                 tasks: [],
-                taskName: 'a'
+                taskName: 'a',
+                errors: []
             }
         })
 
@@ -236,7 +258,8 @@ describe('task', () => {
             task: {
                 profile,
                 tasks: [completeTask],
-                taskName: ''
+                taskName: '',
+                errors: []
             }
         })
 
@@ -299,7 +322,8 @@ describe('task', () => {
             task: {
                 profile,
                 tasks: [incompleteTask],
-                taskName: ''
+                taskName: '',
+                errors: []
             }
         })
 
@@ -361,7 +385,8 @@ describe('task', () => {
             task: {
                 profile,
                 tasks: [incompleteTask],
-                taskName: ''
+                taskName: '',
+                errors: []
             }
         })
 

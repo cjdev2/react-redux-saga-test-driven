@@ -2,7 +2,7 @@ import {createConnected} from "../compose-util/compose-connected";
 import profileDispatch from "./profileDispatch";
 import Profile from "./Profile";
 import {profileModel, profileReducers} from "./profileState";
-import profileEffects from "./profileEffects";
+import profileEffects, {profileError} from "./profileEffects";
 
 const createProfileConnected = componentDependencyMap => {
     return createConnected({
@@ -12,6 +12,7 @@ const createProfileConnected = componentDependencyMap => {
         View: Profile,
         reducerMap: profileReducers,
         effectMap: profileEffects,
+        handleError: profileError,
         componentDependencyMap
     })
 }

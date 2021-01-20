@@ -2,6 +2,15 @@ import '@testing-library/jest-dom/extend-expect'
 import createEnvironment from "./environment";
 import createFetchFunction from "../test-util/fetchFunction";
 
+const captureException = async f => {
+    try {
+        await f()
+        throw Error('exception was expected to be thrown')
+    } catch (error) {
+        return error
+    }
+}
+
 test('fetch text', async () => {
     // given
     const response = {uri: 'uri', response: 'content'}
@@ -18,20 +27,29 @@ test('fetch text', async () => {
 
 test('fetch text error', async () => {
     // given
-    const fetch = jest.fn().mockRejectedValueOnce('fetch error')
+    const fetch = jest.fn().mockRejectedValueOnce(Error('the-error'))
     const environment = createEnvironment({fetch})
 
     // when
-    return expect(environment.fetchText('the-uri')).rejects.toThrow("Unable to fetch resource 'the-uri'")
+    const exception = await captureException(() => environment.fetchText('the-uri'))
+
+    // then
+    expect(exception.message).toContain('the-uri')
+    expect(exception.message).toContain('the-error')
 })
 
 test('fetch text with options error', async () => {
     // given
-    const fetch = jest.fn().mockRejectedValueOnce('fetch error')
+    const fetch = jest.fn().mockRejectedValueOnce(Error('the-error'))
     const environment = createEnvironment({fetch})
 
     // when
-    return expect(environment.fetchText('uri', {method: 'POST'})).rejects.toThrow("Unable to fetch resource 'uri' with options {\"method\":\"POST\"}")
+    const exception = await captureException(() => environment.fetchText('the-uri', {method: 'POST'}))
+
+    // then
+    expect(exception.message).toContain('the-uri')
+    expect(exception.message).toContain('the-error')
+    expect(exception.message).toContain('POST')
 })
 
 test('fetch json', async () => {
@@ -50,30 +68,54 @@ test('fetch json', async () => {
 
 test('fetch json parse error', async () => {
     // given
-    const response = {uri: 'uri', response: "not valid json"}
+    const response = {uri: 'the-uri', response: "not valid json"}
     const responses = [response]
     const fetch = createFetchFunction(responses)
     const environment = createEnvironment({fetch})
-    const expectedMessage = "Unable to parse response from resource 'uri' to json\nnot valid json"
+
+    // when
+    const exception = await captureException(() => environment.fetchJson('the-uri'))
 
     // then
-    await expect(environment.fetchJson('uri')).rejects.toThrow(expectedMessage)
+    expect(exception.message).toContain('not valid json')
+    expect(exception.message).toContain('the-uri')
 })
 
 test('fetch json error', async () => {
     // given
-    const fetch = jest.fn().mockRejectedValueOnce('fetch error')
+    const fetch = jest.fn().mockRejectedValueOnce(Error('the-error'))
     const environment = createEnvironment({fetch})
 
     // when
-    await expect(environment.fetchJson('uri')).rejects.toThrow("Unable to fetch resource 'uri'")
+    const exception = await captureException(() => environment.fetchJson('the-uri'))
+
+    // then
+    expect(exception.message).toContain('the-uri')
+    expect(exception.message).toContain('the-error')
 })
 
 test('fetch json with options error', async () => {
     // given
-    const fetch = jest.fn().mockRejectedValueOnce('fetch error')
+    const fetch = jest.fn().mockRejectedValueOnce(Error('the-error'))
     const environment = createEnvironment({fetch})
 
     // when
-    await expect(environment.fetchJson('uri', {method: 'POST'})).rejects.toThrow("Unable to fetch resource 'uri' with options {\"method\":\"POST\"}")
+    const exception = await captureException(() => environment.fetchJson('the-uri', {method: 'POST'}))
+    expect(exception.message).toContain('the-uri')
+    expect(exception.message).toContain('the-error')
+    expect(exception.message).toContain('POST')
+})
+
+test('fetch json parse error with options', async () => {
+    // given
+    const response = {uri: 'the-uri', options: {method: 'POST'}, response: "not valid json"}
+    const responses = [response]
+    const fetch = createFetchFunction(responses)
+    const environment = createEnvironment({fetch})
+
+    // when
+    const exception = await captureException(() => environment.fetchJson('the-uri', {method: 'POST'}))
+    expect(exception.message).toContain('not valid json')
+    expect(exception.message).toContain('the-uri')
+    expect(exception.message).toContain('POST')
 })

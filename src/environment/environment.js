@@ -1,3 +1,5 @@
+import * as R from 'ramda'
+
 const nopPromiseTracker = {
     trackPromise: p => p
 }
@@ -14,11 +16,13 @@ const createEnvironment = (
             const text = await response.text()
             return text
         } catch (error) {
+            const messageLines = []
+            messageLines.push(`Unable to fetch resource '${resource}'`)
             if (init) {
-                throw Error(`Unable to fetch resource '${resource}' with options ${JSON.stringify(init)}`)
-            } else {
-                throw Error(`Unable to fetch resource '${resource}'`)
+                messageLines.push(`options = ${JSON.stringify(init)}`)
             }
+            messageLines.push(`message = ${error.message}`)
+            throw new Error(R.join('\n', messageLines))
         }
     }
     const untrackedFetchJson = async (resource, init) => {
@@ -26,7 +30,14 @@ const createEnvironment = (
         try {
             return JSON.parse(text)
         } catch (error) {
-            throw Error(`Unable to parse response from resource '${resource}' to json\n${text}`)
+            const messageLines = []
+            messageLines.push(`Unable to json from text '${text}'`)
+            messageLines.push(`resource = ${resource}`)
+            if (init) {
+                messageLines.push(`options = ${JSON.stringify(init)}`)
+            }
+            messageLines.push(`message = ${error.message}`)
+            throw new Error(R.join('\n', messageLines))
         }
     }
     const trackPromise = f => {

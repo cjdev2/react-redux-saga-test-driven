@@ -5,7 +5,8 @@ const profileEvent = {
     FETCH_PROFILES_REQUEST: 'PROFILE/FETCH_PROFILES_REQUEST',
     FETCH_PROFILES_SUCCESS: 'PROFILE/FETCH_PROFILES_SUCCESS',
     PROFILE_NAME_CHANGED: 'PROFILE/PROFILE_NAME_CHANGED',
-    DELETE_PROFILE_REQUEST: 'PROFILE/DELETE_PROFILE_REQUEST'
+    DELETE_PROFILE_REQUEST: 'PROFILE/DELETE_PROFILE_REQUEST',
+    ADD_ERROR: 'PROFILE/ERROR_ADDED'
 }
 
 const profileDispatch = {
@@ -13,7 +14,8 @@ const profileDispatch = {
     addProfileRequest: name => ({type: profileEvent.ADD_PROFILE_REQUEST, name}),
     fetchProfilesSuccess: profiles => ({type: profileEvent.FETCH_PROFILES_SUCCESS, profiles}),
     profileNameChanged: name => ({type: profileEvent.PROFILE_NAME_CHANGED, name}),
-    deleteProfileRequest: id => ({type: profileEvent.DELETE_PROFILE_REQUEST, id})
+    deleteProfileRequest: id => ({type: profileEvent.DELETE_PROFILE_REQUEST, id}),
+    addError: error => ({type: profileEvent.ADD_ERROR, error})
 }
 
 export {profileDispatch as default, profileEvent, profileUriPattern}

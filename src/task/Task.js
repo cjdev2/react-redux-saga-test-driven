@@ -1,6 +1,7 @@
 import './Task.css'
 import * as R from 'ramda'
 import {pluralize} from "../string-util/string-util";
+import ErrorComponent from "../error/ErrorComponent";
 
 const TaskListItem = ({task, updateTaskRequest}) => {
     const completeClass = task.complete ? 'complete' : 'in-progress';
@@ -45,6 +46,7 @@ const Task = ({
                   profile,
                   tasks,
                   taskName,
+                  errors,
                   taskNameChanged,
                   addTaskRequest,
                   updateTaskRequest,
@@ -63,6 +65,7 @@ const Task = ({
     }
     return <div className={'Task'}>
         <h2>{header}</h2>
+        <ErrorComponent errors={errors}/>
         <AddTask profile={profile}
                  taskName={taskName}
                  taskNameChanged={taskNameChanged}

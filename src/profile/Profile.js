@@ -2,6 +2,7 @@ import './Profile.css'
 import * as R from 'ramda'
 import {pluralize} from "../string-util/string-util";
 import {eventCouldHaveComeFromLabelInsteadOfElement} from '../element-util/element-util'
+import ErrorComponent from "../error/ErrorComponent";
 
 const ProfileListItem = ({profile, deleteProfileRequest}) => {
     const onClick = event => {
@@ -41,7 +42,7 @@ const AddProfile = ({profileName, profileNameChanged, addProfileRequest}) => {
                   onChange={onChange}/>
 }
 
-const Profile = ({profiles, profileName, profileNameChanged, addProfileRequest, deleteProfileRequest}) => {
+const Profile = ({profiles, profileName, errors, profileNameChanged, addProfileRequest, deleteProfileRequest}) => {
     const header = `${profiles.length} ${pluralize({
         quantity: profiles.length,
         singular: 'profile',
@@ -49,6 +50,7 @@ const Profile = ({profiles, profileName, profileNameChanged, addProfileRequest, 
     })}`
     return <div className={'Profile'}>
         <h2>{header}</h2>
+        <ErrorComponent errors={errors}/>
         <AddProfile profileName={profileName}
                     profileNameChanged={profileNameChanged}
                     addProfileRequest={addProfileRequest}/>

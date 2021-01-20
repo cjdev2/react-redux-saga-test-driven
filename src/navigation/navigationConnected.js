@@ -2,7 +2,7 @@ import {createConnected} from "../compose-util/compose-connected";
 import navigationDispatch from "./navigationDispatch";
 import Navigation from "./Navigation";
 import {navigationModel, navigationReducers} from "./navigationState";
-import navigationEffects from "./navigationEffects";
+import navigationEffects, {navigationError} from "./navigationEffects";
 
 const createNavigationConnected = componentDependencyMap => {
     return createConnected({
@@ -12,6 +12,7 @@ const createNavigationConnected = componentDependencyMap => {
         View: Navigation,
         reducerMap: navigationReducers,
         effectMap: navigationEffects,
+        handleError: navigationError,
         componentDependencyMap
     })
 }

@@ -26,7 +26,35 @@ describe('navigation', () => {
         // then
         expect(tester.history.location.pathname).toEqual('/profile')
 
-        expect(tester.effectiveState()).toEqual({navigation: {page: ''}})
+        expect(tester.effectiveState()).toEqual({
+            navigation: {
+                page: '',
+                errors: []
+            }
+        })
+
+        expect(tester.reduxEvents).toEqual([
+            {type: 'NAVIGATION/FETCH_PAGE_REQUEST'},
+            {type: 'NAVIGATION/REDIRECT', uri: '/profile'}
+        ])
+    })
+
+    test('navigation error', async () => {
+        // given
+        const tester = createTester({})
+
+        // when
+        await tester.dispatch(navigationDispatch.fetchPageRequest())
+
+        // then
+        expect(tester.history.location.pathname).toEqual('/profile')
+
+        expect(tester.effectiveState()).toEqual({
+            navigation: {
+                page: '',
+                errors: []
+            }
+        })
 
         expect(tester.reduxEvents).toEqual([
             {type: 'NAVIGATION/FETCH_PAGE_REQUEST'},
@@ -46,8 +74,9 @@ describe('navigation', () => {
         expect(tester.rendered.getByText('summary component')).toBeInTheDocument()
 
         expect(tester.effectiveState()).toEqual({
-            "navigation": {
-                "page": "profile"
+            navigation: {
+                page: "profile",
+                errors: []
             }
         })
 
@@ -73,8 +102,9 @@ describe('navigation', () => {
         expect(tester.rendered.getByText('summary component')).toBeInTheDocument()
 
         expect(tester.effectiveState()).toEqual({
-            "navigation": {
-                "page": "task"
+            navigation: {
+                page: "task",
+                errors: []
             }
         })
 
