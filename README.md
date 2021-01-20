@@ -21,7 +21,48 @@ First make sure you have [webdb](https://gitlab.cj.dev/training/webdb) running, 
 
 - Easy to compose
 - Easy to test
-- Easy for parts to interact with each other without knowledge of implementation details
+- Easy for components to interact with each other without knowledge of implementation details
+
+## Design highlights
+
+- Each component manages its own ecosystem of
+  - state, via lenses and reducers
+  - view, via a react component that ONLY interacts with the state and dispatch methods injected into it
+    - in particular, there is no locally managed state, no interaction with a context, no lifecycle methods, and no
+      hooks
+  - effects, via redux sagas
+    - all side effects are abstracted by an "environment", injected through currying
+  - dispatch, which describes a contract for component interaction
+  - connected, which forms each component into the same shape so that it may be composed into the top level
+- The top level composes the components together and only knows a few minor things about them
+  - the top level knows which components might need to render which other components
+  - the top level is the only place aware of the entire list of components
+  - the top level knows which event of fire first
+- Components can only communicate with each other by sending messages declared in their "dispatch" file
+- Navigation not treated any differently, it is treated as any other component
+- All non-determinism is isolated to the "environment" file
+- Testing can be done at the component level, or at the detail level
+  - All tests here are at the component level
+  - The user interface "rendered" portion is all that really needs to be tested
+  - The "effectiveState" and "reduxEvents" are useful for debugging, or optional regression tests
+  - Regression tests will make your tests more brittle, but will allow you to detect mistakes in implementation that
+    don't affect the observable behavior
+  - The "effectiveState" and "reduxEvents" regression tests are left in here as documentation, in a real-world app you
+    would use them sparingly
+  - The component level tests do take a bit of setup, another valid style is to only have one or two component level
+    tests and rely more heavily on lower level tests
+- By convention, I prefix every lens path and event type constant with the directory. As these occupy a global
+  namespace (for state model and event dispatch respectively), this convention prevents collisions.
+- Except for "dispatch", files in each component directory can be merged together or pulled apart as you like. You
+  should not mix dispatch with anything else, as is serves as the contract for components to communicate with each
+  other. The smaller the surface area of the contract, the easier the code is to maintain, so the shape of events and
+  perhaps some global constants are the only things that should exist in "dispatch". An example where global constants
+  is needed is the regular expression uri pattern that matches each component. The component needs to know about the
+  shape of its uri pattern when it needs to pull data out of it. The navigator needs to know about the shape of the uri
+  pattern in order to render the appropriate component based on the uri.
+- A single top level component is in charge of composition, and inverts the dependency on components that need to be
+  rendered inside other components. In this manner, the tests can stub out inner components and focus on testing the
+  composing component.
 
 ## Requirements
 
