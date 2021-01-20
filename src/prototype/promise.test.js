@@ -29,7 +29,6 @@ test('timers', async () => {
         return new Promise(resolve => {
             setTimeout(() => resolve(f()), timeout)
         });
-
     }
     const aPromise = invokeLater(() => 2, 0)
     const bPromise = invokeLater(() => 3, 0)
