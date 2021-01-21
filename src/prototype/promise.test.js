@@ -1,6 +1,18 @@
 import '@testing-library/jest-dom/extend-expect'
 import * as R from 'ramda'
 
+const invokeLater = (f, timeout) => {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(f()), timeout)
+    });
+}
+
+const passTime = timeout => {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(), timeout)
+    });
+}
+
 test('async to sequence', async () => {
     // given
     const a = async () => 1
@@ -59,4 +71,20 @@ test('wrap promise', async () => {
 
     // then
     expect(await bar(1, 2, 3)).toEqual(123)
+})
+
+test('wait for something to happen', async () => {
+    let somethingHappened = false
+    const events = []
+    const waitForMe = () => {
+        somethingHappened = true
+    }
+    invokeLater(waitForMe, 25)
+    while (!somethingHappened) {
+        events.push('waiting')
+        await passTime(10)
+    }
+    expect(somethingHappened).toBeTruthy()
+    expect(events[0]).toEqual('waiting')
+    expect(events[1]).toEqual('waiting')
 })
