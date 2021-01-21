@@ -6,6 +6,12 @@ const invokeLater = (f, timeout) => {
     });
 }
 
+const passTime = timeout => {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(), timeout)
+    });
+}
+
 const ifThenElse = (condition, ifTrue, ifFalse) => {
     if (condition) return ifTrue
     else return ifFalse

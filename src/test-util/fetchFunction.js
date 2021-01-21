@@ -1,24 +1,38 @@
 import * as R from "ramda";
 
-const createFetchFunction = fetchEvents => {
-    let index = 0
-    return async (uri, options) => {
-        const fetchEvent = fetchEvents[index]
-        if (fetchEvent.errorMessage) throw Error(fetchEvent.errorMessage)
-        if (R.equals(uri, fetchEvent.uri) && R.equals(options, fetchEvent.options)) {
-            index++
-            const text = async () => fetchEvent.response
-            return {
-                text
-            }
+const ifThenElse = (condition, ifTrue, ifFalse) => {
+    if (condition) return ifTrue
+    else return ifFalse
+}
+
+const createFetchFunction = fetchSpecs => {
+    let fetchSpecIndex = 0
+    return async (resource, init) => {
+        const thisFetchSpecIndex = fetchSpecIndex
+        fetchSpecIndex++
+        const fetchSpec = fetchSpecs[thisFetchSpecIndex]
+        if (fetchSpec.errorMessage) throw Error(fetchSpec.errorMessage)
+        const expectedResource = fetchSpec.uri
+        const expectedInitMethod = ifThenElse(R.isNil(fetchSpec.method), {}, {method: fetchSpec.method})
+        const expectedInitBody = ifThenElse(R.isNil(fetchSpec.requestText), {}, {body: fetchSpec.requestText})
+        const mergedInit = R.mergeRight(expectedInitMethod, expectedInitBody)
+        const expectedInit = ifThenElse(R.isEmpty(mergedInit), undefined, mergedInit)
+        const matches = R.equals(resource, expectedResource) && R.equals(init, expectedInit)
+        if (matches) {
+            const fetchSpecResponseText = ifThenElse(R.isNil(fetchSpec.responseText), '', fetchSpec.responseText)
+            const textPromise = Promise.resolve(fetchSpecResponseText)
+            const responsePromise = Promise.resolve({
+                text: () => textPromise
+            })
+            return responsePromise
         } else {
             const messageLines = []
-            messageLines.push(`Fetch expectation at index ${index} did not match`)
-            messageLines.push(`expected uri     = ${fetchEvent.uri}`)
-            messageLines.push(`actual   uri     = ${uri}`)
-            messageLines.push(`expected options = ${fetchEvent.options}`)
-            messageLines.push(`actual   options = ${options}`)
-            throw new Error(R.join('\n', messageLines))
+            messageLines.push(`Fetch expectation at index ${thisFetchSpecIndex} did not match`)
+            messageLines.push(`expected resource = ${fetchSpec.uri}`)
+            messageLines.push(`actual   resource = ${resource}`)
+            messageLines.push(`expected init     = ${JSON.stringify(expectedInit)}`)
+            messageLines.push(`actual   init     = ${JSON.stringify(init)}`)
+            throw Error(R.join('\n', messageLines))
         }
     }
 }

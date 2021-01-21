@@ -156,7 +156,7 @@ test('create connected', async () => {
         handleError,
         componentDependencyMap
     })
-    const httpGetValue = {uri: '/value', response: 'world'};
+    const httpGetValue = {uri: '/value', responseText: 'world'};
     const fetchEvents = [httpGetValue]
     const tester = createConnectedTester({connected, fetchEvents})
     await tester.dispatch(dispatch.request())

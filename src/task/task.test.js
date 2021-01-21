@@ -24,11 +24,11 @@ describe('task', () => {
         const tasksInProfile = [task1, task3]
         const httpGetProfile = {
             uri: `/proxy/profile/${profile.id}`,
-            response: JSON.stringify(profile)
+            responseText: JSON.stringify(profile)
         }
         const httpGetTasks = {
             uri: `/proxy/task`,
-            response: JSON.stringify(tasks)
+            responseText: JSON.stringify(tasks)
         }
         const fetchEvents = [httpGetProfile, httpGetTasks]
         const tester = createTester({fetchEvents, uri})
@@ -90,18 +90,16 @@ describe('task', () => {
         const taskWithoutId = R.dissoc('id', task)
         const httpPostCreateTask = {
             uri: `/proxy/task`,
-            options: {
-                method: 'POST',
-                body: JSON.stringify(taskWithoutId)
-            }
+            method: 'POST',
+            requestText: JSON.stringify(taskWithoutId)
         }
         const httpGetProfile = {
             uri: `/proxy/profile/${profile.id}`,
-            response: JSON.stringify(profile)
+            responseText: JSON.stringify(profile)
         }
         const httpGetTasks = {
             uri: `/proxy/task`,
-            response: JSON.stringify([task])
+            responseText: JSON.stringify([task])
         }
         const fetchEvents = [httpPostCreateTask, httpGetProfile, httpGetTasks]
         const initialState = {
@@ -223,18 +221,16 @@ describe('task', () => {
 
         const httpPostUpdateTask = {
             uri: `/proxy/task/${incompleteTask.id}`,
-            options: {
-                method: 'POST',
-                body: JSON.stringify(completeTask)
-            }
+            method: 'POST',
+            requestText: JSON.stringify(completeTask)
         }
         const httpGetProfile = {
             uri: `/proxy/profile/${profile.id}`,
-            response: JSON.stringify(profile)
+            responseText: JSON.stringify(profile)
         }
         const httpGetTasks = {
             uri: `/proxy/task`,
-            response: JSON.stringify([completeTask])
+            responseText: JSON.stringify([completeTask])
         }
         const fetchEvents = [httpPostUpdateTask, httpGetProfile, httpGetTasks]
         const initialState = {
@@ -287,18 +283,16 @@ describe('task', () => {
 
         const httpPostUpdateTask = {
             uri: `/proxy/task/${completeTask.id}`,
-            options: {
-                method: 'POST',
-                body: JSON.stringify(incompleteTask)
-            }
+            method: 'POST',
+            requestText: JSON.stringify(incompleteTask)
         }
         const httpGetProfile = {
             uri: `/proxy/profile/${profile.id}`,
-            response: JSON.stringify(profile)
+            responseText: JSON.stringify(profile)
         }
         const httpGetTasks = {
             uri: `/proxy/task`,
-            response: JSON.stringify([incompleteTask])
+            responseText: JSON.stringify([incompleteTask])
         }
         const fetchEvents = [httpPostUpdateTask, httpGetProfile, httpGetTasks]
         const initialState = {
@@ -352,17 +346,15 @@ describe('task', () => {
 
         const httpDeleteTask = {
             uri: `/proxy/task/${completeTask.id}`,
-            options: {
-                method: 'DELETE'
-            }
+            method: 'DELETE'
         }
         const httpGetProfile = {
             uri: `/proxy/profile/${profile.id}`,
-            response: JSON.stringify(profile)
+            responseText: JSON.stringify(profile)
         }
         const httpGetTasks = {
             uri: `/proxy/task`,
-            response: JSON.stringify([incompleteTask])
+            responseText: JSON.stringify([incompleteTask])
         }
         const fetchEvents = [httpDeleteTask, httpGetProfile, httpGetTasks]
         const initialState = {

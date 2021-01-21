@@ -23,11 +23,11 @@ describe('summary', () => {
         const tasks = R.concat(tasksForProfile1, tasksForProfile2)
         const httpGetProfiles = {
             uri: '/proxy/profile',
-            response: JSON.stringify(profiles)
+            responseText: JSON.stringify(profiles)
         }
         const httpGetTasks = {
             uri: '/proxy/task',
-            response: JSON.stringify(tasks)
+            responseText: JSON.stringify(tasks)
         }
         const fetchEvents = [httpGetProfiles, httpGetTasks]
         const tester = createTester({fetchEvents})

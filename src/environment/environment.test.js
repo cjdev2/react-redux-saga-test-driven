@@ -13,7 +13,7 @@ const captureException = async f => {
 
 test('fetch text', async () => {
     // given
-    const response = {uri: 'uri', response: 'content'}
+    const response = {uri: 'uri', responseText: 'content'}
     const responses = [response]
     const fetch = createFetchFunction(responses)
     const environment = createEnvironment({fetch})
@@ -54,7 +54,7 @@ test('fetch text with options error', async () => {
 
 test('fetch json', async () => {
     // given
-    const response = {uri: 'uri', response: JSON.stringify({a: 1})}
+    const response = {uri: 'uri', responseText: JSON.stringify({a: 1})}
     const responses = [response]
     const fetch = createFetchFunction(responses)
     const environment = createEnvironment({fetch})
@@ -68,7 +68,7 @@ test('fetch json', async () => {
 
 test('fetch json parse error', async () => {
     // given
-    const response = {uri: 'the-uri', response: "not valid json"}
+    const response = {uri: 'the-uri', responseText: "not valid json"}
     const responses = [response]
     const fetch = createFetchFunction(responses)
     const environment = createEnvironment({fetch})
@@ -108,7 +108,7 @@ test('fetch json with options error', async () => {
 
 test('fetch json parse error with options', async () => {
     // given
-    const response = {uri: 'the-uri', options: {method: 'POST'}, response: "not valid json"}
+    const response = {uri: 'the-uri', method: 'POST', responseText: "not valid json"}
     const responses = [response]
     const fetch = createFetchFunction(responses)
     const environment = createEnvironment({fetch})

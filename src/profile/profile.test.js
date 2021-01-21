@@ -18,7 +18,7 @@ describe('profile', () => {
         const profiles = sample.profileArray(3)
         const httpGetProfiles = {
             uri: '/proxy/profile',
-            response: JSON.stringify(profiles)
+            responseText: JSON.stringify(profiles)
         }
         const fetchEvents = [httpGetProfiles]
         const tester = createTester({fetchEvents})
@@ -69,14 +69,12 @@ describe('profile', () => {
         const profilesAfterAdd = [profile]
         const httpPostCreateProfile = {
             uri: '/proxy/profile',
-            options: {
-                method: "POST",
-                body: JSON.stringify({name: 'yo'})
-            }
+            method: "POST",
+            requestText: JSON.stringify({name: 'yo'})
         }
         const httpGetProfiles = {
             uri: '/proxy/profile',
-            response: JSON.stringify(profilesAfterAdd)
+            responseText: JSON.stringify(profilesAfterAdd)
         }
         const fetchEvents = [httpPostCreateProfile, httpGetProfiles]
         const tester = createTester({fetchEvents})
@@ -157,29 +155,23 @@ describe('profile', () => {
         }
         const httpGetTasks = {
             uri: '/proxy/task',
-            response: JSON.stringify(initialTasks)
+            responseText: JSON.stringify(initialTasks)
         }
         const httpDeleteFirstTask = {
             uri: `/proxy/task/${firstTaskInProfile2.id}`,
-            options: {
-                method: "DELETE"
-            }
+            method: "DELETE"
         }
         const httpDeleteSecondTask = {
             uri: `/proxy/task/${secondTaskInProfile2.id}`,
-            options: {
-                method: "DELETE"
-            }
+            method: "DELETE"
         }
         const httpDeleteProfile = {
             uri: `/proxy/profile/${profile2Delete.id}`,
-            options: {
-                method: "DELETE"
-            }
+            method: "DELETE"
         }
         const httpGetProfiles = {
             uri: '/proxy/profile',
-            response: JSON.stringify(profilesAfterDelete)
+            responseText: JSON.stringify(profilesAfterDelete)
         }
         const fetchEvents = [httpGetTasks, httpDeleteFirstTask, httpDeleteSecondTask, httpDeleteProfile, httpGetProfiles]
         const tester = createTester({fetchEvents, initialState})
@@ -220,13 +212,11 @@ describe('profile', () => {
         }
         const httpDeleteProfile = {
             uri: `/proxy/profile/${profile2.id}`,
-            options: {
-                method: "DELETE"
-            }
+            method: "DELETE"
         }
         const httpGetProfiles = {
             uri: '/proxy/profile',
-            response: JSON.stringify(profilesAfterDelete)
+            responseText: JSON.stringify(profilesAfterDelete)
         }
 
         const fetchEvents = [httpDeleteProfile, httpGetProfiles]
