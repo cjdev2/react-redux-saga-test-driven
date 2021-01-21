@@ -5,9 +5,9 @@ import createTaskConnected from "./taskConnected";
 import createConnectedTester from "../test-util/connectedTester";
 import * as R from 'ramda'
 
-const createTester = ({fetchEvents, uri, initialState}) => {
+const createTester = ({fetchSpecs, uri, initialState}) => {
     const connected = createTaskConnected({})
-    const tester = createConnectedTester({connected, uri, fetchEvents, initialState})
+    const tester = createConnectedTester({connected, uri, fetchSpecs, initialState})
     return tester
 }
 
@@ -30,8 +30,8 @@ describe('task', () => {
             uri: `/proxy/task`,
             responseText: JSON.stringify(tasks)
         }
-        const fetchEvents = [httpGetProfile, httpGetTasks]
-        const tester = createTester({fetchEvents, uri})
+        const fetchSpecs = [httpGetProfile, httpGetTasks]
+        const tester = createTester({fetchSpecs, uri})
 
         // when
         await tester.dispatch(taskDispatch.fetchTasksRequest())
@@ -71,8 +71,8 @@ describe('task', () => {
             errorMessage: 'the-error'
 
         }
-        const fetchEvents = [httpGetProfile]
-        const tester = createTester({fetchEvents, uri})
+        const fetchSpecs = [httpGetProfile]
+        const tester = createTester({fetchSpecs, uri})
 
         // when
         await tester.dispatch(taskDispatch.fetchTasksRequest())
@@ -101,7 +101,7 @@ describe('task', () => {
             uri: `/proxy/task`,
             responseText: JSON.stringify([task])
         }
-        const fetchEvents = [httpPostCreateTask, httpGetProfile, httpGetTasks]
+        const fetchSpecs = [httpPostCreateTask, httpGetProfile, httpGetTasks]
         const initialState = {
             task: {
                 profile,
@@ -109,7 +109,7 @@ describe('task', () => {
                 taskName: ''
             }
         }
-        const tester = createTester({fetchEvents, uri, initialState})
+        const tester = createTester({fetchSpecs, uri, initialState})
 
         // when
         await tester.userTypes({placeholder: 'task name', value: task.name})
@@ -232,7 +232,7 @@ describe('task', () => {
             uri: `/proxy/task`,
             responseText: JSON.stringify([completeTask])
         }
-        const fetchEvents = [httpPostUpdateTask, httpGetProfile, httpGetTasks]
+        const fetchSpecs = [httpPostUpdateTask, httpGetProfile, httpGetTasks]
         const initialState = {
             task: {
                 profile,
@@ -240,7 +240,7 @@ describe('task', () => {
                 taskName: ''
             }
         }
-        const tester = createTester({fetchEvents, uri, initialState})
+        const tester = createTester({fetchSpecs, uri, initialState})
 
         // when
         await tester.userClicksElementWithText(incompleteTask.name)
@@ -294,7 +294,7 @@ describe('task', () => {
             uri: `/proxy/task`,
             responseText: JSON.stringify([incompleteTask])
         }
-        const fetchEvents = [httpPostUpdateTask, httpGetProfile, httpGetTasks]
+        const fetchSpecs = [httpPostUpdateTask, httpGetProfile, httpGetTasks]
         const initialState = {
             task: {
                 profile,
@@ -302,7 +302,7 @@ describe('task', () => {
                 taskName: ''
             }
         }
-        const tester = createTester({fetchEvents, uri, initialState})
+        const tester = createTester({fetchSpecs, uri, initialState})
 
         // when
         await tester.userClicksElementWithText(completeTask.name)
@@ -356,7 +356,7 @@ describe('task', () => {
             uri: `/proxy/task`,
             responseText: JSON.stringify([incompleteTask])
         }
-        const fetchEvents = [httpDeleteTask, httpGetProfile, httpGetTasks]
+        const fetchSpecs = [httpDeleteTask, httpGetProfile, httpGetTasks]
         const initialState = {
             task: {
                 profile,
@@ -364,7 +364,7 @@ describe('task', () => {
                 taskName: ''
             }
         }
-        const tester = createTester({fetchEvents, uri, initialState})
+        const tester = createTester({fetchSpecs, uri, initialState})
 
         // when
         await tester.userClicksElementWithText('Clear Completed')

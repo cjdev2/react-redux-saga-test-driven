@@ -5,9 +5,9 @@ import createProfileConnected from "./profileConnected";
 import createConnectedTester from "../test-util/connectedTester";
 import {clickedOnLabelAssociatedByHtmlFor} from "../test-util/mouse-event-test-util";
 
-const createTester = ({fetchEvents, initialState}) => {
+const createTester = ({fetchSpecs, initialState}) => {
     const connected = createProfileConnected({})
-    const tester = createConnectedTester({connected, fetchEvents, initialState})
+    const tester = createConnectedTester({connected, fetchSpecs, initialState})
     return tester
 }
 
@@ -20,8 +20,8 @@ describe('profile', () => {
             uri: '/proxy/profile',
             responseText: JSON.stringify(profiles)
         }
-        const fetchEvents = [httpGetProfiles]
-        const tester = createTester({fetchEvents})
+        const fetchSpecs = [httpGetProfiles]
+        const tester = createTester({fetchSpecs})
 
         // when
         await tester.dispatch(profileDispatch.fetchProfilesRequest())
@@ -52,8 +52,8 @@ describe('profile', () => {
             uri: '/proxy/profile',
             errorMessage: 'the-error-message'
         }
-        const fetchEvents = [httpGetProfiles]
-        const tester = createTester({fetchEvents})
+        const fetchSpecs = [httpGetProfiles]
+        const tester = createTester({fetchSpecs})
 
         // when
         await tester.dispatch(profileDispatch.fetchProfilesRequest())
@@ -76,8 +76,8 @@ describe('profile', () => {
             uri: '/proxy/profile',
             responseText: JSON.stringify(profilesAfterAdd)
         }
-        const fetchEvents = [httpPostCreateProfile, httpGetProfiles]
-        const tester = createTester({fetchEvents})
+        const fetchSpecs = [httpPostCreateProfile, httpGetProfiles]
+        const tester = createTester({fetchSpecs})
 
         // when
         await tester.userTypes({placeholder: 'profile name', value: profile.name})
@@ -173,8 +173,8 @@ describe('profile', () => {
             uri: '/proxy/profile',
             responseText: JSON.stringify(profilesAfterDelete)
         }
-        const fetchEvents = [httpGetTasks, httpDeleteFirstTask, httpDeleteSecondTask, httpDeleteProfile, httpGetProfiles]
-        const tester = createTester({fetchEvents, initialState})
+        const fetchSpecs = [httpGetTasks, httpDeleteFirstTask, httpDeleteSecondTask, httpDeleteProfile, httpGetProfiles]
+        const tester = createTester({fetchSpecs, initialState})
 
         // when
         await tester.userClicksElementWithLabelText(profile2Delete.name)
@@ -219,8 +219,8 @@ describe('profile', () => {
             responseText: JSON.stringify(profilesAfterDelete)
         }
 
-        const fetchEvents = [httpDeleteProfile, httpGetProfiles]
-        const tester = createTester({fetchEvents, initialState})
+        const fetchSpecs = [httpDeleteProfile, httpGetProfiles]
+        const tester = createTester({fetchSpecs, initialState})
 
         // when
         await tester.userClicksElementWithLabelTextWithOptions({

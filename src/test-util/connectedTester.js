@@ -19,7 +19,7 @@ const effectiveStateFor = (model, state) => {
     return R.reduce(accumulateState, {}, R.values(model))
 }
 
-const createConnectedTester = ({connected, uri, fetchEvents = [], initialState}) => {
+const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) => {
     const history = createMemoryHistory()
     if (uri) {
         history.push(uri)
@@ -29,7 +29,7 @@ const createConnectedTester = ({connected, uri, fetchEvents = [], initialState})
     history.listen(({location, action}) => {
         historyEvents.push({action, pathname: location.pathname, state: location.state})
     });
-    const fetch = createFetchFunction(fetchEvents)
+    const fetch = createFetchFunction(fetchSpecs)
     const promiseTracker = createPromiseTracker()
     const environment = createEnvironment({history, window, fetch, promiseTracker})
     const sagaMiddleware = createSagaMiddleware()

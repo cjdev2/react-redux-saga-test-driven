@@ -5,9 +5,9 @@ import createSummaryConnected from "./summaryConnected";
 import createConnectedTester from "../test-util/connectedTester";
 import * as R from 'ramda'
 
-const createTester = ({fetchEvents, initialState}) => {
+const createTester = ({fetchSpecs, initialState}) => {
     const connected = createSummaryConnected({})
-    const tester = createConnectedTester({connected, fetchEvents, initialState})
+    const tester = createConnectedTester({connected, fetchSpecs, initialState})
     return tester
 }
 
@@ -29,8 +29,8 @@ describe('summary', () => {
             uri: '/proxy/task',
             responseText: JSON.stringify(tasks)
         }
-        const fetchEvents = [httpGetProfiles, httpGetTasks]
-        const tester = createTester({fetchEvents})
+        const fetchSpecs = [httpGetProfiles, httpGetTasks]
+        const tester = createTester({fetchSpecs})
 
         // when
         await tester.dispatch(summaryDispatch.fetchSummaryRequest())
@@ -63,8 +63,8 @@ describe('summary', () => {
             uri: '/proxy/profile',
             errorMessage: 'the-error'
         }
-        const fetchEvents = [httpGetProfiles]
-        const tester = createTester({fetchEvents})
+        const fetchSpecs = [httpGetProfiles]
+        const tester = createTester({fetchSpecs})
 
         // when
         await tester.dispatch(summaryDispatch.fetchSummaryRequest())
