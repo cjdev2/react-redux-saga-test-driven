@@ -30,13 +30,13 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
     history.listen(({location, action}) => {
         historyEvents.push({action, pathname: location.pathname, state: location.state})
     });
-    const promiseTracker = createPromiseTracker()
+    const {attachTracking, waitForAllPromises} = createPromiseTracker()
     const fetch = createFetchFake(fetchSpecs)
     const untrackedEnvironment = createEnvironment({history, window, fetch})
     const environment = {
         history: untrackedEnvironment.history,
-        fetchText: promiseTracker.attachTracking('fetchText', untrackedEnvironment.fetchText),
-        fetchJson: promiseTracker.attachTracking('fetchJson', untrackedEnvironment.fetchJson)
+        fetchText: attachTracking('fetchText', untrackedEnvironment.fetchText),
+        fetchJson: attachTracking('fetchJson', untrackedEnvironment.fetchJson)
     }
     const {sagaMonitor} = createSagaMonitor()
     const sagaMiddleware = createSagaMiddleware({sagaMonitor})
@@ -51,7 +51,7 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
     const saga = connected.saga(environment)
     sagaMiddleware.run(saga)
     const waitForEvents = async () => {
-        await promiseTracker.waitForAllPromises()
+        await waitForAllPromises()
     }
     const dispatch = async event => await act(async () => {
         store.dispatch(event)
