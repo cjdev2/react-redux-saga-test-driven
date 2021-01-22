@@ -1,16 +1,11 @@
 import * as R from 'ramda'
 
-const nopPromiseTracker = {
-    trackPromise: p => p
-}
-
 const createEnvironment = (
     {
         fetch,
-        history,
-        promiseTracker = nopPromiseTracker
+        history
     }) => {
-    const untrackedFetchText = async (resource, init) => {
+    const fetchText = async (resource, init) => {
         try {
             const response = await fetch(resource, init)
             const text = await response.text()
@@ -25,8 +20,8 @@ const createEnvironment = (
             throw new Error(R.join('\n', messageLines))
         }
     }
-    const untrackedFetchJson = async (resource, init) => {
-        const text = await untrackedFetchText(resource, init)
+    const fetchJson = async (resource, init) => {
+        const text = await fetchText(resource, init)
         try {
             return JSON.parse(text)
         } catch (error) {
@@ -40,17 +35,6 @@ const createEnvironment = (
             throw new Error(R.join('\n', messageLines))
         }
     }
-    const trackPromise = f => {
-        const tracked = (...theArguments) => {
-            const promise = f(...theArguments)
-            promiseTracker.trackPromise(promise)
-            return promise
-        }
-        return tracked
-    }
-
-    const fetchText = trackPromise(untrackedFetchText)
-    const fetchJson = trackPromise(untrackedFetchJson)
 
     return {
         fetch,

@@ -31,7 +31,7 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
     });
     const promiseTracker = createPromiseTracker()
     const fetch = createFetchFunction(fetchSpecs)
-    const environment = createEnvironment({history, window, fetch, promiseTracker})
+    const environment = createEnvironment({history, window, fetch})
     const sagaMiddleware = createSagaMiddleware()
     const reduxEvents = []
     const monitor = store => next => event => {
@@ -43,8 +43,14 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
     const store = createStore(reducer, state, applyMiddleware(sagaMiddleware, monitor))
     const saga = connected.saga(environment)
     sagaMiddleware.run(saga)
+    const passTime = timeout => {
+        return new Promise(resolve => {
+            setTimeout(() => resolve(), timeout)
+        });
+    }
     const waitForEvents = async () => {
-        await promiseTracker.waitForAllPromises()
+        // temporary solution until I figure out a reliable way to wait for the saga events to finish
+        await passTime(10)
     }
     const dispatch = async event => await act(async () => {
         store.dispatch(event)
