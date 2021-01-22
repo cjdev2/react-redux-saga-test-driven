@@ -29,8 +29,8 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
     history.listen(({location, action}) => {
         historyEvents.push({action, pathname: location.pathname, state: location.state})
     });
-    const fetch = createFetchFunction(fetchSpecs)
     const promiseTracker = createPromiseTracker()
+    const fetch = createFetchFunction(fetchSpecs)
     const environment = createEnvironment({history, window, fetch, promiseTracker})
     const sagaMiddleware = createSagaMiddleware()
     const reduxEvents = []
@@ -43,33 +43,36 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
     const store = createStore(reducer, state, applyMiddleware(sagaMiddleware, monitor))
     const saga = connected.saga(environment)
     sagaMiddleware.run(saga)
+    const waitForEvents = async () => {
+        await promiseTracker.waitForAllPromises()
+    }
     const dispatch = async event => await act(async () => {
         store.dispatch(event)
     })
     const userTypes = async ({placeholder, value}) => {
         const dataEntry = rendered.getByPlaceholderText(placeholder)
         await userEvent.type(dataEntry, value)
-        return await promiseTracker.waitForAllPromises()
+        await waitForEvents()
     }
     const userPressesKey = async ({placeholder, key}) => {
         const dataEntry = rendered.getByPlaceholderText(placeholder)
         await fireEvent.keyUp(dataEntry, {key})
-        return await promiseTracker.waitForAllPromises()
+        await waitForEvents()
     }
     const userClicksElementWithText = async text => {
         const element = rendered.getByText(text)
         await userEvent.click(element);
-        return await promiseTracker.waitForAllPromises()
+        await waitForEvents()
     }
     const userClicksElementWithLabelText = async labelText => {
         const element = rendered.getByLabelText(labelText)
         await userEvent.click(element);
-        return await promiseTracker.waitForAllPromises()
+        await waitForEvents()
     }
     const userClicksElementWithLabelTextWithOptions = async ({labelText, mouseEvent}) => {
         const element = rendered.getByLabelText(labelText)
         await userEvent.click(element, mouseEvent);
-        return await promiseTracker.waitForAllPromises()
+        await waitForEvents()
     }
     const Component = connected.Component
     const rendered = render(<Provider store={store}><Component/></Provider>)
