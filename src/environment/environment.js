@@ -37,7 +37,6 @@ const createEnvironment = (
     }
 
     return {
-        fetch,
         history,
         fetchText,
         fetchJson
