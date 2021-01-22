@@ -17,6 +17,18 @@ First make sure you have [webdb](https://gitlab.cj.dev/training/webdb) running, 
 - `./scripts/coverage.sh`
   - Test coverage report
 
+## Testing Examples
+
+Higher level testing
+
+- [Test everything connected at the domain level, using the real view, reducer, and saga](/src/task/taskConnected.test.js)
+
+Lower level testing
+
+- [Test view only, through state received and functions invoked](/src/task/Task.test.js)
+- [Test side effects only, through saga handlers](/src/task/taskEffects.test.js)
+- [Test state transformation only, through data model (lenses) and reducers](/src/task/taskState.test.js)
+
 ## Design Goals
 
 - Easy to compose
