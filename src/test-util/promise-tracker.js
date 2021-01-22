@@ -10,11 +10,8 @@ const createPromiseTracker = () => {
         return compositePromise
     }
     const waitForAllPromises = async () => {
-        const result = await waitForPromises()
-        if (promises.length !== 0) {
-            return await waitForAllPromises()
-        } else {
-            return result
+        while (promises.length !== 0) {
+            await waitForPromises()
         }
     }
     const attachTracking = f => (...theArguments) => {
