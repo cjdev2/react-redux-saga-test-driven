@@ -17,8 +17,15 @@ const createPromiseTracker = () => {
             return result
         }
     }
+    const attachTracking = f => (...theArguments) => {
+        const promise = f(...theArguments)
+        trackPromise(promise)
+        return promise
+    }
+
     return {
         trackPromise,
+        attachTracking,
         waitForPromises,
         waitForAllPromises
     }
