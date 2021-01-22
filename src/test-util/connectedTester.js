@@ -9,6 +9,7 @@ import userEvent from '@testing-library/user-event'
 import createPromiseTracker from "./promise-tracker";
 import {createMemoryHistory} from "history";
 import * as R from "ramda";
+import createSagaMonitor from "./saga-monitor";
 
 const effectiveStateFor = (model, state) => {
     const accumulateState = (accumulator, lens) => {
@@ -31,8 +32,14 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
     });
     const promiseTracker = createPromiseTracker()
     const fetch = createFetchFunction(fetchSpecs)
-    const environment = createEnvironment({history, window, fetch})
-    const sagaMiddleware = createSagaMiddleware()
+    const untrackedEnvironment = createEnvironment({history, window, fetch})
+    const environment = {
+        history: untrackedEnvironment.history,
+        fetchText: promiseTracker.attachTracking('fetchText', untrackedEnvironment.fetchText),
+        fetchJson: promiseTracker.attachTracking('fetchJson', untrackedEnvironment.fetchJson)
+    }
+    const {sagaMonitor} = createSagaMonitor()
+    const sagaMiddleware = createSagaMiddleware({sagaMonitor})
     const reduxEvents = []
     const monitor = store => next => event => {
         reduxEvents.push(event)
@@ -43,14 +50,8 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
     const store = createStore(reducer, state, applyMiddleware(sagaMiddleware, monitor))
     const saga = connected.saga(environment)
     sagaMiddleware.run(saga)
-    const passTime = timeout => {
-        return new Promise(resolve => {
-            setTimeout(() => resolve(), timeout)
-        });
-    }
     const waitForEvents = async () => {
-        // temporary solution until I figure out a reliable way to wait for the saga events to finish
-        await passTime(10)
+        await promiseTracker.waitForAllPromises()
     }
     const dispatch = async event => await act(async () => {
         store.dispatch(event)

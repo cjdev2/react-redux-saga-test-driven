@@ -18,7 +18,7 @@ const createSagaMonitor = () => {
         addId('effectTriggered', effectId)
     }
     const effectResolved = (effectId, result) => {
-        removeId('effectTriggered', effectId)
+        removeId('effectResolved', effectId)
     }
     const effectRejected = (effectId, error) => {
         removeId('effectRejected', effectId)

@@ -1,6 +1,6 @@
 const createPromiseTracker = () => {
     const promises = []
-    const trackPromise = p => {
+    const trackPromise = (caption, p) => {
         promises.push(p)
         return p
     }
@@ -14,9 +14,9 @@ const createPromiseTracker = () => {
             await waitForPromises()
         }
     }
-    const attachTracking = f => (...theArguments) => {
+    const attachTracking = (caption, f) => (...theArguments) => {
         const promise = f(...theArguments)
-        trackPromise(promise)
+        trackPromise(caption, promise)
         return promise
     }
 

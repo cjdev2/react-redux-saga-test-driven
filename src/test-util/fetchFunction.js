@@ -7,7 +7,7 @@ const ifThenElse = (condition, ifTrue, ifFalse) => {
 
 const createFetchFunction = fetchSpecs => {
     let fetchSpecIndex = 0
-    return async (resource, init) => {
+    return (resource, init) => {
         const thisFetchSpecIndex = fetchSpecIndex
         fetchSpecIndex++
         const fetchSpec = fetchSpecs[thisFetchSpecIndex]
