@@ -103,7 +103,10 @@ describe('task effects', () => {
         // then
         expect(await iterator.next().value).toEqual(profile)
         expect(await iterator.next(profile).value).toEqual(tasks)
-        expect(await iterator.next(tasks).value.payload.action).toEqual(taskDispatch.fetchTasksSuccess(tasksInProfile))
+        expect(await iterator.next(tasks).value.payload.action).toEqual(taskDispatch.fetchTasksSuccess({
+            profile,
+            tasks: tasksInProfile
+        }))
         expect(iterator.next().done).toBeTruthy()
     })
 })
