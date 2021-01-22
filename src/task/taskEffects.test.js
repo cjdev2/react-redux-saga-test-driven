@@ -2,75 +2,11 @@ import '@testing-library/jest-dom/extend-expect'
 import taskDispatch, {taskEvent} from "./taskDispatch";
 import taskEffects from "./taskEffects";
 import createSample from "../test-util/sample";
-import createTaskConnected from "./taskConnected";
-import createConnectedTester from "../test-util/connectedTester";
 import createEnvironment from "../environment/environment";
 import createFetchFake from "../test-util/fetch-fake";
 import {createMemoryHistory} from "history";
 
-const createTester = ({fetchSpecs, uri, initialState}) => {
-    const connected = createTaskConnected({})
-    const tester = createConnectedTester({connected, uri, fetchSpecs, initialState})
-    return tester
-}
-
 describe('task effects', () => {
-    /*
-     ● Console
-
-    console.log
-      [
-        {
-          profileId: 'profile-id-1',
-          id: 'task-id-4',
-          name: 'task-name-5',
-          complete: false
-        },
-        {
-          profileId: 'profile-id-6',
-          id: 'task-id-7',
-          name: 'task-name-8',
-          complete: false
-        },
-        {
-          profileId: 'profile-id-1',
-          id: 'task-id-10',
-          name: 'task-name-11',
-          complete: false
-        }
-      ]
-
-      at Object.<anonymous> (src/task/taskEffects.test.js:57:17)
-
-    console.log
-      {
-        type: 'TASK/FETCH_TASKS_SUCCESS',
-        profile: { id: 'profile-id-1', name: 'profile-name-2' },
-        tasks: [
-          {
-            profileId: 'profile-id-1',
-            id: 'task-id-4',
-            name: 'task-name-5',
-            complete: false
-          },
-          {
-            profileId: 'profile-id-1',
-            id: 'task-id-10',
-            name: 'task-name-11',
-            complete: false
-          }
-        ]
-      }
-
-      at Object.<anonymous> (src/task/taskEffects.test.js:58:17)
-
-    console.log
-      true
-
-      at Object.<anonymous> (src/task/taskEffects.test.js:59:17)
-
-     */
-
     test('fetch tasks', async () => {
         // given
         const sample = createSample()
