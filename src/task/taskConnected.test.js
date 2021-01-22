@@ -11,7 +11,7 @@ const createTester = ({fetchSpecs, uri, initialState}) => {
     return tester
 }
 
-describe('task', () => {
+describe('task connected', () => {
     test('load tasks', async () => {
         // given
         const sample = createSample()
