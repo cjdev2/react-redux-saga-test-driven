@@ -13,7 +13,6 @@ const errorAdded = (state, event) => appendToArray(navigationModel.errors, event
 const navigationReducers = {
     [navigationEvent.FETCH_PAGE_SUCCESS]: fetchPage,
     [navigationEvent.ADD_ERROR]: errorAdded
-
 }
 
 export {navigationReducers, navigationModel}

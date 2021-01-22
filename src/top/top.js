@@ -13,8 +13,15 @@ const navigationConnected = createNavigationConnected({
     Task: taskConnected.Component,
     Summary: summaryConnected.Component
 })
-const connectedArray = [profileConnected, taskConnected, navigationConnected, summaryConnected]
-const initializeEvents = [navigationDispatch.fetchPageRequest()]
+const connectedArray = [
+    profileConnected,
+    taskConnected,
+    navigationConnected,
+    summaryConnected
+]
+const initializeEvents = [
+    navigationDispatch.fetchPageRequest()
+]
 const Top = navigationConnected.Component
 
 const reducer = createReducerFromConnected(connectedArray)
