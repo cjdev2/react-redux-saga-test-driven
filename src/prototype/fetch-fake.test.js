@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect'
-import createFetchFunction from "../test-util/fetchFunction";
+import createFetchFake from "../test-util/fetch-fake";
 import createPromiseTracker from "../test-util/promise-tracker";
 
 test('fetch works with await', async () => {
@@ -14,7 +14,7 @@ test('fetch works with await', async () => {
         requestText: "request-body-2"
     }
     const fetchSpecs = [fetchSpec1, fetchSpec2]
-    const fetch = createFetchFunction(fetchSpecs)
+    const fetch = createFetchFake(fetchSpecs)
 
     const monitor = []
 
@@ -56,7 +56,7 @@ test('keep track of fetch fake promises', async () => {
         requestText: "request-body-2"
     }
     const fetchSpecs = [fetchSpec1, fetchSpec2]
-    const fetch = attachTracking('fetch', createFetchFunction(fetchSpecs))
+    const fetch = attachTracking('fetch', createFetchFake(fetchSpecs))
 
     const monitor = []
 

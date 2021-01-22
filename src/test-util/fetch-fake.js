@@ -5,7 +5,7 @@ const ifThenElse = (condition, ifTrue, ifFalse) => {
     else return ifFalse
 }
 
-const createFetchFunction = fetchSpecs => {
+const createFetchFake = fetchSpecs => {
     let fetchSpecIndex = 0
     return (resource, init) => {
         const thisFetchSpecIndex = fetchSpecIndex
@@ -37,4 +37,4 @@ const createFetchFunction = fetchSpecs => {
     }
 }
 
-export default createFetchFunction
+export default createFetchFake

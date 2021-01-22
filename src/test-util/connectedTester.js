@@ -1,4 +1,4 @@
-import createFetchFunction from "./fetchFunction";
+import createFetchFake from "../test-util/fetch-fake";
 import createEnvironment from "../environment/environment";
 import createSagaMiddleware from "redux-saga";
 import {applyMiddleware, createStore} from "redux";
@@ -31,7 +31,7 @@ const createConnectedTester = ({connected, uri, fetchSpecs = [], initialState}) 
         historyEvents.push({action, pathname: location.pathname, state: location.state})
     });
     const promiseTracker = createPromiseTracker()
-    const fetch = createFetchFunction(fetchSpecs)
+    const fetch = createFetchFake(fetchSpecs)
     const untrackedEnvironment = createEnvironment({history, window, fetch})
     const environment = {
         history: untrackedEnvironment.history,
