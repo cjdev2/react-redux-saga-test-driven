@@ -29,6 +29,13 @@ Lower level testing
 - [Test side effects only, through saga handlers](/src/task/taskEffects.test.js)
 - [Test state transformation only, through data model (lenses) and reducers](/src/task/taskState.test.js)
 
+## Experiment here
+
+[React, Redux, and Saga prototype application](https://gitlab.cj.dev/training/react-redux-saga-prototype)
+
+This is a single-file implementation of this same application without the tests, error handling, and dependency
+inversion. It is useful for experimenting.
+
 ## Design Goals
 
 - Easy to compose
