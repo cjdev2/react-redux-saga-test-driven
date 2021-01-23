@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom/extend-expect'
-import taskDispatch, {taskEvent} from "./taskDispatch";
-import taskEffects from "./taskEffects";
-import createSample from "../test-util/sample";
-import createEnvironment from "../environment/environment";
-import createFetchFake from "../test-util/fetch-fake";
-import {createMemoryHistory} from "history";
+import taskDispatch, {taskEvent} from './taskDispatch';
+import taskEffects from './taskEffects';
+import createSample from '../test-util/sample';
+import createEnvironment from '../environment/environment';
+import createFetchFake from '../test-util/fetch-fake';
+import {createMemoryHistory} from 'history';
 
 describe('task effects', () => {
     test('fetch tasks', async () => {

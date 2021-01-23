@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
-import {eventCouldHaveComeFromLabelInsteadOfElement} from "./element-util";
-import {clickedOnLabelAssociatedByHtmlFor, typicalMouseEvent, usedKeyboard} from "../test-util/mouse-event-test-util";
+import {eventCouldHaveComeFromLabelInsteadOfElement} from './element-util';
+import {clickedOnLabelAssociatedByHtmlFor, typicalMouseEvent, usedKeyboard} from '../test-util/mouse-event-test-util';
 
 test('typical mouse event', async () => {
     expect(eventCouldHaveComeFromLabelInsteadOfElement(typicalMouseEvent)).toEqual(false)

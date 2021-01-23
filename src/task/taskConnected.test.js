@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/extend-expect'
-import taskDispatch, {taskEvent} from "./taskDispatch";
-import createSample from "../test-util/sample";
-import createTaskConnected from "./taskConnected";
-import createConnectedTester from "../test-util/connectedTester";
+import taskDispatch, {taskEvent} from './taskDispatch';
+import createSample from '../test-util/sample';
+import createTaskConnected from './taskConnected';
+import createConnectedTester from '../test-util/connectedTester';
 import * as R from 'ramda'
 
 const createTester = ({fetchSpecs, uri, initialState}) => {
@@ -43,10 +43,10 @@ describe('task connected', () => {
         expect(tester.rendered.getByText(task3.name)).toBeInTheDocument()
 
         expect(tester.effectiveState()).toEqual({
-            "task": {
+            'task': {
                 profile,
-                "tasks": tasksInProfile,
-                "taskName": "",
+                'tasks': tasksInProfile,
+                'taskName': '',
                 errors: []
             }
         })

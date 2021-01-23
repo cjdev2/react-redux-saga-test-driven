@@ -1,6 +1,6 @@
-import {profileEvent} from "./profileDispatch";
-import * as R from "ramda";
-import {appendToArray, lensPathWithDefault} from "../compose-util/compose-connected";
+import {profileEvent} from './profileDispatch';
+import * as R from 'ramda';
+import {appendToArray, lensPathWithDefault} from '../compose-util/compose-connected';
 
 const profileModel = {
     profiles: lensPathWithDefault(['profile', 'profiles'], []),

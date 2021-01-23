@@ -1,4 +1,4 @@
-import ErrorComponent from "../error/ErrorComponent";
+import ErrorComponent from '../error/ErrorComponent';
 
 const PageNotFound = ({page}) => <h1>{`Page '${page}' not found`}</h1>
 

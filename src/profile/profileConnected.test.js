@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom/extend-expect'
-import profileDispatch from "./profileDispatch";
-import createSample from "../test-util/sample";
-import createProfileConnected from "./profileConnected";
-import createConnectedTester from "../test-util/connectedTester";
-import {clickedOnLabelAssociatedByHtmlFor} from "../test-util/mouse-event-test-util";
+import profileDispatch from './profileDispatch';
+import createSample from '../test-util/sample';
+import createProfileConnected from './profileConnected';
+import createConnectedTester from '../test-util/connectedTester';
+import {clickedOnLabelAssociatedByHtmlFor} from '../test-util/mouse-event-test-util';
 
 const createTester = ({fetchSpecs, initialState}) => {
     const connected = createProfileConnected({})
@@ -41,8 +41,8 @@ describe('profile', () => {
         })
 
         expect(tester.reduxEvents).toEqual([
-            {type: "PROFILE/FETCH_PROFILES_REQUEST"},
-            {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles}
+            {type: 'PROFILE/FETCH_PROFILES_REQUEST'},
+            {type: 'PROFILE/FETCH_PROFILES_SUCCESS', profiles}
         ])
     })
 
@@ -69,7 +69,7 @@ describe('profile', () => {
         const profilesAfterAdd = [profile]
         const httpPostCreateProfile = {
             uri: '/proxy/profile',
-            method: "POST",
+            method: 'POST',
             requestText: JSON.stringify({name: 'yo'})
         }
         const httpGetProfiles = {
@@ -98,11 +98,11 @@ describe('profile', () => {
         expect(tester.reduxEvents).toEqual([
             {type: 'PROFILE/PROFILE_NAME_CHANGED', name: 'y'},
             {type: 'PROFILE/PROFILE_NAME_CHANGED', name: 'yo'},
-            {type: "PROFILE/ADD_PROFILE_REQUEST", name: 'yo'},
+            {type: 'PROFILE/ADD_PROFILE_REQUEST', name: 'yo'},
             {type: 'PROFILE/PROFILE_NAME_CHANGED', name: ''},
-            {type: "PROFILE/FETCH_PROFILES_REQUEST"},
+            {type: 'PROFILE/FETCH_PROFILES_REQUEST'},
             {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'},
-            {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles: profilesAfterAdd}
+            {type: 'PROFILE/FETCH_PROFILES_SUCCESS', profiles: profilesAfterAdd}
         ])
     })
 
@@ -159,15 +159,15 @@ describe('profile', () => {
         }
         const httpDeleteFirstTask = {
             uri: `/proxy/task/${firstTaskInProfile2.id}`,
-            method: "DELETE"
+            method: 'DELETE'
         }
         const httpDeleteSecondTask = {
             uri: `/proxy/task/${secondTaskInProfile2.id}`,
-            method: "DELETE"
+            method: 'DELETE'
         }
         const httpDeleteProfile = {
             uri: `/proxy/profile/${profile2Delete.id}`,
-            method: "DELETE"
+            method: 'DELETE'
         }
         const httpGetProfiles = {
             uri: '/proxy/profile',
@@ -188,10 +188,10 @@ describe('profile', () => {
         expect(tester.effectiveState()).toEqual(stateAfterDelete)
 
         expect(tester.reduxEvents).toEqual([
-            {type: "PROFILE/DELETE_PROFILE_REQUEST", id: profile2Delete.id},
-            {type: "PROFILE/FETCH_PROFILES_REQUEST"},
+            {type: 'PROFILE/DELETE_PROFILE_REQUEST', id: profile2Delete.id},
+            {type: 'PROFILE/FETCH_PROFILES_REQUEST'},
             {type: 'SUMMARY/FETCH_SUMMARY_REQUEST'},
-            {type: "PROFILE/FETCH_PROFILES_SUCCESS", profiles: profilesAfterDelete}
+            {type: 'PROFILE/FETCH_PROFILES_SUCCESS', profiles: profilesAfterDelete}
         ])
     })
 
@@ -212,7 +212,7 @@ describe('profile', () => {
         }
         const httpDeleteProfile = {
             uri: `/proxy/profile/${profile2.id}`,
-            method: "DELETE"
+            method: 'DELETE'
         }
         const httpGetProfiles = {
             uri: '/proxy/profile',

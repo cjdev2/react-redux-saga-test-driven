@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/extend-expect'
-import summaryDispatch from "./summaryDispatch";
-import createSample from "../test-util/sample";
-import createSummaryConnected from "./summaryConnected";
-import createConnectedTester from "../test-util/connectedTester";
+import summaryDispatch from './summaryDispatch';
+import createSample from '../test-util/sample';
+import createSummaryConnected from './summaryConnected';
+import createConnectedTester from '../test-util/connectedTester';
 import * as R from 'ramda'
 
 const createTester = ({fetchSpecs, initialState}) => {

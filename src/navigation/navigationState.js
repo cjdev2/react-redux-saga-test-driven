@@ -1,6 +1,6 @@
-import {navigationEvent} from "./navigationDispatch";
-import * as R from "ramda";
-import {appendToArray, lensPathWithDefault} from "../compose-util/compose-connected";
+import {navigationEvent} from './navigationDispatch';
+import * as R from 'ramda';
+import {appendToArray, lensPathWithDefault} from '../compose-util/compose-connected';
 
 const navigationModel = {
     page: lensPathWithDefault(['navigation', 'page'], ''),

@@ -1,6 +1,6 @@
 import * as R from 'ramda'
-import {all, call, takeEvery} from "redux-saga/effects";
-import {connect} from "react-redux";
+import {all, call, takeEvery} from 'redux-saga/effects';
+import {connect} from 'react-redux';
 
 const lensPathWithDefault = (lensPath, theDefault) => {
     const theLens = R.lensPath(lensPath)

@@ -1,8 +1,8 @@
-import profileDispatch, {profileEvent} from "./profileDispatch";
-import {all, put} from "redux-saga/effects";
-import summaryDispatch from "../summary/summaryDispatch";
-import * as R from "ramda";
-import {composeErrorMessage} from "../error/ErrorComponent";
+import profileDispatch, {profileEvent} from './profileDispatch';
+import {all, put} from 'redux-saga/effects';
+import summaryDispatch from '../summary/summaryDispatch';
+import * as R from 'ramda';
+import {composeErrorMessage} from '../error/ErrorComponent';
 
 const fetchProfilesRequest = environment => function* () {
     const profiles = yield environment.fetchJson('/proxy/profile')

@@ -1,4 +1,4 @@
-import * as R from "ramda";
+import * as R from 'ramda';
 
 const ifThenElse = (condition, ifTrue, ifFalse) => {
     if (condition) return ifTrue

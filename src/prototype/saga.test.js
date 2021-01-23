@@ -2,8 +2,8 @@ import '@testing-library/jest-dom/extend-expect'
 import * as R from 'ramda'
 import {applyMiddleware, createStore} from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import {put, take, takeEvery} from "redux-saga/effects";
-import {act} from "react-dom/test-utils"
+import {put, take, takeEvery} from 'redux-saga/effects';
+import {act} from 'react-dom/test-utils'
 
 const assertArrayIsSorted = array => {
     const sortedArray = R.sortBy(R.identity, array)
@@ -111,7 +111,7 @@ test('event makes async call', async () => {
     const state = {}
     const sagaMiddleware = createSagaMiddleware()
     const fooEvent = {type: 'foo', payload: 'foo content'}
-    const asyncFunction = async () => "async content"
+    const asyncFunction = async () => 'async content'
     const store = createStore(
         reducer,
         state,

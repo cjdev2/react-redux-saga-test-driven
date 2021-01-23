@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import '@testing-library/jest-dom/extend-expect'
 
 test('handle async error', async () => {

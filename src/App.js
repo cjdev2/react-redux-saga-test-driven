@@ -3,8 +3,8 @@ import {initializeEvents, reducer, saga, Top} from './top/top'
 import {Provider} from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import {applyMiddleware, compose, createStore} from 'redux'
-import {createBrowserHistory} from "history";
-import createEnvironment from "./environment/environment";
+import {createBrowserHistory} from 'history';
+import createEnvironment from './environment/environment';
 
 const sagaMiddleware = createSagaMiddleware()
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

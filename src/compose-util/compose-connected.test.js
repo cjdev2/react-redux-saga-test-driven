@@ -5,14 +5,14 @@ import {
     createSagaFromConnected,
     lensPathWithDefault,
     pairsToObject
-} from "./compose-connected";
+} from './compose-connected';
 import * as R from 'ramda'
-import {put, takeEvery} from "redux-saga/effects";
-import createConnectedTester from "../test-util/connectedTester";
+import {put, takeEvery} from 'redux-saga/effects';
+import createConnectedTester from '../test-util/connectedTester';
 import createSagaMiddleware from 'redux-saga'
 import {applyMiddleware, createStore} from 'redux'
-import {act} from "react-dom/test-utils";
-import createEnvironment from "../environment/environment";
+import {act} from 'react-dom/test-utils';
+import createEnvironment from '../environment/environment';
 
 test('pairs to object', () => {
     // given

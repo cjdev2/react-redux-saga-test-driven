@@ -1,12 +1,12 @@
-import {createConnected} from "../compose-util/compose-connected";
-import navigationDispatch from "./navigationDispatch";
-import Navigation from "./Navigation";
-import {navigationModel, navigationReducers} from "./navigationState";
-import navigationEffects, {navigationError} from "./navigationEffects";
+import {createConnected} from '../compose-util/compose-connected';
+import navigationDispatch from './navigationDispatch';
+import Navigation from './Navigation';
+import {navigationModel, navigationReducers} from './navigationState';
+import navigationEffects, {navigationError} from './navigationEffects';
 
 const createNavigationConnected = componentDependencyMap => {
     return createConnected({
-        name: "navigation",
+        name: 'navigation',
         model: navigationModel,
         dispatch: navigationDispatch,
         View: Navigation,

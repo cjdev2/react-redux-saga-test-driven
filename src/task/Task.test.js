@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/extend-expect'
-import createSample from "../test-util/sample";
-import {render} from "@testing-library/react";
+import createSample from '../test-util/sample';
+import {render} from '@testing-library/react';
 import Task from './Task'
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 describe('task view', () => {
     test('render profile and tasks', () => {

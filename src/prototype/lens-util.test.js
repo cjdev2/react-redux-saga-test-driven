@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
 import * as R from 'ramda'
-import {lensPathWithDefault} from "../compose-util/compose-connected";
+import {lensPathWithDefault} from '../compose-util/compose-connected';
 
 test('lens with default getter', () => {
     // given

@@ -1,8 +1,8 @@
-import taskDispatch, {taskEvent, taskUriPattern} from "./taskDispatch";
-import {all, put} from "redux-saga/effects";
+import taskDispatch, {taskEvent, taskUriPattern} from './taskDispatch';
+import {all, put} from 'redux-saga/effects';
 import * as R from 'ramda'
-import summaryDispatch from "../summary/summaryDispatch";
-import {composeErrorMessage} from "../error/ErrorComponent";
+import summaryDispatch from '../summary/summaryDispatch';
+import {composeErrorMessage} from '../error/ErrorComponent';
 
 const fetchTasksRequest = environment => function* (event) {
     const uri = environment.history.location.pathname

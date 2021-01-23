@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import {act} from "react-dom/test-utils"
+import {act} from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 
 const LearnButtonLabel = ({onClick}) => {

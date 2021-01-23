@@ -1,8 +1,8 @@
 import './Profile.css'
 import * as R from 'ramda'
-import {pluralize} from "../string-util/string-util";
+import {pluralize} from '../string-util/string-util';
 import {eventCouldHaveComeFromLabelInsteadOfElement} from '../element-util/element-util'
-import ErrorComponent from "../error/ErrorComponent";
+import ErrorComponent from '../error/ErrorComponent';
 
 const ProfileListItem = ({profile, deleteProfileRequest}) => {
     const onClick = event => {

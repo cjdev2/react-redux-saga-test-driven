@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom/extend-expect'
-import {applyMiddleware, createStore} from "redux";
+import {applyMiddleware, createStore} from 'redux';
 import {connect, Provider} from 'react-redux'
-import {fireEvent, render} from "@testing-library/react";
+import {fireEvent, render} from '@testing-library/react';
 import * as R from 'ramda'
-import userEvent from "@testing-library/user-event";
-import createSagaMiddleware from "redux-saga";
-import {put, takeEvery} from "redux-saga/effects";
+import userEvent from '@testing-library/user-event';
+import createSagaMiddleware from 'redux-saga';
+import {put, takeEvery} from 'redux-saga/effects';
 
 test('react redux saga', () => {
     // given
@@ -89,7 +89,7 @@ test('react redux saga', () => {
     const dataEntry = rendered.getByPlaceholderText('the placeholder')
 
     // when
-    userEvent.type(dataEntry, "abc")
+    userEvent.type(dataEntry, 'abc')
     fireEvent.keyUp(dataEntry, {key: 'Enter'})
 
     // test the view
@@ -214,7 +214,7 @@ test('react redux saga async', async () => {
     const dataEntry = rendered.getByPlaceholderText('the placeholder')
 
     // when
-    userEvent.type(dataEntry, "abc")
+    userEvent.type(dataEntry, 'abc')
     fireEvent.keyUp(dataEntry, {key: 'Enter'})
     await environment.promiseTracker.waitForPromises()
 

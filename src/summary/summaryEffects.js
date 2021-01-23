@@ -1,6 +1,6 @@
-import summaryDispatch, {summaryEvent} from "./summaryDispatch";
-import {put} from "redux-saga/effects";
-import {composeErrorMessage} from "../error/ErrorComponent";
+import summaryDispatch, {summaryEvent} from './summaryDispatch';
+import {put} from 'redux-saga/effects';
+import {composeErrorMessage} from '../error/ErrorComponent';
 
 const fetchSummaryRequest = environment => function* () {
     const profiles = yield environment.fetchJson('/proxy/profile')

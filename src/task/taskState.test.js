@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom/extend-expect'
-import taskDispatch, {taskEvent} from "./taskDispatch";
-import createSample from "../test-util/sample";
-import createTaskConnected from "./taskConnected";
-import createConnectedTester from "../test-util/connectedTester";
-import {taskReducers} from "./taskState";
+import taskDispatch, {taskEvent} from './taskDispatch';
+import createSample from '../test-util/sample';
+import createTaskConnected from './taskConnected';
+import createConnectedTester from '../test-util/connectedTester';
+import {taskReducers} from './taskState';
 
 const createTester = ({fetchSpecs, uri, initialState}) => {
     const connected = createTaskConnected({})

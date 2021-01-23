@@ -1,6 +1,6 @@
-import {summaryEvent} from "./summaryDispatch";
-import * as R from "ramda";
-import {appendToArray, lensPathWithDefault} from "../compose-util/compose-connected";
+import {summaryEvent} from './summaryDispatch';
+import * as R from 'ramda';
+import {appendToArray, lensPathWithDefault} from '../compose-util/compose-connected';
 
 const summaryModel = {
     profileCount: lensPathWithDefault(['summary', 'profileCount'], 0),

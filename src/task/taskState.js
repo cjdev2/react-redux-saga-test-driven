@@ -1,6 +1,6 @@
-import {taskEvent} from "./taskDispatch";
-import * as R from "ramda";
-import {appendToArray, lensPathWithDefault} from "../compose-util/compose-connected";
+import {taskEvent} from './taskDispatch';
+import * as R from 'ramda';
+import {appendToArray, lensPathWithDefault} from '../compose-util/compose-connected';
 
 const taskModel = {
     profile: lensPathWithDefault(['task', 'profile'], {id: 'null-profile-id', name: 'null-profile-name'}),

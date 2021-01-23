@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
-import createEnvironment from "./environment";
-import createFetchFake from "../test-util/fetch-fake";
+import createEnvironment from './environment';
+import createFetchFake from '../test-util/fetch-fake';
 
 const captureException = async f => {
     try {
@@ -68,7 +68,7 @@ test('fetch json', async () => {
 
 test('fetch json parse error', async () => {
     // given
-    const response = {uri: 'the-uri', responseText: "not valid json"}
+    const response = {uri: 'the-uri', responseText: 'not valid json'}
     const responses = [response]
     const fetch = createFetchFake(responses)
     const environment = createEnvironment({fetch})
@@ -108,7 +108,7 @@ test('fetch json with options error', async () => {
 
 test('fetch json parse error with options', async () => {
     // given
-    const response = {uri: 'the-uri', method: 'POST', responseText: "not valid json"}
+    const response = {uri: 'the-uri', method: 'POST', responseText: 'not valid json'}
     const responses = [response]
     const fetch = createFetchFake(responses)
     const environment = createEnvironment({fetch})

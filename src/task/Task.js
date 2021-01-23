@@ -1,7 +1,7 @@
 import './Task.css'
 import * as R from 'ramda'
-import {pluralize} from "../string-util/string-util";
-import ErrorComponent from "../error/ErrorComponent";
+import {pluralize} from '../string-util/string-util';
+import ErrorComponent from '../error/ErrorComponent';
 
 const TaskListItem = ({task, updateTaskRequest}) => {
     const completeClass = task.complete ? 'complete' : 'in-progress';

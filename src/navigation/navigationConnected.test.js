@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/extend-expect'
-import navigationDispatch from "./navigationDispatch";
-import createNavigationConnected from "./navigationConnected";
-import createConnectedTester from "../test-util/connectedTester";
-import createSample from "../test-util/sample";
+import navigationDispatch from './navigationDispatch';
+import createNavigationConnected from './navigationConnected';
+import createConnectedTester from '../test-util/connectedTester';
+import createSample from '../test-util/sample';
 
 const createTester = ({uri}) => {
     const componentDependencyMap = {
@@ -75,7 +75,7 @@ describe('navigation', () => {
 
         expect(tester.effectiveState()).toEqual({
             navigation: {
-                page: "profile",
+                page: 'profile',
                 errors: []
             }
         })
@@ -103,7 +103,7 @@ describe('navigation', () => {
 
         expect(tester.effectiveState()).toEqual({
             navigation: {
-                page: "task",
+                page: 'task',
                 errors: []
             }
         })

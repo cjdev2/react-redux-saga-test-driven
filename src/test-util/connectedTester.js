@@ -1,15 +1,15 @@
-import createFetchFake from "../test-util/fetch-fake";
-import createEnvironment from "../environment/environment";
-import createSagaMiddleware from "redux-saga";
-import {applyMiddleware, createStore} from "redux";
-import {act} from "react-dom/test-utils";
+import createFetchFake from '../test-util/fetch-fake';
+import createEnvironment from '../environment/environment';
+import createSagaMiddleware from 'redux-saga';
+import {applyMiddleware, createStore} from 'redux';
+import {act} from 'react-dom/test-utils';
 import {Provider} from 'react-redux'
-import {fireEvent, render} from "@testing-library/react";
+import {fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import createPromiseTracker from "./promise-tracker";
-import {createMemoryHistory} from "history";
-import * as R from "ramda";
-import createSagaMonitor from "./saga-monitor";
+import createPromiseTracker from './promise-tracker';
+import {createMemoryHistory} from 'history';
+import * as R from 'ramda';
+import createSagaMonitor from './saga-monitor';
 
 const effectiveStateFor = (model, state) => {
     const accumulateState = (accumulator, lens) => {
