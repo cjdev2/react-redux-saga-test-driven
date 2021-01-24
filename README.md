@@ -2,14 +2,14 @@
 
 ## How to run
 
-First make sure you have [webdb](https://gitlab.cj.dev/training/webdb) running, then read the "Scripts" section.
+First make sure you have [webdb](https://github.com/cjdev/webdb) running, then read the "Scripts" section.
 
 ## Scripts
 
 - `./scripts/prepare.sh`
   - One time initialization
 - `./scripts/sample-data.sh`
-  - Create sample data for [webdb](https://gitlab.cj.dev/training/webdb)
+  - Create sample data for [webdb](https://github.com/cjdev/webdb)
 - `./scripts/run.sh`
   - Run application
 - `./scripts/test.sh`
@@ -31,7 +31,7 @@ Lower level testing
 
 ## Experiment here
 
-[React, Redux, and Saga prototype application](https://gitlab.cj.dev/training/react-redux-saga-prototype)
+[React, Redux, and Saga prototype application](https://github.com/cjdev/react-redux-saga-prototype)
 
 This is a single-file implementation of this same application without the tests, error handling, and dependency
 inversion. It is useful for experimenting.
