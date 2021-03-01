@@ -166,8 +166,8 @@ and be more explicit and intentional about what css styles are applied
 ## Technology Stack
 - [React](https://reactjs.org/)
 - [Ramda](https://ramdajs.com/)
-- [React Router](https://reactrouter.com/)
-  - [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+- [Redux](https://redux.js.org/)
+- [Redux Saga](https://redux-saga.js.org/)
 - [history](https://github.com/ReactTraining/history/)
 - [Jest](https://jestjs.io/)
   - [expect api](https://jestjs.io/docs/en/expect)
