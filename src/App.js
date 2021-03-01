@@ -8,9 +8,10 @@ import createEnvironment from './environment/environment';
 
 const sagaMiddleware = createSagaMiddleware()
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const initialState = {}
 const store = createStore(
     reducer,
-    {},
+    initialState,
     composeEnhancers(applyMiddleware(sagaMiddleware))
 )
 const history = createBrowserHistory()
