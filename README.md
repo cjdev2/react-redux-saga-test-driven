@@ -1,8 +1,9 @@
 # Sample Program Demonstrating React, Redux, and Sagas
 
-## How to run
+## Before running
 
-First make sure you have [webdb](https://github.com/cjdev/webdb) running, then read the "Scripts" section.
+- `npm install`
+- Make sure [webdb](https://github.com/cjdev/webdb) is running, see instructions in that project
 
 ## Scripts
 
@@ -17,24 +18,41 @@ First make sure you have [webdb](https://github.com/cjdev/webdb) running, then r
 - `./scripts/coverage.sh`
     - Test coverage report
 
-## Testing Examples
+## Requirements
 
-Higher level testing
+- [ ] Profiles
+  - [ ] Display all profiles
+  - [ ] Add a profile
+  - [ ] Remove a profile
+  - [ ] Navigate to tasks associated with a particular profile
+- [ ] Tasks
+  - [ ] Display all tasks for a particular profile
+  - [ ] Add a task
+  - [ ] Mark a task as complete
+  - [ ] Clear all completed tasks
+  - [ ] Navigate to profiles
+- [ ] Summary
+  - [ ] Display the total number of profiles
+  - [ ] Display the total number of tasks
+  - [ ] Be visible on every page
+  - [ ] Immediately update as the underlying data changes
+- [ ] Navigation
+  - [ ] Profiles and Tasks are displayed on different pages
+  - [ ] Bookmarked pages should work
+  - [ ] Back button should work
 
-- [Test everything connected at the domain level, using the real view, reducer, and saga](/src/task/taskConnected.test.js)
+## Intent
 
-Lower level testing
+You should know how write a front end application that handles all of the following in a testable way
 
-- [Test view only, through state received and functions invoked](/src/task/Task.test.js)
-- [Test side effects only, through saga handlers](/src/task/taskEffects.test.js)
-- [Test state transformation only, through data model (lenses) and reducers](/src/task/taskState.test.js)
+- presentation
+- state
+- side effects
+- multiple pages
+- back button
+- an event in one component triggering a state change in another, without coupling those components together
 
-## Experiment here
-
-[React, Redux, and Saga prototype application](https://github.com/cjdev/react-redux-saga-prototype)
-
-This is a single-file implementation of this same application without the tests, error handling, and dependency
-inversion. It is useful for experimenting.
+This is a fully test driven example project that shows one way of accomplishing this.
 
 ## Design Goals
 
@@ -42,7 +60,7 @@ inversion. It is useful for experimenting.
 - Easy to test
 - Easy for components to interact with each other without knowledge of implementation details
 
-## Design highlights
+## Design Style
 
 - Each component manages its own ecosystem of
     - state, via lenses and reducers
@@ -83,43 +101,32 @@ inversion. It is useful for experimenting.
   rendered inside other components. In this manner, the tests can stub out inner components and focus on testing the
   composing component.
 
-## Requirements
+## Original Readme File (generated)
 
-- [ ] Profiles
-    - [ ] Display all profiles
-    - [ ] Add a profile
-    - [ ] Remove a profile
-    - [ ] Navigate to tasks associated with a particular profile
-- [ ] Tasks
-    - [ ] Display all tasks for a particular profile
-    - [ ] Add a task
-    - [ ] Mark a task as complete
-    - [ ] Clear all completed tasks
-    - [ ] Navigate to profiles
-- [ ] Summary
-    - [ ] Display the total number of profiles
-    - [ ] Display the total number of tasks
-    - [ ] Be visible on every page
-    - [ ] Immediately update as the underlying data changes
-- [ ] Navigation
-    - [ ] Profiles and Tasks are displayed on different pages
-    - [ ] Bookmarked pages should work
-    - [ ] Back button should work
+[README-generated.md](README-original.md)
 
-## Intent
+## Testing Examples
 
-You should know how write a front end application that handles all of the following in a testable way
+Higher level testing
 
-- presentation
-- state
-- side effects
-- multiple pages
-- back button
-- an event in one component triggering a state change in another, without coupling those components together
+- [Test everything connected at the domain level, using the real view, reducer, and saga](/src/task/taskConnected.test.js)
 
-This is a fully test driven example project that shows one way of accomplishing this.
+Lower level testing
+
+- [Test view only, through state received and functions invoked](/src/task/Task.test.js)
+- [Test side effects only, through saga handlers](/src/task/taskEffects.test.js)
+- [Test state transformation only, through data model (lenses) and reducers](/src/task/taskState.test.js)
+
+## Experiment here
+
+[React, Redux, and Saga prototype application](https://github.com/cjdev/react-redux-saga-prototype)
+
+This is a single-file implementation of this same application without the tests, error handling, and dependency
+inversion. It is useful for experimenting.
 
 ## How this project was created
+
+### Create project and add dependencies
 
 ```bash
 npx create-react-app react-redux-saga-test-driven
@@ -131,6 +138,31 @@ npm install redux-saga
 npm install history
 npm install http-proxy-middleware
 ```
+
+### Test coverage setup
+
+Add the following entry to `package.json`
+
+```json
+{
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/*",
+      "!<rootDir>/node_modules/",
+      "!src/test-util/*"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
+  }
+}
+```
+
+- In general, collect test coverage from "src/**/*.{js,jsx,ts,tsx}"
+- Since business logic is being kept out the root directory, exclude "!src/*"
+- No need to test third party modules, so exclude "!<rootDir>/node_modules/"
+- Don't need to test utilities that are only used in tests, so exclude "!src/test-util/*"
 
 ## Proxy setup
 
