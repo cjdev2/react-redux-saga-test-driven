@@ -11,9 +11,9 @@ describe('task effects', () => {
         // given
         const sample = createSample()
         const profile = sample.profile()
-        const task1 = sample.task({profileId: profile.id})
+        const task1 = sample.task({profile: profile.id})
         const task2 = sample.task()
-        const task3 = sample.task({profileId: profile.id})
+        const task3 = sample.task({profile: profile.id})
         const tasks = [task1, task2, task3]
         const tasksInProfile = [task1, task3]
         const httpGetProfile = {

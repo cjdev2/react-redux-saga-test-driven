@@ -18,15 +18,15 @@ const addProfileRequest = environment => function* (event) {
 }
 
 const deleteProfileRequest = environment => function* (event) {
-    const profileId = event.id
+    const profile = event.id
     const allTasks = yield environment.fetchJson('/proxy/task')
-    const matchesProfile = task => task.profileId === profileId
+    const matchesProfile = task => task.profile === profile
     const tasksForProfile = R.filter(matchesProfile, allTasks)
     const taskIds = R.map(R.prop('id'), tasksForProfile)
     const createDeleteTaskFunction = taskId => environment.fetchText(`/proxy/task/${taskId}`, {method: 'DELETE'})
     const deleteTaskFunctions = R.map(createDeleteTaskFunction, taskIds)
     yield all(deleteTaskFunctions)
-    yield environment.fetchText(`/proxy/profile/${profileId}`, {method: 'DELETE'})
+    yield environment.fetchText(`/proxy/profile/${profile}`, {method: 'DELETE'})
     yield put(profileDispatch.fetchProfilesRequest())
     yield put(summaryDispatch.fetchSummaryRequest())
 }

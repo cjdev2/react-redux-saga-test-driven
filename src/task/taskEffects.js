@@ -10,7 +10,7 @@ const fetchTasksRequest = environment => function* (event) {
     const profileId = matchResult[1]
     const profile = yield environment.fetchJson(`/proxy/profile/${profileId}`)
     const allTasks = yield environment.fetchJson('/proxy/task')
-    const matchingProfileId = task => task.profileId === profileId
+    const matchingProfileId = task => task.profile === profileId
     const tasks = R.filter(matchingProfileId, allTasks)
     yield put(taskDispatch.fetchTasksSuccess({profile, tasks}))
 }

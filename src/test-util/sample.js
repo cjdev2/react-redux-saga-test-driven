@@ -13,14 +13,14 @@ const createSample = () => {
     const profileArray = quantity => R.times(profile, quantity)
     const task = overrides => {
         const generated = {
-            profileId: string('profile-id'),
+            profile: string('profile-id'),
             id: string('task-id'),
             name: string('task-name'),
             complete: false
         }
         return R.mergeRight(generated, overrides)
     }
-    const taskArray = ({quantity, profile}) => R.times(() => task({profileId: profile.id}), quantity)
+    const taskArray = ({quantity, profile}) => R.times(() => task({profile: profile.id}), quantity)
 
     return {
         profile,

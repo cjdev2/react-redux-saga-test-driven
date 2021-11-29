@@ -29,7 +29,7 @@ const AddTask = ({profile, taskName, taskNameChanged, addTaskRequest}) => {
     const onKeyUp = event => {
         if (R.trim(taskName) === '') return
         if (event.key !== 'Enter') return
-        const task = {profileId: profile.id, name: taskName, complete: false}
+        const task = {profile: profile.id, name: taskName, complete: false}
         addTaskRequest(task)
     }
     const onChange = event => {
